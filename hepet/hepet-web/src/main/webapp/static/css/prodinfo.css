@@ -1,0 +1,132 @@
+html {
+  font-size: 20px; }
+
+.thin-line {
+  position: relative; }
+  .thin-line:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    -webkit-transform: scale(1, 0.5);
+            transform: scale(1, 0.5);
+    background: #ddd; }
+  .thin-line:last-child:after {
+    display: none; }
+
+.banner {
+  width: 100%; }
+  .banner img {
+    width: 100%;
+    display: block; }
+  .banner .swiper-pagination-bullet-active {
+    background: #000; }
+
+.pd-price {
+  background: #fff;
+  height: 50px;
+  width: 100%;
+  padding: 0 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: #1caaf0;
+  font-size: 18px; }
+  .pd-price .market {
+    font-size: 12px;
+    color: #ccc;
+    text-decoration: line-through; }
+  .pd-price .icon {
+    font-size: 0.5rem;
+    -ms-flex-item-align: center;
+        align-self: center;
+    padding: 0 5px;
+    background: #ed8a8a;
+    color: #fff;
+    border-radius: 2px;
+    margin-left: 10px; }
+
+.pd-name {
+  background: #fff;
+  width: 100%;
+  padding: 15px; }
+  .pd-name .title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    font-size: 15px;
+    line-height: 21px; }
+  .pd-name .subtit {
+    padding-top: 10px;
+    font-size: 13px;
+    color: #666; }
+
+.pd-info {
+  background: #fff;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 15px;
+  font-size: 13px; }
+  .pd-info span {
+    margin-right: 15px; }
+    .pd-info span:before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      margin-right: 5px;
+      border-radius: 50%;
+      background: #ed8a8a;
+      display: inline-block;
+      vertical-align: middle; }
+
+.pd-detail {
+  margin-top: 10px;
+  width: 100%;
+  padding: 15px 0;
+  background: #fff; }
+  .pd-detail .title {
+    margin-bottom: 20px;
+    width: 6.25rem;
+    background: #dedede;
+    color: #fff;
+    border-radius: 3px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 0.9rem;
+    font-size: 12px; }
+
+.buy-button {
+  position: fixed;
+  bottom: 0;
+  z-index: 99;
+  width: 100%;
+  height: 50px;
+  background: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+  .buy-button .amount {
+    padding-left: 15px;
+    -webkit-box-flex: 3;
+        -ms-flex: 3;
+            flex: 3;
+    color: #1caaf0; }
+  .buy-button .buy {
+    -webkit-box-flex: 2;
+        -ms-flex: 2;
+            flex: 2;
+    line-height: 50px;
+    background: #1caaf0;
+    text-align: center;
+    color: #fff;
+    font-size: 18px; }

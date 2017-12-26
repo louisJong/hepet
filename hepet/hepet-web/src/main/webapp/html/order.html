@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>订单信息确认</title>
+	<base href="./../" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+	<!-- 引入css -->
+	<link rel="stylesheet" type="text/css" href="css/base.css">
+	<link rel="stylesheet" type="text/css" href="css/order.css">
+	<!-- 引入js -->
+	<script type="text/javascript" src='js/jquery-1.11.3.min.js'></script>
+	<script type="text/javascript" src='js/common.js'></script>
+</head>
+<body>
+<!-- 收货信息	 -->
+<div class="address">
+	<div class="left">
+		<i class="icon peisong "></i><span>收货人:</span>
+	</div>
+	<div class="center" id='address'></div>
+	<div class="right" style="display: none;"><i class="icon-right"></i></div>
+</div>
+<!-- 商品信息 -->
+<div class="prod">
+	<div class="left">
+		<img src="images/ad/ad_01.png">
+	</div>
+	<div class="center">
+		<p class="pd-name">商品标题BOSE QuietComfort35 QC35 蓝牙降噪头戴耳机</p>
+		<div class="pd-info">
+			<p>规格：黑色 </p>
+			<p>发货：国内自营仓</p>
+		</div>
+		<p class="pd-price">RMB 2280.00</p>
+	</div>
+</div>
+<!-- 支付信息 -->
+<div class="payinfo">
+	<div class="item">
+		<div class="left">分期付款</div>
+		<div class="right font-base">RMB 180.34 X12期</div>
+	</div>
+	<div class="item">
+		<div class="left">支付方式</div>
+		<div class="right">油彩信用额度<span class='small-font'>（可用3500额度）</span></div>
+	</div>
+</div>
+<!-- 支付按钮 -->
+<div class="btn-box">
+	<div class="normal-btn" id="confirmBtn">确认订单</div>
+</div>
+
+<script type="text/javascript">
+	var address = {"address":"张杨路500号16楼","area":"上海市浦东新区","contact":"江青松","id":3,"phone":"18217148462"}	 
+	var from = commonUtils.getUrlParam('from') || '';
+	var defaultAddId =  address['id'];
+  $(function() {
+  	initAdd();
+  	if(!address) {
+			$("#confirmBtn").addClass("disable");
+  	} else {
+ 			$("#confirmBtn").removeClass("disable");
+  	}
+  	$("#confirmBtn").on("click", confirm);
+  })
+  function comfirm() {
+  	$.ajax({
+  		url:'',
+  		type: 'post',
+  		dataType: 'json',
+  		success: function(data) {
+  			if(data.head.code == '0000') {
+					//成功后的事件。。。。
+  			} else {
+  				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
+  			}
+  		}
+  	})
+  }
+  //初始地址
+  function initAdd() {
+  	var str = ''
+  	var curUrl = encodeURIComponent(window.location.href)
+  	if(!address) {
+       str+= '<a href="/html/add_address.html?from=order&curUrl='+curUrl+'">添加地址信息</a>'
+  	} else {
+  		var curAdd = {"address":"张杨路500号16楼","area":"上海市浦东新区","contact":"江青松","id":3,"phone":"18217148462"}
+  		str+= '<p class="add-name">'+ curAdd['contact'] +' '+ curAdd['phone'] +'</p>';
+  		str+= '<div class="add-add">';
+  		str+= '<p>'+ curAdd['area'] +'</p>';
+  		str+= '<p>'+ curAdd['address'] +'</p>';
+  		str+= '</div>';  		
+  	}
+  	$("#address").append($(str));
+    //如果地址列表超过1个 可点击到地址列表页切换
+    if( address ) { 
+    	$(".address").find(".right").show(); 
+    	$("#address").on("click" , function() {
+    		window.location.href = 'html/address.html?from=order&addid=' + defaultAddId +'&curUrl='+curUrl;
+    	})
+    }
+  }
+
+</script>
+</body>
+</html>

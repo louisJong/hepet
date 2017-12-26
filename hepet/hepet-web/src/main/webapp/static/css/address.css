@@ -1,0 +1,106 @@
+html {
+  font-size: 20px; }
+
+.thin-line, #addressForm .input-label, .address-list .address-item {
+  position: relative; }
+  .thin-line:after, #addressForm .input-label:after, .address-list .address-item:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    -webkit-transform: scale(1, 0.5);
+            transform: scale(1, 0.5);
+    background: #ddd; }
+  .thin-line:last-child:after, #addressForm .input-label:last-child:after, .address-list .address-item:last-child:after {
+    display: none; }
+
+#addressForm {
+  margin-top: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-width: 1px 0; }
+  #addressForm .input-label {
+    width: 100%;
+    padding: 0 15px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    min-height: 50px;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+    #addressForm .input-label .input-tips {
+      width: 80px;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+      -webkit-box-flex: 0;
+          -ms-flex-positive: 0;
+              flex-grow: 0;
+      color: #666;
+      font-size: 15px; }
+      #addressForm .input-label .input-tips.address {
+        -ms-flex-item-align: start;
+            align-self: flex-start;
+        padding-top: 15px;
+        line-height: 1; }
+    #addressForm .input-label input {
+      -webkit-box-flex: 4;
+          -ms-flex-positive: 4;
+              flex-grow: 4;
+      border: none;
+      color: #333;
+      font-weight: 500;
+      font-size: 15px; }
+    #addressForm .input-label textarea {
+      outline: none;
+      min-height: 100px;
+      -webkit-box-flex: 4;
+          -ms-flex-positive: 4;
+              flex-grow: 4;
+      border: none;
+      color: #333;
+      font-size: 15px;
+      font-weight: 500;
+      resize: none;
+      padding: 15px 0; }
+    #addressForm .input-label .icon-right {
+      display: block;
+      width: 8px;
+      height: 13px;
+      background: url("../images/icon_right.png") no-repeat;
+      background-size: 100% auto; }
+
+.address-list {
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+  .address-list .address-item {
+    width: 100%;
+    padding: 15px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between; }
+    .address-list .address-item.actived .right {
+      width: 20px;
+      height: 20px;
+      background: url("../images/icon_check.png") no-repeat;
+      background-size: 100% 20px;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+      -webkit-box-flex: 0;
+          -ms-flex-positive: 0;
+              flex-grow: 0;
+      -ms-flex-item-align: center;
+          align-self: center; }
+    .address-list .address-item .left {
+      -webkit-box-flex: 6;
+          -ms-flex-positive: 6;
+              flex-grow: 6; }
+    .address-list .address-item .add-add {
+      font-size: 12px;
+      color: #888;
+      line-height: 16px;
+      padding-top: 5px; }

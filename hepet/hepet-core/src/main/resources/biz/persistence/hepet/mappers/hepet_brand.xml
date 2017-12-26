@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding= "UTF-8" ?>        
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hepet_brand">
+<resultMap id="hepet_brand" type="com.project.hepet.model.HepetBrand">
+	<result column="id" property="id"/>
+	<result column="brand_name" property="brandName"/>
+	<result column="brand_code" property="brandCode"/>
+	<result column="status" property="status"/>
+	<result column="tags" property="tags"/>
+	<result column="logo_img_url" property="logoImgUrl"/>
+	<result column="brand_img_url" property="brandImgUrl"/>
+	<result column="update_time" property="updateTime"/>
+	<result column="create_time" property="createTime"/>
+</resultMap>
+<select id="findById" parameterType="long"  resultMap="hepet_brand">
+	select * 	from hepet_brand where id=#{id}  
+</select>  
+<insert id="insert"  parameterType="com.project.hepet.model.HepetBrand"  useGeneratedKeys="true" keyProperty="id">
+	insert into hepet_brand(id ,brand_name ,brand_code ,status ,tags ,logo_img_url ,brand_img_url ,update_time ,create_time)
+   values(#{id,jdbcType=INTEGER} ,#{brandName,jdbcType=VARCHAR} ,#{brandCode,jdbcType=VARCHAR} ,#{status,jdbcType=TINYINT} ,#{tags,jdbcType=VARCHAR} ,#{logoImgUrl,jdbcType=LONGVARCHAR} ,#{brandImgUrl,jdbcType=LONGVARCHAR} ,#{updateTime,jdbcType=TIMESTAMP} ,#{createTime,jdbcType=TIMESTAMP}) 
+</insert>
+<insert id="batchInsert"  parameterType="list">
+	insert into hepet_brand(id ,brand_name ,brand_code ,status ,tags ,logo_img_url ,brand_img_url ,update_time ,create_time)
+   values
+	<foreach collection="list" item="item" index="index"   separator=","> 
+    (#{item.id,jdbcType=INTEGER} ,#{item.brandName,jdbcType=VARCHAR} ,#{item.brandCode,jdbcType=VARCHAR} ,#{item.status,jdbcType=TINYINT} ,#{item.tags,jdbcType=VARCHAR} ,#{item.logoImgUrl,jdbcType=LONGVARCHAR} ,#{item.brandImgUrl,jdbcType=LONGVARCHAR} ,#{item.updateTime,jdbcType=TIMESTAMP} ,#{item.createTime,jdbcType=TIMESTAMP})
+	</foreach> 
+</insert>
+<update id="update"	parameterType="com.project.hepet.model.HepetBrand">
+	update hepet_brand
+<set>
+	<if test="brandName != null">brand_name=#{brandName},</if>
+	<if test="status != null">status=#{status},</if>
+	<if test="tags != null">tags=#{tags},</if>
+	<if test="logoImgUrl != null">logo_img_url=#{logoImgUrl},</if>
+	<if test="brandImgUrl != null">brand_img_url=#{brandImgUrl},</if>
+	<if test="updateTime != null">update_time=#{updateTime}</if>
+</set>
+	where id=#{id}
+</update>
+</mapper>

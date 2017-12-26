@@ -1,0 +1,5 @@
+/.settings/
+/.project
+/logs/
+/package_dev.bat
+/package_product.bat

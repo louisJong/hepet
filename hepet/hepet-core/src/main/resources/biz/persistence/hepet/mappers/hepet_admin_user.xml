@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding= "UTF-8" ?>        
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hepet_admin_user">
+<resultMap id="hepet_admin_user" type="com.project.hepet.model.HepetAdminUser">
+	<result column="id" property="id"/>
+	<result column="user_name" property="userName"/>
+	<result column="mobile" property="mobile"/>
+	<result column="email" property="email"/>
+	<result column="login_pwd" property="loginPwd"/>
+	<result column="create_user" property="createUser"/>
+	<result column="create_time" property="createTime"/>
+	<result column="update_time" property="updateTime"/>
+	<result column="status" property="status"/>
+</resultMap>
+<select id="findById" parameterType="long"  resultMap="hepet_admin_user">
+	select * 	from hepet_admin_user where id=#{id}  
+</select>  
+<select id="findByUserNameAndPwd" parameterType="hashmap"  resultMap="hepet_admin_user">
+	select * from hepet_admin_user where user_name=#{userName} and login_pwd=#{loginPwd}
+</select>  
+<insert id="insert"  parameterType="com.project.hepet.model.HepetAdminUser"  useGeneratedKeys="true" keyProperty="id">
+	insert into hepet_admin_user(id ,user_name ,mobile ,email ,login_pwd ,create_user ,create_time ,update_time ,status)
+   values(#{id,jdbcType=INTEGER} ,#{userName,jdbcType=VARCHAR} ,#{mobile,jdbcType=VARCHAR} ,#{email,jdbcType=VARCHAR} ,#{loginPwd,jdbcType=VARCHAR} ,#{createUser,jdbcType=VARCHAR} ,#{createTime,jdbcType=TIMESTAMP} ,#{updateTime,jdbcType=TIMESTAMP} ,#{status,jdbcType=TINYINT}) 
+</insert>
+<insert id="batchInsert"  parameterType="list">
+	insert into hepet_admin_user(id ,user_name ,mobile ,email ,login_pwd ,create_user ,create_time ,update_time ,status)
+   values
+	<foreach collection="list" item="item" index="index"   separator=","> 
+    (#{item.id,jdbcType=INTEGER} ,#{item.userName,jdbcType=VARCHAR} ,#{item.mobile,jdbcType=VARCHAR} ,#{item.email,jdbcType=VARCHAR} ,#{item.loginPwd,jdbcType=VARCHAR} ,#{item.createUser,jdbcType=VARCHAR} ,#{item.createTime,jdbcType=TIMESTAMP} ,#{item.updateTime,jdbcType=TIMESTAMP} ,#{item.status,jdbcType=TINYINT})
+	</foreach> 
+</insert>
+<update id="update"	parameterType="com.project.hepet.model.HepetAdminUser">
+	update hepet_admin_user
+<set>
+	<if test="mobile != null">mobile=#{mobile},</if>
+	<if test="email != null">email=#{email},</if>
+	<if test="loginPwd != null">login_pwd=#{loginPwd},</if>
+	<if test="updateTime != null">update_time=#{updateTime},</if>
+	<if test="status != null">status=#{status}</if>
+</set>
+	where id=#{id}
+</update>
+</mapper>

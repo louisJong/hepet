@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding= "UTF-8" ?>        
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hepet_banner">
+<resultMap id="hepet_banner" type="com.project.hepet.model.HepetBanner">
+	<result column="id" property="id"/>
+	<result column="banner_desc" property="bannerDesc"/>
+	<result column="img_url" property="imgUrl"/>
+	<result column="banner_link" property="bannerLink"/>
+	<result column="banner_sort" property="bannerSort"/>
+	<result column="status" property="status"/>
+	<result column="create_time" property="createTime"/>
+	<result column="create_user" property="createUser"/>
+	<result column="update_time" property="updateTime"/>
+	<result column="update_user" property="updateUser"/>
+</resultMap>
+<select id="findById" parameterType="long"  resultMap="hepet_banner">
+	select * 	from hepet_banner where id=#{id}  
+</select>  
+<select id="getSortedBanners" resultMap="hepet_banner">
+	select img_url,banner_desc,banner_link	from hepet_banner where status=1 order by banner_sort
+</select>  
+<insert id="insert"  parameterType="com.project.hepet.model.HepetBanner"  useGeneratedKeys="true" keyProperty="id">
+	insert into hepet_banner(id ,banner_desc ,img_url ,banner_link ,banner_sort ,status ,create_time ,create_user ,update_time ,update_user)
+   values(#{id,jdbcType=INTEGER} ,#{bannerDesc,jdbcType=VARCHAR} ,#{imgUrl,jdbcType=VARCHAR} ,#{bannerLink,jdbcType=VARCHAR} ,#{bannerSort,jdbcType=INTEGER} ,#{status,jdbcType=TINYINT} ,#{createTime,jdbcType=TIMESTAMP} ,#{createUser,jdbcType=VARCHAR} ,#{updateTime,jdbcType=TIMESTAMP} ,#{updateUser,jdbcType=VARCHAR}) 
+</insert>
+<insert id="batchInsert"  parameterType="list">
+	insert into hepet_banner(id ,banner_desc ,img_url ,banner_link ,banner_sort ,status ,create_time ,create_user ,update_time ,update_user)
+   values
+	<foreach collection="list" item="item" index="index"   separator=","> 
+    (#{item.id,jdbcType=INTEGER} ,#{item.bannerDesc,jdbcType=VARCHAR} ,#{item.imgUrl,jdbcType=VARCHAR} ,#{item.bannerLink,jdbcType=VARCHAR} ,#{item.bannerSort,jdbcType=INTEGER} ,#{item.status,jdbcType=TINYINT} ,#{item.createTime,jdbcType=TIMESTAMP} ,#{item.createUser,jdbcType=VARCHAR} ,#{item.updateTime,jdbcType=TIMESTAMP} ,#{item.updateUser,jdbcType=VARCHAR})
+	</foreach> 
+</insert>
+<update id="update"	parameterType="com.project.hepet.model.HepetBanner">
+	update hepet_banner
+<set>
+	<if test="bannerDesc != null">banner_desc=#{bannerDesc},</if>
+	<if test="imgUrl != null">img_url=#{imgUrl},</if>
+	<if test="bannerLink != null">banner_link=#{bannerLink},</if>
+	<if test="bannerSort != null">banner_sort=#{bannerSort},</if>
+	<if test="status != null">status=#{status},</if>
+	<if test="updateTime != null">update_time=#{updateTime},</if>
+	<if test="updateUser != null">update_user=#{updateUser}</if>
+</set>
+	where id=#{id}
+</update>
+</mapper>

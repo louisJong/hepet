@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>密码设置</title>
+	<base href="./../" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+	<script type="text/javascript" src='js/jquery-1.11.3.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="css/base.css">
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+</head>
+<body>
+	<header></header>
+	<div class="login-form">
+		<form id='registerForm'>
+			<div class="input-label"><input type="text" placeholder="请输入本人手机号注册" name='tel' id="tel"></div>
+			<div class="input-label"><input type="password" placeholder="请输入短信验证码" name='code' id="code"><span class="code-tips" id="sendCode">获取验证码</span></div>
+			<div class="btn-box" id='register'>
+				<div class="normal-btn">下一步</div>
+			</div>
+		</form>
+		<div class="register-tips">
+			<a href="" class='small-font'><font color='#ccc'>点击注册即表示同意</font>《油彩用户服务协议》</a>
+		</div>
+	</div>
+	<footer>
+		<span>先海淘后还款</span>
+		<span>万元额度可使用</span>
+		<span>中锅银行诚信服务</span>
+	</footer>
+
+	<script type="text/javascript">
+		$(function() {
+			$("#sendCode").on("click", onSendCode);
+			$("#register").on("click", register);
+			//手机号校验 输入11位数字
+			$("#tel").on("input propertychange", function() {
+        var val = $(this).val();
+			  $(this).val(val.replace(/[^\d]/g,'').substr(0,11))
+			})
+		})
+    function register() {
+    	$.ajax({
+    		type: 'post',
+		    url: '',
+		    data: $("#registerForm").serializeArray(),
+		    success: function(data){}
+    	})
+    }
+
+    var countDown = 60, time;
+    //发送验证码
+		function onSendCode() {
+			if($(this).hasClass('disable')){
+				return;
+			}
+      sendMessage();
+		}
+
+		function sendMessage() {
+			$("#sendCode").addClass('disable');
+			$("#sendCode").html( countDown + "秒");
+			time = window.setInterval(setRemainTime, 1000);
+			function setRemainTime() {
+				if (countDown == 0) {
+          window.clearInterval(time); //停止计时器
+          $("#sendCode").removeClass('disable');//启用按钮
+          $("#sendCode").html("重新获取验证码");
+        } else {
+        	countDown--;
+        	$("#sendCode").html( countDown + "秒");
+        }
+      }
+    }
+
+	</script>
+</body>
+</html>

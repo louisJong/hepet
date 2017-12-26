@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding= "UTF-8" ?>        
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hepet_order">
+<resultMap id="hepet_order" type="com.project.hepet.model.HepetOrder">
+	<result column="id" property="id"/>
+	<result column="category_code" property="categoryCode"/>
+	<result column="brand_code" property="brandCode"/>
+	<result column="brand_name" property="brandName"/>
+	<result column="goods_name" property="goodsName"/>
+	<result column="sub_desc" property="subDesc"/>
+	<result column="profit" property="profit"/>
+	<result column="num" property="num"/>
+	<result column="price" property="price"/>
+	<result column="period" property="period"/>
+	<result column="price_per_period" property="pricePerPeriod"/>
+	<result column="address" property="address"/>
+	<result column="contact" property="contact"/>
+	<result column="phone" property="phone"/>
+	<result column="kd_no" property="kdNo"/>
+	<result column="kd_name" property="kdName"/>
+	<result column="status" property="status"/>
+	<result column="update_time" property="updateTime"/>
+	<result column="create_time" property="createTime"/>
+	<result column="pay_time" property="payTime"/>
+	<result column="customer_id" property="customerId"/>
+	<result column="tel" property="tel"/>
+	<result column="order_num" property="orderNum"/>
+	<result column="pay_num" property="payNum"/>
+	<result column="pay_code" property="payCode"/>
+	<result column="pay_info" property="payInfo"/>
+	<result column="goods_id" property="goodsId"/>
+	<result column="list_img_url" property="listImgUrl"/>
+</resultMap>
+<select id="findById" parameterType="long"  resultMap="hepet_order">
+	select * 	from hepet_order where id=#{id}  
+</select>  
+<select id="orderCount" parameterType="hashmap"  resultType="long">
+	select count(1) from hepet_order
+	<where>
+		<if test="status!=null and status!=''">
+			status = #{status}
+		</if>
+		<if test="tel!=null and status!=''">
+			and tel = #{tel}
+		</if>
+		<if test="customerId!=null">
+			and customer_id = #{customerId}
+		</if>
+	</where>
+</select>  
+<select id="findDetail" parameterType="hashmap"  resultMap="hepet_order">
+	select id,goods_id,create_time,brand_name,list_img_url,goods_name,sub_desc,num,price,period,address,contact,phone,kd_no,kd_name,status,pay_time,order_num from hepet_order 
+	where id = #{orderId} and customer_id=#{customerId}
+</select> 
+<select id="findOrders" parameterType="hashmap"  resultMap="hepet_order">
+	select id,goods_id,create_time,list_img_url,brand_name,goods_name,sub_desc,num,price,period,address,contact,phone,kd_no,kd_name,status,pay_time,order_num from hepet_order 
+	<where>
+		<if test="tel!=null">
+			tel = #{tel}
+		</if>
+		<if test="customerId!=null">
+			and customer_id = #{customerId}
+		</if>
+		<if test="status!=null">
+			and status = #{status}
+		</if>
+	</where>  
+	order by create_time desc
+	limit #{startRow} , #{limit}
+</select>  
+<insert id="insert"  parameterType="com.project.hepet.model.HepetOrder"  useGeneratedKeys="true" keyProperty="id">
+	insert into hepet_order(id ,category_code ,brand_code ,brand_name ,goods_name ,sub_desc ,profit ,num ,price ,period ,price_per_period ,address ,contact ,phone ,kd_no ,kd_name ,status ,update_time ,create_time ,pay_time ,customer_id ,tel ,order_num ,pay_num ,pay_code ,pay_info ,goods_id ,list_img_url)
+   values(#{id,jdbcType=INTEGER} ,#{categoryCode,jdbcType=VARCHAR} ,#{brandCode,jdbcType=VARCHAR} ,#{brandName,jdbcType=VARCHAR} ,#{goodsName,jdbcType=VARCHAR} ,#{subDesc,jdbcType=VARCHAR} ,#{profit,jdbcType=INTEGER} ,#{num,jdbcType=INTEGER} ,#{price,jdbcType=DECIMAL} ,#{period,jdbcType=INTEGER} ,#{pricePerPeriod,jdbcType=DECIMAL} ,#{address,jdbcType=VARCHAR} ,#{contact,jdbcType=VARCHAR} ,#{phone,jdbcType=VARCHAR} ,#{kdNo,jdbcType=VARCHAR} ,#{kdName,jdbcType=VARCHAR} ,#{status,jdbcType=VARCHAR} ,#{updateTime,jdbcType=TIMESTAMP} ,#{createTime,jdbcType=TIMESTAMP} ,#{payTime,jdbcType=TIMESTAMP} ,#{customerId,jdbcType=INTEGER} ,#{tel,jdbcType=VARCHAR} ,#{orderNum,jdbcType=VARCHAR} ,#{payNum,jdbcType=VARCHAR} ,#{payCode,jdbcType=VARCHAR} ,#{payInfo,jdbcType=VARCHAR} ,#{goodsId,jdbcType=INTEGER} ,#{listImgUrl,jdbcType=LONGVARCHAR}) 
+</insert>
+<insert id="batchInsert"  parameterType="list">
+	insert into hepet_order(id ,category_code ,brand_code ,brand_name ,goods_name ,sub_desc ,profit ,num ,price ,period ,price_per_period ,address ,contact ,phone ,kd_no ,kd_name ,status ,update_time ,create_time ,pay_time ,customer_id ,tel ,order_num ,pay_num ,pay_code ,pay_info ,goods_id ,list_img_url)
+   values
+	<foreach collection="list" item="item" index="index"   separator=","> 
+    (#{item.id,jdbcType=INTEGER} ,#{item.categoryCode,jdbcType=VARCHAR} ,#{item.brandCode,jdbcType=VARCHAR} ,#{item.brandName,jdbcType=VARCHAR} ,#{item.goodsName,jdbcType=VARCHAR} ,#{item.subDesc,jdbcType=VARCHAR} ,#{item.profit,jdbcType=INTEGER} ,#{item.num,jdbcType=INTEGER} ,#{item.price,jdbcType=DECIMAL} ,#{item.period,jdbcType=INTEGER} ,#{item.pricePerPeriod,jdbcType=DECIMAL} ,#{item.address,jdbcType=VARCHAR} ,#{item.contact,jdbcType=VARCHAR} ,#{item.phone,jdbcType=VARCHAR} ,#{item.kdNo,jdbcType=VARCHAR} ,#{item.kdName,jdbcType=VARCHAR} ,#{item.status,jdbcType=VARCHAR} ,#{item.updateTime,jdbcType=TIMESTAMP} ,#{item.createTime,jdbcType=TIMESTAMP} ,#{item.payTime,jdbcType=TIMESTAMP} ,#{item.customerId,jdbcType=INTEGER} ,#{item.tel,jdbcType=VARCHAR} ,#{item.orderNum,jdbcType=VARCHAR} ,#{item.payNum,jdbcType=VARCHAR} ,#{item.payCode,jdbcType=VARCHAR} ,#{item.payInfo,jdbcType=VARCHAR} ,#{item.goodsId,jdbcType=INTEGER} ,#{item.listImgUrl,jdbcType=LONGVARCHAR})
+	</foreach> 
+</insert>
+<update id="update"	parameterType="com.project.hepet.model.HepetOrder">
+	update hepet_order
+<set>
+	<if test="categoryCode != null">category_code=#{categoryCode},</if>
+	<if test="brandCode != null">brand_code=#{brandCode},</if>
+	<if test="brandName != null">brand_name=#{brandName},</if>
+	<if test="goodsName != null">goods_name=#{goodsName},</if>
+	<if test="subDesc != null">sub_desc=#{subDesc},</if>
+	<if test="profit != null">profit=#{profit},</if>
+	<if test="num != null">num=#{num},</if>
+	<if test="price != null">price=#{price},</if>
+	<if test="period != null">period=#{period},</if>
+	<if test="pricePerPeriod != null">price_per_period=#{pricePerPeriod},</if>
+	<if test="address != null">address=#{address},</if>
+	<if test="contact != null">contact=#{contact},</if>
+	<if test="phone != null">phone=#{phone},</if>
+	<if test="kdNo != null">kd_no=#{kdNo},</if>
+	<if test="kdName != null">kd_name=#{kdName},</if>
+	<if test="status != null">status=#{status},</if>
+	<if test="updateTime != null">update_time=#{updateTime},</if>
+	<if test="payTime != null">pay_time=#{payTime},</if>
+	<if test="customerId != null">customer_id=#{customerId},</if>
+	<if test="tel != null">tel=#{tel},</if>
+	<if test="orderNum != null">order_num=#{orderNum},</if>
+	<if test="payNum != null">pay_num=#{payNum},</if>
+	<if test="payCode != null">pay_code=#{payCode},</if>
+	<if test="payInfo != null">pay_info=#{payInfo},</if>
+	<if test="goodsId != null">goods_id=#{goodsId},</if>
+	<if test="listImgUrl != null">list_img_url=#{listImgUrl}</if>
+</set>
+	where id=#{id}
+	<if test="status!=null">
+		AND status &lt;&gt; #{status}
+	</if>
+</update>
+<update id="addKdInfo" parameterType="hashmap">
+    update hepet_order 
+	<set>
+	<if test="kdNo != null">kd_no=#{kdNo},</if>
+	<if test="kdName != null">kd_name=#{kdName},</if>
+	status = 'NORECEIVE'
+	, update_time=now()
+	</set> 
+	where status = 'NOSEND'
+</update>
+</mapper>

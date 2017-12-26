@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding= "UTF-8" ?>        
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hepet_goods_category">
+<resultMap id="hepet_goods_category" type="com.project.hepet.model.HepetGoodsCategory">
+	<result column="id" property="id"/>
+	<result column="name" property="name"/>
+	<result column="code" property="code"/>
+	<result column="create_time" property="createTime"/>
+	<result column="update_time" property="updateTime"/>
+	<result column="descript" property="descript"/>
+	<result column="status" property="status"/>
+	<result column="shot_name" property="shotName"/>
+</resultMap>
+<select id="findById" parameterType="long"  resultMap="hepet_goods_category">
+	select * 	from hepet_goods_category where id=#{id}  
+</select>  
+<select id="findAll" resultMap="hepet_goods_category">
+	select id,name,code,shot_name from hepet_goods_category where status=1
+</select>  
+<insert id="insert"  parameterType="com.project.hepet.model.HepetGoodsCategory"  useGeneratedKeys="true" keyProperty="id">
+	insert into hepet_goods_category(id ,name ,code ,create_time ,update_time ,descript ,status ,shot_name)
+   values(#{id,jdbcType=INTEGER} ,#{name,jdbcType=VARCHAR} ,#{code,jdbcType=VARCHAR} ,#{createTime,jdbcType=TIMESTAMP} ,#{updateTime,jdbcType=TIMESTAMP} ,#{descript,jdbcType=VARCHAR} ,#{status,jdbcType=TINYINT} ,#{shotName,jdbcType=VARCHAR}) 
+</insert>
+<insert id="batchInsert"  parameterType="list">
+	insert into hepet_goods_category(id ,name ,code ,create_time ,update_time ,descript ,status ,shot_name)
+   values
+	<foreach collection="list" item="item" index="index"   separator=","> 
+    (#{item.id,jdbcType=INTEGER} ,#{item.name,jdbcType=VARCHAR} ,#{item.code,jdbcType=VARCHAR} ,#{item.createTime,jdbcType=TIMESTAMP} ,#{item.updateTime,jdbcType=TIMESTAMP} ,#{item.descript,jdbcType=VARCHAR} ,#{item.status,jdbcType=TINYINT} ,#{item.shotName,jdbcType=VARCHAR})
+	</foreach> 
+</insert>
+<update id="update"	parameterType="com.project.hepet.model.HepetGoodsCategory">
+	update hepet_goods_category
+<set>
+	<if test="name != null">name=#{name},</if>
+	<if test="updateTime != null">update_time=#{updateTime},</if>
+	<if test="descript != null">descript=#{descript},</if>
+	<if test="status != null">status=#{status},</if>
+	<if test="shotName != null">shot_name=#{shotName}</if>
+</set>
+	where id=#{id}
+</update>
+</mapper>

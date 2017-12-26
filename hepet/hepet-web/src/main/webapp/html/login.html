@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登录</title>
+	<base href="./../" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+	<script type="text/javascript" src='js/jquery-1.11.3.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="css/base.css">
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+</head>
+<body>
+	<header></header>
+	<div class="login-form">
+		<form id='loginForm'>
+			<div class="input-label"><input type="text" placeholder="请输入您的手机号" name='tel' id='tel'></div>
+			<div class="input-label"><input type="password" placeholder="请输入您的密码" name='psd'></div>
+			<div class="btn-box" id='login'>
+				<div class="normal-btn">确定</div>
+			</div>
+		</form>
+		<div class="register-tips">
+			<a href="html/register.html">没有账号？免费注册</a>
+			<a href="">忘记密码？</a>
+		</div>
+	</div>
+	<footer>
+		<span>先海淘后还款</span>
+		<span>万元额度可使用</span>
+		<span>中锅银行诚信服务</span>
+	</footer>
+
+	<script type="text/javascript">
+		$(function() {
+			$("body").on("click", "#login", onLogin)；
+			//手机号校验 输入11位数字
+			$("#tel").on("input propertychange", function() {
+        var val = $(this).val();
+			  $(this).val(val.replace(/[^\d]/g,'').substr(0,11))
+			})
+		})
+		function onLogin() {
+			$.ajax({
+				type: 'post',
+		    url: '',
+		    data: $("#loginForm").serializeArray(),
+		    success: function(data){}
+			})
+		}
+	</script>
+</body>
+</html>

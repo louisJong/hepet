@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding= "UTF-8" ?>        
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hepet_goods">
+<resultMap id="hepet_goods" type="com.project.hepet.model.HepetGoods">
+	<result column="id" property="id"/>
+	<result column="category_code" property="categoryCode"/>
+	<result column="brand_code" property="brandCode"/>
+	<result column="brand_name" property="brandName"/>
+	<result column="goods_name" property="goodsName"/>
+	<result column="sub_desc" property="subDesc"/>
+	<result column="list_img_url" property="listImgUrl"/>
+	<result column="detail_img_urls" property="detailImgUrls"/>
+	<result column="pro_sort" property="proSort"/>
+	<result column="price" property="price"/>
+	<result column="period" property="period"/>
+	<result column="price_per_period" property="pricePerPeriod"/>
+	<result column="is_logistics" property="isLogistics"/>
+	<result column="putaway_opertor" property="putawayOpertor"/>
+	<result column="putaway_time" property="putawayTime"/>
+	<result column="soldout_opertor" property="soldoutOpertor"/>
+	<result column="soldout_time" property="soldoutTime"/>
+	<result column="soldout_desc" property="soldoutDesc"/>
+	<result column="status" property="status"/>
+	<result column="restrict_type" property="restrictType"/>
+	<result column="restrict_num" property="restrictNum"/>
+	<result column="restrict_desc" property="restrictDesc"/>
+	<result column="descript" property="descript"/>
+	<result column="stock" property="stock"/>
+	<result column="fetch_info" property="fetchInfo"/>
+	<result column="size_spec" property="sizeSpec"/>
+	<result column="source" property="source"/>
+	<result column="tags" property="tags"/>
+	<result column="pro_detail" property="proDetail"/>
+	<result column="update_time" property="updateTime"/>
+	<result column="create_user" property="createUser"/>
+	<result column="update_user" property="updateUser"/>
+	<result column="create_time" property="createTime"/>
+	<result column="send_type" property="sendType"/>
+	<result column="profit" property="profit"/>
+	<result column="sold_count" property="soldCount"/>
+	<result column="region" property="region"/>
+	<result column="market_price" property="marketPrice"/>
+</resultMap>
+<select id="findById" parameterType="long"  resultMap="hepet_goods">
+	select * 	from hepet_goods where id=#{id}  
+</select>  
+<select id="findByIdSimple" parameterType="long"  resultMap="hepet_goods">
+	select brand_name,market_price,send_type,region,goods_name,sub_desc,detail_img_urls,list_img_url,price,period,price_per_period,is_logistics,status,stock,tags,sold_count from hepet_goods where id=#{goodsId}  
+</select>  
+<select id="findByIdDetail" parameterType="long"  resultMap="hepet_goods">
+	select pro_detail,status from hepet_goods where id=#{goodsId}  
+</select>  
+<select id="findByIdAllDetail" parameterType="long"  resultMap="hepet_goods">
+    select brand_name,market_price,send_type,region,pro_detail,goods_name,sub_desc,detail_img_urls,price,period,price_per_period,is_logistics,status,stock,tags,sold_count from hepet_goods where id=#{goodsId}  
+</select>  
+<select id="findGoodsCount" parameterType="hashmap"  resultType="long">
+	select count(1) from hepet_goods 
+	<where>
+		<if test="categoryCode!=null and categoryCode!=''">
+		   category_code = #{categoryCode}
+		</if>
+	</where>
+</select>  
+<select id="findGoods" parameterType="hashmap"  resultMap="hepet_goods">
+	select id,brand_name,market_price,goods_name,sub_desc,list_img_url,pro_sort,price,period,is_logistics,stock,tags,sold_count from hepet_goods 
+  	<where>
+  		<if test="categoryCode!=null and categoryCode!=''">
+  			category_code = #{categoryCode}
+  		</if>
+  		<if test="fetchSj == 1">
+  			and status = 1
+  		</if>
+  	</where>
+  	order by sold_count desc
+  	limit #{startRow} , #{limit}
+</select>
+<insert id="insert"  parameterType="com.project.hepet.model.HepetGoods"  useGeneratedKeys="true" keyProperty="id">
+	insert into hepet_goods(id ,category_code ,brand_code ,brand_name ,goods_name ,sub_desc ,list_img_url ,detail_img_urls ,pro_sort ,price ,period ,price_per_period ,is_logistics ,putaway_opertor ,putaway_time ,soldout_opertor ,soldout_time ,soldout_desc ,status ,restrict_type ,restrict_num ,restrict_desc ,descript ,stock ,fetch_info ,size_spec ,source ,tags ,pro_detail ,update_time ,create_user ,update_user ,create_time ,send_type ,profit ,sold_count ,region ,market_price)
+   values(#{id,jdbcType=INTEGER} ,#{categoryCode,jdbcType=VARCHAR} ,#{brandCode,jdbcType=VARCHAR} ,#{brandName,jdbcType=VARCHAR} ,#{goodsName,jdbcType=VARCHAR} ,#{subDesc,jdbcType=VARCHAR} ,#{listImgUrl,jdbcType=LONGVARCHAR} ,#{detailImgUrls,jdbcType=LONGVARCHAR} ,#{proSort,jdbcType=INTEGER} ,#{price,jdbcType=DECIMAL} ,#{period,jdbcType=INTEGER} ,#{pricePerPeriod,jdbcType=DECIMAL} ,#{isLogistics,jdbcType=TINYINT} ,#{putawayOpertor,jdbcType=VARCHAR} ,#{putawayTime,jdbcType=TIMESTAMP} ,#{soldoutOpertor,jdbcType=VARCHAR} ,#{soldoutTime,jdbcType=TIMESTAMP} ,#{soldoutDesc,jdbcType=VARCHAR} ,#{status,jdbcType=TINYINT} ,#{restrictType,jdbcType=TINYINT} ,#{restrictNum,jdbcType=INTEGER} ,#{restrictDesc,jdbcType=VARCHAR} ,#{descript,jdbcType=LONGVARCHAR} ,#{stock,jdbcType=INTEGER} ,#{fetchInfo,jdbcType=VARCHAR} ,#{sizeSpec,jdbcType=VARCHAR} ,#{source,jdbcType=VARCHAR} ,#{tags,jdbcType=VARCHAR} ,#{proDetail,jdbcType=LONGVARCHAR} ,#{updateTime,jdbcType=TIMESTAMP} ,#{createUser,jdbcType=VARCHAR} ,#{updateUser,jdbcType=VARCHAR} ,#{createTime,jdbcType=TIMESTAMP} ,#{sendType,jdbcType=VARCHAR} ,#{profit,jdbcType=INTEGER} ,#{soldCount,jdbcType=INTEGER} ,#{region,jdbcType=VARCHAR} ,#{marketPrice,jdbcType=DECIMAL}) 
+</insert>
+<insert id="batchInsert"  parameterType="list">
+	insert into hepet_goods(id ,category_code ,brand_code ,brand_name ,goods_name ,sub_desc ,list_img_url ,detail_img_urls ,pro_sort ,price ,period ,price_per_period ,is_logistics ,putaway_opertor ,putaway_time ,soldout_opertor ,soldout_time ,soldout_desc ,status ,restrict_type ,restrict_num ,restrict_desc ,descript ,stock ,fetch_info ,size_spec ,source ,tags ,pro_detail ,update_time ,create_user ,update_user ,create_time ,send_type ,profit ,sold_count ,region ,market_price)
+   values
+	<foreach collection="list" item="item" index="index"   separator=","> 
+    (#{item.id,jdbcType=INTEGER} ,#{item.categoryCode,jdbcType=VARCHAR} ,#{item.brandCode,jdbcType=VARCHAR} ,#{item.brandName,jdbcType=VARCHAR} ,#{item.goodsName,jdbcType=VARCHAR} ,#{item.subDesc,jdbcType=VARCHAR} ,#{item.listImgUrl,jdbcType=LONGVARCHAR} ,#{item.detailImgUrls,jdbcType=LONGVARCHAR} ,#{item.proSort,jdbcType=INTEGER} ,#{item.price,jdbcType=DECIMAL} ,#{item.period,jdbcType=INTEGER} ,#{item.pricePerPeriod,jdbcType=DECIMAL} ,#{item.isLogistics,jdbcType=TINYINT} ,#{item.putawayOpertor,jdbcType=VARCHAR} ,#{item.putawayTime,jdbcType=TIMESTAMP} ,#{item.soldoutOpertor,jdbcType=VARCHAR} ,#{item.soldoutTime,jdbcType=TIMESTAMP} ,#{item.soldoutDesc,jdbcType=VARCHAR} ,#{item.status,jdbcType=TINYINT} ,#{item.restrictType,jdbcType=TINYINT} ,#{item.restrictNum,jdbcType=INTEGER} ,#{item.restrictDesc,jdbcType=VARCHAR} ,#{item.descript,jdbcType=LONGVARCHAR} ,#{item.stock,jdbcType=INTEGER} ,#{item.fetchInfo,jdbcType=VARCHAR} ,#{item.sizeSpec,jdbcType=VARCHAR} ,#{item.source,jdbcType=VARCHAR} ,#{item.tags,jdbcType=VARCHAR} ,#{item.proDetail,jdbcType=LONGVARCHAR} ,#{item.updateTime,jdbcType=TIMESTAMP} ,#{item.createUser,jdbcType=VARCHAR} ,#{item.updateUser,jdbcType=VARCHAR} ,#{item.createTime,jdbcType=TIMESTAMP} ,#{item.sendType,jdbcType=VARCHAR} ,#{item.profit,jdbcType=INTEGER} ,#{item.soldCount,jdbcType=INTEGER} ,#{item.region,jdbcType=VARCHAR} ,#{item.marketPrice,jdbcType=DECIMAL})
+	</foreach> 
+</insert>
+<update id="update"	parameterType="com.project.hepet.model.HepetGoods">
+	update hepet_goods
+<set>
+	<if test="categoryCode != null">category_code=#{categoryCode},</if>
+	<if test="brandCode != null">brand_code=#{brandCode},</if>
+	<if test="brandName != null">brand_name=#{brandName},</if>
+	<if test="goodsName != null">goods_name=#{goodsName},</if>
+	<if test="subDesc != null">sub_desc=#{subDesc},</if>
+	<if test="listImgUrl != null">list_img_url=#{listImgUrl},</if>
+	<if test="detailImgUrls != null">detail_img_urls=#{detailImgUrls},</if>
+	<if test="proSort != null">pro_sort=#{proSort},</if>
+	<if test="price != null">price=#{price},</if>
+	<if test="period != null">period=#{period},</if>
+	<if test="pricePerPeriod != null">price_per_period=#{pricePerPeriod},</if>
+	<if test="isLogistics != null">is_logistics=#{isLogistics},</if>
+	<if test="putawayOpertor != null">putaway_opertor=#{putawayOpertor},</if>
+	<if test="putawayTime != null">putaway_time=#{putawayTime},</if>
+	<if test="soldoutOpertor != null">soldout_opertor=#{soldoutOpertor},</if>
+	<if test="soldoutTime != null">soldout_time=#{soldoutTime},</if>
+	<if test="soldoutDesc != null">soldout_desc=#{soldoutDesc},</if>
+	<if test="status != null">status=#{status},</if>
+	<if test="restrictType != null">restrict_type=#{restrictType},</if>
+	<if test="restrictNum != null">restrict_num=#{restrictNum},</if>
+	<if test="restrictDesc != null">restrict_desc=#{restrictDesc},</if>
+	<if test="descript != null">descript=#{descript},</if>
+	<if test="stock != null">stock=#{stock},</if>
+	<if test="fetchInfo != null">fetch_info=#{fetchInfo},</if>
+	<if test="sizeSpec != null">size_spec=#{sizeSpec},</if>
+	<if test="source != null">source=#{source},</if>
+	<if test="tags != null">tags=#{tags},</if>
+	<if test="proDetail != null">pro_detail=#{proDetail},</if>
+	<if test="updateTime != null">update_time=#{updateTime},</if>
+	<if test="updateUser != null">update_user=#{updateUser},</if>
+	<if test="sendType != null">send_type=#{sendType},</if>
+	<if test="profit != null">profit=#{profit},</if>
+	<if test="soldCount != null">sold_count=#{soldCount},</if>
+	<if test="region != null">region=#{region},</if>
+	<if test="marketPrice != null">market_price=#{marketPrice}</if>
+</set>
+	where id=#{id}
+</update>
+<update id="addSoldCount" parameterType="hashmap">
+	update hepet_goods set sold_count = sold_count + #{soldNum}, update_time=now() where id = #{id}
+</update>
+
+<update id="deductStock" parameterType="hashmap">
+	update hepet_goods set stock = stock - #{num}, update_time=now() where id = #{id} and stock - #{num} &gt;= 0 
+</update>
+</mapper>
