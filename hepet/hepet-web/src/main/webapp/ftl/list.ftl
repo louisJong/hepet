@@ -117,7 +117,7 @@
 				str+= '<div>'
 				str+='<p class="pd-name">'+pd.goodsName+'</p>';
 				str+='<p class="pd-sub">'+pd.subDesc+'</p>';
-				str+='<p class="pd-price"><span class="small-font">￥</span>'+pd.price+' 元 <span class="pd-market">￥'+pd.stock+'元</span></p>';
+				str+='<p class="pd-price"><span class="small-font">￥</span>'+pd.price+' 元 <span class="pd-market">￥'+pd.marketPrice+'元</span></p>';
 				str+='</div>';
 				str+='</li>';
 				listDom.append($(str));
