@@ -20,6 +20,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.alibaba.fastjson.JSONObject;
 import com.project.hepet.admin.util.WebUtil;
 import com.project.hepet.common.utils.JsonUtils;
+import com.project.hepet.dao.HepetGoodsDao;
 import com.project.hepet.model.HepetGoods;
 import com.project.hepet.model.HepetGoodsCategory;
 import com.project.hepet.service.FileService;
@@ -35,6 +36,9 @@ public class GoodsController {
 	
 	@Autowired
 	private FileService fileService;
+	
+	@Autowired
+	private HepetGoodsDao goodsDao;
 	
 	@RequestMapping("/hepet/addGoods")
 	@ResponseBody
@@ -123,7 +127,9 @@ public class GoodsController {
 	@ResponseBody
 	String goodsDetail(HttpServletRequest request ,
 			@RequestParam(value="goodsId" , required=true) long goodsId){
-		return goodsService.goodsDetail(goodsId, true).toJSONString();
+		JSONObject result = JsonUtils.commonJsonReturn();
+		result.put("info", goodsDao.findById(goodsId));
+		return result.toJSONString();
 	}
 	
 	@RequestMapping("/hepet/goodsCategorys")
