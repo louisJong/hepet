@@ -1,22 +1,27 @@
 package com.project.hepet.service.impl;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.project.hepet.common.exception.BizException;
 import com.project.hepet.common.utils.HttpService;
 import com.project.hepet.common.utils.JsonUtils;
+import com.project.hepet.common.utils.MD5Util;
 import com.project.hepet.common.utils.UniqueNoUtils;
 import com.project.hepet.dao.HepetGoodsDao;
 import com.project.hepet.dao.HepetOrderDao;
@@ -40,9 +45,8 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private HepetReceiveAddressDao addressDao;
 	
-	private final static String getPaySmsCodeUrl = "http://maoyunhai.6655.la/boccfc/json/getPaySmsCode";
-	
-	private final static String payUrl = "http://maoyunhai.6655.la/boccfc/json/pay";
+	@Value("${hepet.boccfc.api.url}")
+	private String BOCCFC_API_URL;
 
 	@Override
 	public List<HepetOrder> orderList(long pageIndex, long limit, String status) {
@@ -58,6 +62,7 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.findDetail(orderId , customerId);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public JSONObject order(long goodsId , long num , long addId, String tel , Long customerId) {
 		Assert.isTrue(num>0);
@@ -134,58 +139,76 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public JSONObject getPaySmsCode(String tel, Long customerId) {
-		JSONObject param = new JSONObject();
-		param.put("apiPath", "apiGateWay/getPaySmsCode");
-		JSONObject requestJson = new JSONObject();
-		requestJson.put("customerId", customerId);
-		requestJson.put("mobileNo", tel);
-		param.put("requestJson", requestJson);
-		param.put("appMarket", "apple");
-		try {
-			String resp = new HttpService().doPostRequestEntity(getPaySmsCodeUrl, param.toJSONString());
-			JSONObject result = JsonUtils.commonJsonReturn();
-			JsonUtils.setBody(result, "resp", JSON.parse(resp));
-			return result;
-		} catch (IOException e) {
-			logger.error("getPaySmsCode error tel:"+tel+",customerId:"+customerId , e);
-			return JsonUtils.commonJsonReturn("9999" , "系统异常");
-		}
+	public JSONObject getPaySmsCode(String tel, Long customerId, String token , long orderId) {
+		HepetOrder order = orderDao.findDetail(orderId , customerId);
+		SortedMap<String, Object> param = new TreeMap<String, Object>();
+		param.put("transCode", "TS2001");
+		param.put("mobile", tel);
+		param.put("timeStamp", new Date().getTime()+"");
+		param.put("merchantId", "ZY00000001");
+		param.put("thirdOrderNo", order.getOrderNum());
+		param.put("transReqNo", UUID.randomUUID().toString().replace("-", ""));
+		param.put("amount", (order.getPrice().multiply(new BigDecimal(100))).longValue());
+		JSONObject sendResult =  doTrans(param, token);
+		return JsonUtils.commonJsonReturn(sendResult.getString("code"), sendResult.getString("msg"));
 	}
 
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public JSONObject pay(long orderId , String tel , Long customerId , String dynamicPwd , String desc) throws Exception {
+	public JSONObject pay(long orderId , String tel , Long customerId , String dynamicPwd , String desc, String token) throws Exception {
 		HepetOrder order = orderDao.findDetail(orderId , customerId);
 		if(order==null ||!"NOPAY".equals(order.getStatus())){
 			return JsonUtils.commonJsonReturn("0001" , "参数错误");
 		}
+		String tradeId = UUID.randomUUID().toString().replace("-", "");
 		HepetOrder updateOrder = new HepetOrder();
 		updateOrder.setId(orderId);
 		updateOrder.setStatus("NOSEND");
 		updateOrder.setUpdateTime(new Date());
 		int effectCount = orderDao.update(updateOrder);
 		Assert.isTrue(effectCount!=0, "订单已被支付");
-		JSONObject param = new JSONObject();
-		param.put("apiPath", "apiGateWay/pay");
-		JSONObject requestJson = new JSONObject();
-		requestJson.put("customerId", customerId);
-		requestJson.put("loanAcctNo", tel);
-		requestJson.put("amount", order.getPrice());
-		requestJson.put("instalPeriod", order.getPeriod());
-		requestJson.put("dynamicPwd", dynamicPwd);
-		requestJson.put("payDescription", desc);
-		param.put("requestJson", requestJson);
-		param.put("appMarket", "apple");
-		String resp = new HttpService().doPostRequestEntity(payUrl, param.toJSONString());
-		JSONObject result = JSONObject.parseObject(resp);
-		if(!"000000".equals(result.getString("returnCode"))){//支付失败
-			throw new BizException(result.getString("returnCode"), result.getString("errorMsg"));
-		}else{
-			result = JsonUtils.commonJsonReturn();
-			
+		SortedMap<String, Object> param = new TreeMap<String, Object>();
+		param.put("transCode", "TS2002");
+		param.put("mobile", tel);
+		param.put("timeStamp", new Date().getTime()+"");
+		param.put("merchantId", "ZY00000001");
+		param.put("thirdOrderNo", order.getOrderNum());
+		param.put("transReqNo", tradeId);
+		param.put("amount", (order.getPrice().multiply(new BigDecimal(100))).longValue());
+		param.put("instalPeriod", order.getPeriod());
+		param.put("dynamicPwd", dynamicPwd);
+//		param.put("comUseType", tradeId);
+		param.put("payDescription", desc);
+		JSONObject payResult = doTrans(param, token);
+		if(!"0000".equals(payResult.getString("code"))){
+			updateOrder.setStatus("NOPAY");
+			updateOrder.setUpdateTime(new Date());
+			orderDao.update(updateOrder);
 		}
-		return result;
+		return JsonUtils.commonJsonReturn(payResult.getString("code"), payResult.getString("msg"));
+	}
+	
+	private JSONObject doTrans(SortedMap<String, Object> param , String token){
+		JSONObject paramJson = new JSONObject(param);
+		paramJson.put("sign", MD5Util.MD5Encode(paramJson + token));
+		String resp = null;
+		try {
+			resp = new HttpService().doPostRequestEntity(BOCCFC_API_URL, paramJson.toJSONString());
+		} catch (IOException e) {
+			logger.error("doTrans erroe param:" + param , e );
+			return JsonUtils.commonJsonReturn("9999", "系统异常");
+		}
+		return JSONObject.parseObject(resp);
+	}
+
+	@Override
+	public JSONObject getAvailAmt(String tel, Long customerId, String token) {
+		SortedMap<String, Object> param = new TreeMap<String, Object>();
+		param.put("transCode", "TS1001");
+		param.put("mobile", tel);
+		param.put("timeStamp", new Date().getTime()+"");
+		param.put("merchantId", "ZY00000001");
+		return doTrans(param, token);
 	}
 
 }

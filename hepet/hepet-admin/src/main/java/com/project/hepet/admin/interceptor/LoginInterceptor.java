@@ -22,11 +22,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 //	    response.setHeader("Access-Control-Max-Age", "3600");
 //	    response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 //	    response.setHeader("Access-Control-Allow-Credentials","true"); //是否允许浏览器携带用户身份信息（cookie）
+		response.setHeader("Access-Control-Allow-Origin", "*"); 
 		if(EnvUtil.isDev()){
 			logger.info("request.getHerder('Origin') : " + request.getHeader("Origin"));
+			response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin")); 
 		}
 	    response.setHeader("Access-Control-Allow-Credentials", "true");
-	    response.setHeader("Access-Control-Allow-Origin", "*");
 	    response.setHeader("Access-Control-Max-Age", "3600");
     	response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
     	response.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-type,Authorization");

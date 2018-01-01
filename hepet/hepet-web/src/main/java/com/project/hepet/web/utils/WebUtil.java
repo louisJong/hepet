@@ -128,6 +128,14 @@ public class WebUtil {
 		return null;
 	}
     
+    public static String getToken(HttpServletRequest request){
+    	HttpSession session = getSession(request);
+		if(session != null && session.getAttribute("token") != null){
+			return (String) session.getAttribute("token");
+		}
+		return null;
+	}
+    
     public static String getReqIpAddr(HttpServletRequest request) {
 	        String ip = request.getHeader("X-Real-IP");
 	        if (StringUtils.isNotEmpty(ip) && !"unknown".equalsIgnoreCase(ip)) {

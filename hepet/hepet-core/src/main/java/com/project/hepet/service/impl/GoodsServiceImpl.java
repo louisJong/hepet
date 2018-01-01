@@ -51,7 +51,7 @@ public class GoodsServiceImpl implements GoodsService {
 		if(!fetchMoreDetail)
 			goods = goodsDao.findByIdSimple(goodsId);
 		else
-			goods = goodsDao.findByIdDetail(goodsId);
+			goods = goodsDao.findByIdAllDetail(goodsId);
 		JSONObject result = JsonUtils.commonJsonReturn();
 		if( goods==null || 0==goods.getStatus() ){//下架
 			return JsonUtils.commonJsonReturn("1001", "商品已下架");

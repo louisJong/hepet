@@ -31,14 +31,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			HandlerMethod hm = (HandlerMethod)handler;	
 			LoginDesc loginDesc = hm.getMethodAnnotation(LoginDesc.class);
 			if(loginDesc!=null && loginDesc.login() && !WebUtil.isLogin(request) && !EnvUtil.isDev()){
-				JSONObject isLoginJson = new JSONObject();
-				JSONObject head = new JSONObject();
-				head.put("code", "9900");
-				head.put("msg", "登陆过期");
-				isLoginJson.put("head", head);
 				response.setContentType("text/html; charset=utf-8");
 				PrintWriter writer = response.getWriter();
-				writer.write(isLoginJson.toJSONString());
+				writer.write("登陆超时，请从app重新登陆");
 				writer.flush();
 				return false;
 			}

@@ -1,6 +1,9 @@
 package com.project.hepet.web.controller;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.project.hepet.common.utils.JsonUtils;
 import com.project.hepet.common.utils.LoginDesc;
+import com.project.hepet.common.utils.UniqueNoUtils;
 import com.project.hepet.model.HepetGoods;
 import com.project.hepet.model.HepetReceiveAddress;
 import com.project.hepet.service.AddressService;
@@ -71,8 +75,10 @@ public class OrderController {
 		}
 		result = goodsService.goodsDetail(goodsId, false);
 		HepetGoods goods = (HepetGoods) JsonUtils.getBodyValue(result, "info");
+		JSONObject amtJson = orderService.getAvailAmt(WebUtil.getTel(request), WebUtil.getCustomerId(request), WebUtil.getToken(request));
 		modelMap.put("address", address);
 		modelMap.put("goodsId", goodsId);
+		modelMap.put("availAmt", amtJson.get("availAmt"));
 		modelMap.put("goods", goods);
 		modelMap.put("hasMore", addressService.haseMore(WebUtil.getTel(request), WebUtil.getCustomerId(request)));
 		return "order";
@@ -94,8 +100,8 @@ public class OrderController {
 	@LoginDesc
 	@RequestMapping("/hepet/order/getPaySmsCode")
 	@ResponseBody
-	String getPaySmsCode(HttpServletRequest request){
-		return orderService.getPaySmsCode(WebUtil.getTel(request), WebUtil.getCustomerId(request)).toJSONString();
+	String getPaySmsCode(HttpServletRequest request , HttpSession session , long orderId){
+		return orderService.getPaySmsCode(WebUtil.getTel(request), WebUtil.getCustomerId(request) , WebUtil.getToken(request) , orderId).toJSONString();
 	}
 	
 	@LoginDesc
@@ -103,7 +109,7 @@ public class OrderController {
 	@ResponseBody
 	String pay(HttpServletRequest request , @RequestParam(value="orderId" , required = true) long orderId ,
 			@RequestParam(value="dynamicPwd" , required = true) String dynamicPwd , String desc ) throws Exception{
-		return orderService.pay(orderId , WebUtil.getTel(request), WebUtil.getCustomerId(request), dynamicPwd, desc).toJSONString();
+		return orderService.pay(orderId , WebUtil.getTel(request), WebUtil.getCustomerId(request), dynamicPwd, desc , WebUtil.getToken(request)).toJSONString();
 	}
 	
 	@LoginDesc

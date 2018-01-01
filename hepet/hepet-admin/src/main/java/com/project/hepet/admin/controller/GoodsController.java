@@ -1,6 +1,7 @@
 package com.project.hepet.admin.controller;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,7 +72,7 @@ public class GoodsController {
 		goods.setCategoryCode(categoryCode);
 		goods.setDescript(descript);
 		goods.setFetchInfo(fetchInfo).setCreateUser(WebUtil.getUserName(request));
-		goods.setGoodsName(goodsName).setIsLogistics(isLogistics).setListImgUrl(listImgUrl)
+		goods.setGoodsName(goodsName).setIsLogistics(isLogistics).setListImgUrl(listImgUrl).setPricePerPeriod(new BigDecimal(price).divide(new BigDecimal(period), RoundingMode.CEILING))
 		.setPeriod(period).setPrice(new BigDecimal(price)).setProDetail(proDetail).setProfit(profit)
 		.setRestrictDesc(restrictDesc).setRestrictNum(restrictNum).setRestrictType(restrictType)
 		.setSendType(sendType).setSource(source).setTags(tags).setSubDesc(subDesc).setStock(stock).setRegion(region).setMarketPrice(new BigDecimal(marketPrice));
@@ -116,6 +117,13 @@ public class GoodsController {
 		JsonUtils.setBody(result, "goodsList" , goodsService.goodsList(pageIndex, limit, categoryCode , 0));
 		JsonUtils.setBody(result, "count" , goodsService.goodsCount(categoryCode));
 		return result.toJSONString();
+	}
+	
+	@RequestMapping("/hepet/goodsDetail")
+	@ResponseBody
+	String goodsDetail(HttpServletRequest request ,
+			@RequestParam(value="goodsId" , required=true) long goodsId){
+		return goodsService.goodsDetail(goodsId, true).toJSONString();
 	}
 	
 	@RequestMapping("/hepet/goodsCategorys")

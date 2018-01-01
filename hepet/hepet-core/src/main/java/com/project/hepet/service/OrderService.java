@@ -46,8 +46,10 @@ public interface OrderService {
 	
 	void addKdInfo(String kdNo ,String kdName);
 	
-	JSONObject getPaySmsCode(String tel , Long customerId);
+	JSONObject getPaySmsCode(String tel , Long customerId, String token, long orderId);
 	
-	JSONObject pay(long orderId , String tel , Long customerId , String dynamicPwd , String desc) throws Exception;
+	JSONObject getAvailAmt(String tel , Long customerId , String token);
+	
+	JSONObject pay(long orderId , String tel , Long customerId , String dynamicPwd , String desc, String token) throws Exception;
 
 }
