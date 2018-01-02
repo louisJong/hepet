@@ -56,7 +56,6 @@ function getListData(page) {
 function setListData(pageData) {
 	var dataList = pageData['listData'];
 	for(var i = 0; i < dataList.length; i++) {
-		if(i == dataList.length) break;
 		var od = dataList[i];	
 		var str = '<a class="list-item" href="${host.base}/hepet/order/result?orderId='+ od['id'] +'">';
 		str += '<div class="top">';
@@ -90,9 +89,9 @@ function getListDataFromNet(pageNum, pageSize, successCallback, errorCallback) {
         	listData: listData,
         	count: data.body.count
         }
-        for (var i = (pageNum-1)*pageSize; i < (pageNum-1)*pageSize + data.body.orderList.length; i++) {
-        	 _data.listData.push(data.body.orderList[i]);      		
-    		}		      
+		for (var i = 0; i < data.body.orderList.length; i++) {
+			_data.listData.push(data.body.orderList[i]);
+		}			      
       	//回调
       	successCallback(_data);
     	}else {

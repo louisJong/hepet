@@ -43,7 +43,7 @@
 				$(this).addClass("actived").siblings().removeClass("actived");
 				defaultId = $(this).data("id");
 			}else{
-				window.location.href = '${host.base}/hepet/addAddr';
+				window.location.href = '${host.base}/hepet/addAddr?id='+$(this).data("id");
 			}
 		})
 	})
