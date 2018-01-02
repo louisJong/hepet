@@ -39,8 +39,12 @@
 		}
 
 		$("body").on("click", '.address-item', function() {
-			$(this).addClass("actived").siblings().removeClass("actived");
-			defaultId = $(this).data("id");
+			if(from=="order"){
+				$(this).addClass("actived").siblings().removeClass("actived");
+				defaultId = $(this).data("id");
+			}else{
+				window.location.href = '${host.base}/hepet/addAddr';
+			}
 		})
 	})
 	function initAddressList(data) {

@@ -52,11 +52,11 @@
 <div class="mask" style="display: none;">
     <div class="mask-wrapper">
       <div class="mask-header">
-        <p>请输入短信验证码</p>
+        <p>请输入分期支付验证码</p>
         <div class="bar"></div>
       </div>
       <div class="mask-body">
-		<input type="text">
+		<input type="text" id="codeInput">
 		<div class="sendcode" id="sendCode">发送验证码</div>
         
       </div>
@@ -82,27 +82,31 @@
 		$(".mask").hide();
 	})
 	// 成功跳转
-	$(".maskOk").on("click", function() {
-		 var params = {
-      goodsId:#{goodsId},
-      smsCode:$("#sendCode").val()
-    }; 
-    if(address){
-    	params.addId = address.id;
-    }
-  	$.ajax({
-  		url:'${host.base}/hepet/order/submit',
-  		type: 'post',
-  		dataType: 'json',
-  		data: params,
-  		success: function(data) {
-  			if(data.head.code == '0000') {
-				alert('下单成功');
-  			} else {
-  				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
-  			}
-  		}
-  	})
+	$("#maskOk").on("click", function() {
+		if($("#codeInput").val().length == 0){
+			$.mask({type:'alert', alertTips: "验证码不能为空", alertTime: 2000});
+			return;
+		}
+		var params = {
+	      goodsId:#{goodsId},
+	      dynamicPwd:$("#codeInput").val()
+	    }; 
+	    if(address){
+	    	params.addId = address.id;
+	    }
+	  	$.ajax({
+	  		url:'${host.base}/hepet/order/pay',
+	  		type: 'post',
+	  		dataType: 'json',
+	  		data: params,
+	  		success: function(data) {
+	  			if(data.head.code == '0000') {
+					window.location.href = '${host.base}/hepet/order/result?orderId='+data.body.id;
+	  			} else {
+	  				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
+	  			}
+	  		}
+	  	})
 	})
 	// 发送验证码
 	$("#sendCode").on('click', onSendCode);
@@ -119,14 +123,14 @@
   //发送验证码的ajax事件
   function sendMesAjax(onSuss) {
   	$.ajax({
-  		url:'${host.base}/hepet/order/submit',
+  		url:'${host.base}/hepet/order/getPaySmsCode',
   		type: 'post',
   		dataType: 'json',
-  		data: params,
+  		data: {'goodsId' : #{goodsId}},
   		success: function(data) {
   			if(data.head.code == '0000') {
-				alert('下单成功');
-  			} else {
+				alert('短信发送成功');
+			} else {
   				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
   			}
   		}
