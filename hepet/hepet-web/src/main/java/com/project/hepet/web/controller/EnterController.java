@@ -1,8 +1,8 @@
 package com.project.hepet.web.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.project.hepet.common.utils.JsonUtils;
@@ -28,15 +27,13 @@ public class EnterController {
 	private GoodsService goodsService;
 	
 	@RequestMapping("/hepet/login")
-	@ResponseBody
-	JSONObject login(HttpSession session ,@RequestParam(value="customerId" , required=true) String customerId ,
-			@RequestParam(value="tel" , required=true) String tel ,@RequestParam(value="timeStamp" , required=true)  String timeStamp , @RequestParam(value="sign" , required=true)  String sign){
+	String login(ModelMap modelMap , HttpSession session ,@RequestParam(value="customerId" , required=true) String customerId ,
+			@RequestParam(value="tel" , required=true) String tel ,@RequestParam(value="timeStamp" , required=true)  String timeStamp ,@RequestParam(value="token" , required=true)  String token, @RequestParam(value="sign" , required=true)  String sign){
 		JSONObject result = new JSONObject();
-		if(!verifySign(customerId , tel , timeStamp , sign)){
-			result.put("code", -1);
-			result.put("msg", "签名错误");
+		if(!verifySign(customerId , tel , timeStamp , token , sign)){
+			modelMap.put("info", "登录错误-验签失败");
+			return "common_result";
 		}else{
-			String token = UUID.randomUUID().toString().replace("-", "");
 			session.setAttribute("customerId", customerId);
 			session.setAttribute("tel", tel);
 			session.setAttribute("timeStamp", timeStamp);
@@ -45,13 +42,13 @@ public class EnterController {
 			result.put("token", token);
 			result.put("msg", "登录成功");
 		}
-		return result;
+		return "forward:/hepet/index";
 	}
 	
-	private boolean verifySign(String customerId, String tel, String timeStamp,
+	private boolean verifySign(String customerId, String tel, String timeStamp, String token,
 			String sign) {
 		String salt = "HepetMall2018";
-		String sign_ = MD5Util.MD5Encode(customerId + tel + timeStamp + salt );
+		String sign_ = MD5Util.MD5Encode(customerId + tel + timeStamp + token + salt ).toLowerCase();
 		return sign_.equals(sign);
 	}
 
@@ -71,6 +68,8 @@ public class EnterController {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(MD5Util.MD5Encode("10182171484622017-12-31 14:57:23HepetMall2018"));
+		String time = new Date().getTime()+"";
+		System.out.println("time:"+time);
+		System.out.println(MD5Util.MD5Encode("1018217148462"+time+"123HepetMall2018"));
 	}
 }

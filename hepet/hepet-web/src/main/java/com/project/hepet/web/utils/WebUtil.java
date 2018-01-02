@@ -120,6 +120,14 @@ public class WebUtil {
 		return null;
 	}
     
+    public static String getOrderNum(HttpServletRequest request){
+		HttpSession session = getSession(request);
+		if(session != null && session.getAttribute("orderNum") != null){
+			return  session.getAttribute("orderNum")+"";
+		}
+		return null;
+	}
+    
     public static String getTel(HttpServletRequest request){
 		HttpSession session = getSession(request);
 		if(session != null && session.getAttribute("tel") != null){

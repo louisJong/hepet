@@ -24,13 +24,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
 	        response.setHeader("Access-Control-Allow-Credentials", "true");
 		}
-		if(request.getServletPath().contains("/app/enter") || request.getServletPath().contains("/logout")){
-			return true;
-		}
 		if(handler instanceof  HandlerMethod){
 			HandlerMethod hm = (HandlerMethod)handler;	
 			LoginDesc loginDesc = hm.getMethodAnnotation(LoginDesc.class);
-			if(loginDesc!=null && loginDesc.login() && !WebUtil.isLogin(request) && !EnvUtil.isDev()){
+			if(loginDesc!=null && loginDesc.login() && !WebUtil.isLogin(request)){
 				response.setContentType("text/html; charset=utf-8");
 				PrintWriter writer = response.getWriter();
 				writer.write("登陆超时，请从app重新登陆");

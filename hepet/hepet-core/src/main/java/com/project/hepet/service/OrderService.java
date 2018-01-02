@@ -42,14 +42,14 @@ public interface OrderService {
 	 */
 	HepetOrder orderDetail(long orderId, Long customerId);
 	
-	JSONObject order(long goodsId , long num , long addId, String tel , Long customerId);
+//	JSONObject order(long goodsId , long num , long addId, String tel , Long customerId);
 	
 	void addKdInfo(String kdNo ,String kdName);
 	
-	JSONObject getPaySmsCode(String tel , Long customerId, String token, long orderId);
+	JSONObject getPaySmsCode(String tel , Long customerId, String token, long goodsId, String orderNum);
 	
 	JSONObject getAvailAmt(String tel , Long customerId , String token);
 	
-	JSONObject pay(long orderId , String tel , Long customerId , String dynamicPwd , String desc, String token) throws Exception;
+	JSONObject pay(long orderId , String tel , Long customerId , String dynamicPwd , String desc, String token, Long addId, String orderNum) throws Exception;
 
 }

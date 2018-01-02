@@ -1,7 +1,5 @@
 package com.project.hepet.web.controller;
 
-import java.util.UUID;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -34,6 +32,7 @@ public class OrderController {
 	
 	@Autowired
 	private GoodsService goodsService;
+	
 	
 	@LoginDesc
 	@RequestMapping("/hepet/userOrderList")
@@ -84,38 +83,49 @@ public class OrderController {
 		return "order";
 	}
 	
-	@LoginDesc
-	@RequestMapping("/hepet/order/submit")
-	@ResponseBody
-	String submit(HttpServletRequest request ,
-			@RequestParam(value="goodsId" , required=true) long goodsId , 
-			@RequestParam(value="num" , required=false) Long num , 
-			@RequestParam(value="addId" , required=false) Long addId){
-		num = 1l;//FIXME 一期写死一个
-		addressService.setUnRecentUse(WebUtil.getTel(request), WebUtil.getCustomerId(request));
-		addressService.setRecentUse(addId , WebUtil.getTel(request), WebUtil.getCustomerId(request));
-		return orderService.order(goodsId , num , addId,WebUtil.getTel(request), WebUtil.getCustomerId(request)).toJSONString();
-	}
+//	@LoginDesc
+//	@RequestMapping("/hepet/order/submit")
+//	@ResponseBody
+//	String submit(HttpServletRequest request ,
+//			@RequestParam(value="goodsId" , required=true) long goodsId , 
+//			@RequestParam(value="num" , required=false) Long num , 
+//			@RequestParam(value="addId" , required=false) Long addId){
+//		num = 1l;//FIXME 一期写死一个
+//		addressService.setUnRecentUse(WebUtil.getTel(request), WebUtil.getCustomerId(request));
+//		addressService.setRecentUse(addId , WebUtil.getTel(request), WebUtil.getCustomerId(request));
+//		return orderService.order(goodsId , num , addId,WebUtil.getTel(request), WebUtil.getCustomerId(request)).toJSONString();
+//	}
 	
 	@LoginDesc
 	@RequestMapping("/hepet/order/getPaySmsCode")
 	@ResponseBody
-	String getPaySmsCode(HttpServletRequest request , HttpSession session , long orderId){
-		return orderService.getPaySmsCode(WebUtil.getTel(request), WebUtil.getCustomerId(request) , WebUtil.getToken(request) , orderId).toJSONString();
+	String getPaySmsCode(HttpServletRequest request , HttpSession session , @RequestParam(required=true) long goodsId ){
+		String orderNum = UniqueNoUtils.genOrderNum();
+		session.setAttribute("orderNum", orderNum);
+		return orderService.getPaySmsCode(WebUtil.getTel(request), WebUtil.getCustomerId(request) , WebUtil.getToken(request) , goodsId , orderNum).toJSONString();
 	}
 	
 	@LoginDesc
 	@RequestMapping("/hepet/order/pay")
 	@ResponseBody
-	String pay(HttpServletRequest request , @RequestParam(value="orderId" , required = true) long orderId ,
-			@RequestParam(value="dynamicPwd" , required = true) String dynamicPwd , String desc ) throws Exception{
-		return orderService.pay(orderId , WebUtil.getTel(request), WebUtil.getCustomerId(request), dynamicPwd, desc , WebUtil.getToken(request)).toJSONString();
+	String pay(HttpServletRequest request , @RequestParam(required = true) long goodsId ,
+			@RequestParam(required = true) String dynamicPwd ,
+			Long addId , 
+			String desc ) throws Exception{
+		return orderService.pay(goodsId ,  WebUtil.getTel(request), WebUtil.getCustomerId(request), dynamicPwd, desc , WebUtil.getToken(request) , addId , WebUtil.getOrderNum(request)).toJSONString();
 	}
 	
 	@LoginDesc
 	@RequestMapping("/hepet/myOrders")
 	String myOrders(){
 		return "orderlist";
+	}
+	
+	@LoginDesc
+	@RequestMapping("/hepet/order/result")
+	String orderConfirm(HttpServletRequest request , ModelMap modelMap , long orderId){
+		modelMap.put("orderInfo", orderService.orderDetail(orderId, WebUtil.getCustomerId(request)));
+		return "order_result";
 	}
 	
 }

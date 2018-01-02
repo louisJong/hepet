@@ -49,7 +49,7 @@
 	</where>
 </select>  
 <select id="findDetail" parameterType="hashmap"  resultMap="hepet_order">
-	select id,goods_id,create_time,brand_name,list_img_url,goods_name,sub_desc,num,price,period,address,contact,phone,kd_no,kd_name,status,pay_time,order_num from hepet_order 
+	select id,goods_id,create_time,brand_name,list_img_url,goods_name,sub_desc,num,price,period,address,contact,phone,kd_no,kd_name,status,pay_time,order_num,price_per_period from hepet_order 
 	where id = #{orderId} and customer_id=#{customerId}
 </select> 
 <select id="findOrders" parameterType="hashmap"  resultMap="hepet_order">

@@ -43,6 +43,7 @@ public class GoodsController {
 	@RequestMapping("/hepet/addGoods")
 	@ResponseBody
 	String addGoods(HttpServletRequest request,
+			Long id,
 			@RequestParam(value="categoryCode" , required=true) String categoryCode ,
 			@RequestParam(value="brandCode" , required=true) String brandCode ,
 			@RequestParam(value="brandName" , required=true) String brandName,
@@ -75,12 +76,17 @@ public class GoodsController {
 		goods.setBrandName(brandName);
 		goods.setCategoryCode(categoryCode);
 		goods.setDescript(descript);
+		goods.setId(id);
 		goods.setFetchInfo(fetchInfo).setCreateUser(WebUtil.getUserName(request));
 		goods.setGoodsName(goodsName).setIsLogistics(isLogistics).setListImgUrl(listImgUrl).setPricePerPeriod(new BigDecimal(price).divide(new BigDecimal(period), RoundingMode.CEILING))
 		.setPeriod(period).setPrice(new BigDecimal(price)).setProDetail(proDetail).setProfit(profit)
 		.setRestrictDesc(restrictDesc).setRestrictNum(restrictNum).setRestrictType(restrictType)
 		.setSendType(sendType).setSource(source).setTags(tags).setSubDesc(subDesc).setStock(stock).setRegion(region).setMarketPrice(new BigDecimal(marketPrice));
-		goodsService.addGoods(goods);
+		if(id == null){
+			goodsService.addGoods(goods);
+		}else{
+			goodsDao.update(goods);
+		}
 		JSONObject result = JsonUtils.commonJsonReturn();
 		return result.toJSONString();
 	}

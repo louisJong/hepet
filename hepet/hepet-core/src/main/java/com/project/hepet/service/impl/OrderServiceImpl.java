@@ -63,8 +63,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	@Override
-	public JSONObject order(long goodsId , long num , long addId, String tel , Long customerId) {
+	public JSONObject order(long goodsId , long num , long addId, String tel , Long customerId, String orderNum) {
 		Assert.isTrue(num>0);
 		HepetGoods goods = goodsDao.findById(goodsId);
 		Map<String , Object> AddrParam = new HashMap<String, Object>();
@@ -93,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setGoodsId(goodsId);
 		order.setGoodsName(goods.getGoodsName());
 		order.setNum(num);
-		order.setOrderNum(UniqueNoUtils.genOrderNum());
+		order.setOrderNum(orderNum);
 		order.setPeriod(goods.getPeriod());
 		order.setPhone(address.getPhone());
 		order.setPrice(goods.getPrice());
@@ -139,58 +138,63 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public JSONObject getPaySmsCode(String tel, Long customerId, String token , long orderId) {
-		HepetOrder order = orderDao.findDetail(orderId , customerId);
+	public JSONObject getPaySmsCode(String tel, Long customerId, String token , long goodsId , String orderNum) {
+		HepetGoods goods = goodsDao.findById(goodsId);
 		SortedMap<String, Object> param = new TreeMap<String, Object>();
 		param.put("transCode", "TS2001");
 		param.put("mobile", tel);
 		param.put("timeStamp", new Date().getTime()+"");
 		param.put("merchantId", "ZY00000001");
-		param.put("thirdOrderNo", order.getOrderNum());
+		param.put("thirdOrderNo", orderNum);
 		param.put("transReqNo", UUID.randomUUID().toString().replace("-", ""));
-		param.put("amount", (order.getPrice().multiply(new BigDecimal(100))).longValue());
+		param.put("amount", (goods.getPrice().multiply(new BigDecimal(100))).longValue());
 		JSONObject sendResult =  doTrans(param, token);
 		return JsonUtils.commonJsonReturn(sendResult.getString("code"), sendResult.getString("msg"));
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public JSONObject pay(long orderId , String tel , Long customerId , String dynamicPwd , String desc, String token) throws Exception {
-		HepetOrder order = orderDao.findDetail(orderId , customerId);
-		if(order==null ||!"NOPAY".equals(order.getStatus())){
-			return JsonUtils.commonJsonReturn("0001" , "参数错误");
+	public JSONObject pay(long goodsId , String tel , Long customerId , String dynamicPwd , String desc, String token , Long addId, String orderNum) throws Exception {
+		JSONObject orderResult = this.order(goodsId, 1, addId, tel, customerId , orderNum);
+		if(!JsonUtils.isSuccessCode(orderResult)){
+			return orderResult;
 		}
+		Date now = new Date();
+		long orderId = orderResult.getJSONObject("body").getLongValue("id");
 		String tradeId = UUID.randomUUID().toString().replace("-", "");
 		HepetOrder updateOrder = new HepetOrder();
 		updateOrder.setId(orderId);
 		updateOrder.setStatus("NOSEND");
-		updateOrder.setUpdateTime(new Date());
-		int effectCount = orderDao.update(updateOrder);
-		Assert.isTrue(effectCount!=0, "订单已被支付");
+		updateOrder.setUpdateTime(now);
+		updateOrder.setOrderNum(orderNum);
+		updateOrder.setPayNum(tradeId);
+		HepetGoods goods = goodsDao.findById(goodsId);
 		SortedMap<String, Object> param = new TreeMap<String, Object>();
 		param.put("transCode", "TS2002");
 		param.put("mobile", tel);
 		param.put("timeStamp", new Date().getTime()+"");
 		param.put("merchantId", "ZY00000001");
-		param.put("thirdOrderNo", order.getOrderNum());
+		param.put("thirdOrderNo", orderNum);
 		param.put("transReqNo", tradeId);
-		param.put("amount", (order.getPrice().multiply(new BigDecimal(100))).longValue());
-		param.put("instalPeriod", order.getPeriod());
+		param.put("amount", (goods.getPrice().multiply(new BigDecimal(100))).longValue());
+		param.put("instalPeriod", goods.getPeriod());
 		param.put("dynamicPwd", dynamicPwd);
 //		param.put("comUseType", tradeId);
 		param.put("payDescription", desc);
 		JSONObject payResult = doTrans(param, token);
+		updateOrder.setPayCode(payResult.getString("code"));
+		updateOrder.setPayInfo(payResult.getString("msg"));
+		updateOrder.setPayTime(now);
 		if(!"0000".equals(payResult.getString("code"))){
-			updateOrder.setStatus("NOPAY");
-			updateOrder.setUpdateTime(new Date());
-			orderDao.update(updateOrder);
+			updateOrder.setStatus(null);
 		}
+		int effectCount = orderDao.update(updateOrder);
 		return JsonUtils.commonJsonReturn(payResult.getString("code"), payResult.getString("msg"));
 	}
 	
 	private JSONObject doTrans(SortedMap<String, Object> param , String token){
 		JSONObject paramJson = new JSONObject(param);
-		paramJson.put("sign", MD5Util.MD5Encode(paramJson + token));
+		paramJson.put("sign", MD5Util.MD5Encode(paramJson + token).toUpperCase());
 		String resp = null;
 		try {
 			resp = new HttpService().doPostRequestEntity(BOCCFC_API_URL, paramJson.toJSONString());

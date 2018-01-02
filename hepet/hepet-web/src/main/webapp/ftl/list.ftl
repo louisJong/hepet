@@ -145,8 +145,7 @@
 	          }
 	          categorys.map(function(item, index) {
 	          	if(curNavIndex == categorys[index]['code']){
-								for (var i = (pageNum-1)*pageSize; i < pageNum*pageSize; i++) {
-	            		if(i== data.body.goodsList.length) break;
+								for (var i = 0; i < data.body.goodsList.length; i++) {
 	            		_data.listData.push(data.body.goodsList[i]);
 	          		}							
 		          }

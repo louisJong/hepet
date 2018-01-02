@@ -59,6 +59,9 @@
 		<if test="categoryCode!=null and categoryCode!=''">
 		   category_code = #{categoryCode}
 		</if>
+		<if test="fetchSj == 1">
+  			and status = 1
+  		</if>
 	</where>
 </select>  
 <select id="findGoods" parameterType="hashmap"  resultMap="hepet_goods">
@@ -71,7 +74,7 @@
   			and status = 1
   		</if>
   	</where>
-  	order by sold_count desc
+  	order by sold_count ,id desc
   	limit #{startRow} , #{limit}
 </select>
 <insert id="insert"  parameterType="com.project.hepet.model.HepetGoods"  useGeneratedKeys="true" keyProperty="id">
