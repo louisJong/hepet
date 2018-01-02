@@ -56,7 +56,7 @@
 			} else {
 				actived = index == 0 ? 'actived' : '';
 			}
-      	str += '<div onClick="window.location.href=\'${host.base}/hepet/addAddr?id='+ item['id']+ '\'" class="address-item '+ actived +'" data-id="'+ item['id'] +'">';
+      	str += '<div class="address-item '+ actived +'" data-id="'+ item['id'] +'">';
 	    str += '<div class="left">';
 	    str += '<p class="add-name">'+ item['contact'] +' '+ item['phone'] +'</p>';
 	    str += '<div class="add-add">';

@@ -58,7 +58,7 @@ function setListData(pageData) {
 	for(var i = 0; i < dataList.length; i++) {
 		if(i == dataList.length) break;
 		var od = dataList[i];	
-		var str = '<a class="list-item" href="/html/order_result.html?id='+ od['id'] +'">';
+		var str = '<a class="list-item" href="${host.base}/hepet/order/result?orderId='+ od['id'] +'">';
 		str += '<div class="top">';
 		str += '<div class="left">订单号:'+ (od['orderNum'] ? od['orderNum']: '') +'</div>';
 		str += '<div class="right font-base">'+ od['status'] ? statusMap[od['status']] : '完成' +'</div>';
