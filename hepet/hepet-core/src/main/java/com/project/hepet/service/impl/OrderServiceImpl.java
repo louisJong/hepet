@@ -48,6 +48,8 @@ public class OrderServiceImpl implements OrderService {
 	@Value("${hepet.boccfc.api.url}")
 	private String BOCCFC_API_URL;
 
+	private static String MERCHANR_ID = "ZY00000002";
+	
 	@Override
 	public List<HepetOrder> orderList(long pageIndex, long limit, String status) {
 		Map<String , Object> param = new HashMap<String, Object>();
@@ -144,7 +146,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("transCode", "TS2001");
 		param.put("mobile", tel);
 		param.put("timeStamp", new Date().getTime()+"");
-		param.put("merchantId", "ZY00000001");
+		param.put("merchantId", MERCHANR_ID);
 		param.put("thirdOrderNo", orderNum);
 		param.put("transReqNo", UUID.randomUUID().toString().replace("-", ""));
 		param.put("amount", (goods.getPrice().multiply(new BigDecimal(100))).longValue());
@@ -173,7 +175,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("transCode", "TS2002");
 		param.put("mobile", tel);
 		param.put("timeStamp", new Date().getTime()+"");
-		param.put("merchantId", "ZY00000001");
+		param.put("merchantId", MERCHANR_ID);
 		param.put("thirdOrderNo", orderNum);
 		param.put("transReqNo", tradeId);
 		param.put("amount", (goods.getPrice().multiply(new BigDecimal(100))).longValue());
@@ -211,7 +213,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("transCode", "TS1001");
 		param.put("mobile", tel);
 		param.put("timeStamp", new Date().getTime()+"");
-		param.put("merchantId", "ZY00000001");
+		param.put("merchantId", MERCHANR_ID);
 		return doTrans(param, token);
 	}
 
