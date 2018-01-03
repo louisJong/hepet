@@ -125,7 +125,7 @@ public class GoodsController {
 			@RequestParam(value="categoryCode" , required=false) String categoryCode){
 		JSONObject result = JsonUtils.commonJsonReturn();
 		JsonUtils.setBody(result, "goodsList" , goodsService.goodsList(pageIndex, limit, categoryCode , 0));
-		JsonUtils.setBody(result, "count" , goodsService.goodsCount(categoryCode));
+		JsonUtils.setBody(result, "count" , goodsService.goodsCount(categoryCode, 0));
 		return result.toJSONString();
 	}
 	

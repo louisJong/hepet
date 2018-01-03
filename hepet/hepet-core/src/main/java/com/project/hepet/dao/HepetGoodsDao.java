@@ -1,5 +1,4 @@
 package com.project.hepet.dao ;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,9 +33,7 @@ public class HepetGoodsDao extends GenericDAOImpl<HepetGoods> {
 		return this.getSqlSession().update(this.getNameSpace()+".addSoldCount", param);
 	}
 
-	public long findGoodsCount(String categoryCode) {
-		Map<String , Object> param = new HashMap<String, Object>();
-		param.put("categoryCode", categoryCode);
+	public long findGoodsCount(Map<String, Object> param) {
 		return this.getSqlSession().selectOne(this.getNameSpace()+".findGoodsCount", param);
 	}
 

@@ -23,7 +23,7 @@ public interface GoodsService {
 	  * 商品总个数
 	 * @return
 	 */
-	long goodsCount(String categoryCode);
+	long goodsCount(String categoryCode, int fetchSj);
 	 
 	/**
 	 * 商品详情

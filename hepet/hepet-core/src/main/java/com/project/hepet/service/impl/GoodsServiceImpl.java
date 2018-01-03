@@ -108,8 +108,11 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public long goodsCount(String categoryCode) {
-		return goodsDao.findGoodsCount(categoryCode);
+	public long goodsCount(String categoryCode , int fetchSj) {
+		Map<String , Object> param = new HashMap<String, Object>();
+		param.put("categoryCode", categoryCode);
+		param.put("fetchSj", fetchSj);
+		return goodsDao.findGoodsCount(param);
 	}
 
 	@Override
