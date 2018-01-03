@@ -181,8 +181,9 @@ public class OrderServiceImpl implements OrderService {
 		param.put("amount", (goods.getPrice().multiply(new BigDecimal(100))).longValue());
 		param.put("instalPeriod", goods.getPeriod());
 		param.put("dynamicPwd", dynamicPwd);
-//		param.put("comUseType", tradeId);
+		param.put("comUseType", "9");
 		param.put("payDescription", desc);
+		param.put("merchantCode", "C00131990010001");
 		JSONObject payResult = doTrans(param, token);
 		updateOrder.setPayCode(payResult.getString("code"));
 		updateOrder.setPayInfo(payResult.getString("msg"));
@@ -191,7 +192,9 @@ public class OrderServiceImpl implements OrderService {
 			updateOrder.setStatus(null);
 		}
 		int effectCount = orderDao.update(updateOrder);
-		return JsonUtils.commonJsonReturn(payResult.getString("code"), payResult.getString("msg"));
+		orderResult.getJSONObject("head").put("code", payResult.getString("code"));
+		orderResult.getJSONObject("head").put("msg", payResult.getString("msg"));
+		return orderResult;
 	}
 	
 	private JSONObject doTrans(SortedMap<String, Object> param , String token){
