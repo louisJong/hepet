@@ -109,10 +109,18 @@
 	<if test="goodsId != null">goods_id=#{goodsId},</if>
 	<if test="listImgUrl != null">list_img_url=#{listImgUrl}</if>
 </set>
-	where id=#{id}
-	<if test="status!=null">
-		AND status &lt;&gt; #{status}
-	</if>
+	<where>
+		<if test="id!=null">
+			id=#{id}
+		</if>
+		<if test="status!=null">
+			AND status &lt;&gt; #{status}
+		</if>
+		<if test="orderNum!=null">
+			AND order_num=#{orderNum}
+		</if>
+	</where> 
+	
 </update>
 <update id="addKdInfo" parameterType="hashmap">
     update hepet_order 

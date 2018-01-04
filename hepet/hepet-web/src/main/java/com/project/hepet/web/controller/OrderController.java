@@ -1,8 +1,12 @@
 package com.project.hepet.web.controller;
 
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.project.hepet.common.utils.CommonUtils;
 import com.project.hepet.common.utils.JsonUtils;
 import com.project.hepet.common.utils.LoginDesc;
 import com.project.hepet.common.utils.UniqueNoUtils;
@@ -74,7 +79,12 @@ public class OrderController {
 		}
 		result = goodsService.goodsDetail(goodsId, false);
 		HepetGoods goods = (HepetGoods) JsonUtils.getBodyValue(result, "info");
-		JSONObject amtJson = orderService.getAvailAmt(WebUtil.getTel(request), WebUtil.getCustomerId(request), WebUtil.getToken(request));
+		JSONObject amtJson;
+		try {
+			amtJson = orderService.getAvailAmt(WebUtil.getTel(request), WebUtil.getCustomerId(request), WebUtil.getToken(request));
+		} catch (HttpException e) {
+			amtJson = new JSONObject();
+		}
 		modelMap.put("address", address);
 		modelMap.put("goodsId", goodsId);
 		modelMap.put("availAmt", amtJson.get("availAmt"));
@@ -102,7 +112,11 @@ public class OrderController {
 	String getPaySmsCode(HttpServletRequest request , HttpSession session , @RequestParam(required=true) long goodsId ){
 		String orderNum = UniqueNoUtils.genOrderNum();
 		session.setAttribute("orderNum", orderNum);
-		return orderService.getPaySmsCode(WebUtil.getTel(request), WebUtil.getCustomerId(request) , WebUtil.getToken(request) , goodsId , orderNum).toJSONString();
+		try {
+			return orderService.getPaySmsCode(WebUtil.getTel(request), WebUtil.getCustomerId(request) , WebUtil.getToken(request) , goodsId , orderNum).toJSONString();
+		} catch (HttpException e) {
+			return JsonUtils.commonJsonReturn("9999", "支付异常").toJSONString();
+		}
 	}
 	
 	@LoginDesc
@@ -112,7 +126,48 @@ public class OrderController {
 			@RequestParam(required = true) String dynamicPwd ,
 			Long addId , 
 			String desc ) throws Exception{
-		return orderService.pay(goodsId ,  WebUtil.getTel(request), WebUtil.getCustomerId(request), dynamicPwd, desc , WebUtil.getToken(request) , addId , WebUtil.getOrderNum(request)).toJSONString();
+		final String tradeId = UUID.randomUUID().toString().replace("-", "");
+		final String orderNum =  WebUtil.getOrderNum(request);
+		final String tel = WebUtil.getTel(request);
+		try{
+			JSONObject orderResult = orderService.pay(goodsId ,  tel, WebUtil.getCustomerId(request), dynamicPwd, desc , WebUtil.getToken(request) , addId , orderNum , tradeId);
+			return orderResult.toJSONString();
+		}catch(Exception e){
+			String msg = "支付异常，请重试";
+			if(e instanceof HttpException){
+				orderService.confirmAgain(null , orderNum , tradeId , tel , 1);
+				msg = "支付异常,请稍后查看订单状态";
+			}
+			return JsonUtils.commonJsonReturn("9999", msg).toJSONString();
+		}
+		
+	}
+	
+	@LoginDesc
+	@RequestMapping("/hepet/order/payAgain")
+	@ResponseBody
+	String payAgain(HttpServletRequest request , @RequestParam(required = true) final long orderId ,
+			@RequestParam(required = true) String dynamicPwd) throws Exception{
+		final String tradeId = UUID.randomUUID().toString().replace("-", "");
+		final String tel = WebUtil.getTel(request);
+		try{
+			JSONObject orderResult = orderService.pay(orderId ,  tel, WebUtil.getCustomerId(request), dynamicPwd, WebUtil.getToken(request) , tradeId);
+			return orderResult.toJSONString();
+		}catch(Exception e){
+			String msg = "支付异常，请重试";
+			if(e instanceof HttpException){
+				orderService.confirmAgain(orderId , null , tradeId , tel , 1);
+				msg = "支付异常,请稍后查看订单状态";
+			}
+			return JsonUtils.commonJsonReturn("9999", msg).toJSONString();
+		}
+	}
+	
+	@LoginDesc
+	@RequestMapping("/hepet/order/kd_query")
+	@ResponseBody
+	String kd_query(HttpServletRequest request , @RequestParam(required = true) final long orderId) throws Exception{
+			return orderService.queryKdInfo(orderId).toJSONString();
 	}
 	
 	@LoginDesc

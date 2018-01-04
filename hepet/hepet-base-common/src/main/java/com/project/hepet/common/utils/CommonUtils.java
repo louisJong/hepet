@@ -3,8 +3,8 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,9 +24,9 @@ public class CommonUtils {
 	public static final  DecimalFormat delformat = new DecimalFormat("###,##0.00");
 	
 	/**
-	 * 爬虫线程池
+	 * 线程池
 	 * */
-	public static final ExecutorService crawlerThreadPool = Executors.newFixedThreadPool(20);
+	public static final ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(5);
 	
 	/**
 	 * 手机卡格式校验
