@@ -63,7 +63,7 @@ function setListData(pageData) {
 		str += '<div class="right font-base">'+ od['status'] ? statusMap[od['status']] : '完成' +'</div>';
 		str += '</div>';
 		str += '<div class="center">';
-		str += '<div class="left"></div>';
+		str += '<div><img class="left" src="'+od.listImgUrl+'"/></div>';
 		str += '<div class="right">';
 		str += '<p>'+ (od['brandName'] || '') + od['goodsName']  +'</p>';
 		od['subDesc'] ? str += '<p class="small-tips">'+ od['subDesc'] +'</p>' : '';
