@@ -1,11 +1,17 @@
 package com.project.hepet.admin.job;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import com.project.hepet.service.OrderService;
+
 public class HepetCreditJob {
-	
-//	 @Scheduled(fixedRate = 3*60* 1000)  
-//		public void sysReachMemberInfo(){
-//		 
-//	 }
+
+	@Autowired
+	private OrderService orderService;
+
+	@Scheduled(fixedRate = 3 * 60 * 1000)
+	public void order() {
+		
+	}
 }

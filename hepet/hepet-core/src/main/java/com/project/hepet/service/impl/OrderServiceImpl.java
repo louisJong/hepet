@@ -171,7 +171,6 @@ public class OrderServiceImpl implements OrderService {
 		updateOrder.setId(orderId);
 		updateOrder.setStatus("NOSEND");
 		updateOrder.setUpdateTime(now);
-		updateOrder.setOrderNum(orderNum);
 		HepetGoods goods = goodsDao.findById(goodsId);
 		SortedMap<String, Object> param = new TreeMap<String, Object>();
 		param.put("transCode", "TS2002");

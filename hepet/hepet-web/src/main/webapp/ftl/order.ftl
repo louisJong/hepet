@@ -129,7 +129,7 @@
   		data: {'goodsId' : #{goodsId}},
   		success: function(data) {
   			if(data.head.code == '0000') {
-				alert('短信发送成功');
+				onSuss(data)
 			} else {
   				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
   			}
