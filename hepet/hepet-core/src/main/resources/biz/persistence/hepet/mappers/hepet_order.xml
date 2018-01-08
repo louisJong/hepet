@@ -138,6 +138,6 @@
 	status = 'NORECEIVE'
 	, update_time=now()
 	</set> 
-	where status = 'NOSEND'
+	where status = 'NOSEND' AND id=#{id}
 </update>
 </mapper>

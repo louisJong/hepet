@@ -39,10 +39,11 @@ public class OrderController {
 	@RequestMapping(value="/admin/order/addKdInfo")
 	@ResponseBody
 	public String addKdInfo(HttpServletRequest request , HttpServletResponse response,
-			@RequestParam(value="kdNo" , required = true) String kdNo,
-			@RequestParam(value="kdName" , required = true) String kdName){
+			@RequestParam( required = true) String kdNo,
+			@RequestParam( required = true) String kdName,
+			@RequestParam( required = true) long orderId){
 		try{
-			orderService.addKdInfo(kdNo, kdName);
+			orderService.addKdInfo(kdNo, kdName , orderId);
 	    	return JsonUtils.commonJsonReturn().toJSONString();
     	}catch(Exception e){
 			logger.error("addKdInfo error " ,e);

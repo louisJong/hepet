@@ -67,6 +67,7 @@
     </div>
   </div>
 <script type="text/javascript">
+	var hasClickSend = false;
     var address = '';
 	<#if address??>
 	address = ${address};	
@@ -83,6 +84,10 @@
 	})
 	// 成功跳转
 	$("#maskOk").on("click", function() {
+		if(!hasClickSend){
+			$.mask({type:'alert', alertTips: "请先发送验证码", alertTime: 2000});
+			return;
+		}
 		if($("#codeInput").val().length == 0){
 			$.mask({type:'alert', alertTips: "验证码不能为空", alertTime: 2000});
 			return;
@@ -137,8 +142,8 @@
   	})
   }
 	//最后成功的事件
-  function onSuss() {
-
+  function onSuss(data) {
+	hasClickSend = true;
   }
   //发送验证码倒计时事件
   function sendMessage() {

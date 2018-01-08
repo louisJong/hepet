@@ -44,7 +44,7 @@ public interface OrderService {
 	 */
 	HepetOrder orderDetail(long orderId, Long customerId);
 	
-	void addKdInfo(String kdNo ,String kdName);
+	void addKdInfo(String kdNo ,String kdName, long orderId);
 	
 	JSONObject getPaySmsCode(String tel , Long customerId, String token, long goodsId, String orderNum) throws HttpException;
 	

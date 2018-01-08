@@ -135,9 +135,10 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void addKdInfo(String kdNo, String kdName) {
+	public void addKdInfo(String kdNo, String kdName, long orderId) {
 		Map<String , Object> param = new HashMap<String, Object>();
 		param.put("kdNo", kdNo);
+		param.put("id", orderId);
 		param.put("kdName", kdName);
 		orderDao.addKdInfo(param);
 	}
