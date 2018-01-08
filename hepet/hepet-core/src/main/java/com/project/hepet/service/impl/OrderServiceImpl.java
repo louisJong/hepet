@@ -11,7 +11,7 @@ import java.util.TreeMap;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.http.HttpException;
+import org.apache.commons.httpclient.HttpException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +32,6 @@ import com.project.hepet.model.HepetGoods;
 import com.project.hepet.model.HepetOrder;
 import com.project.hepet.model.HepetReceiveAddress;
 import com.project.hepet.service.OrderService;
-import com.project.hepet.utils.EnvUtil;
 
 @Service
 public class OrderServiceImpl implements OrderService {

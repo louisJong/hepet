@@ -2,7 +2,7 @@ package com.project.hepet.service;
 
 import java.util.List;
 
-import org.apache.http.HttpException;
+import org.apache.commons.httpclient.HttpException;
 
 import com.alibaba.fastjson.JSONObject;
 import com.project.hepet.model.HepetOrder;
