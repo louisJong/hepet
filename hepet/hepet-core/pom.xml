@@ -76,21 +76,6 @@
    			</build>
 		</profile>
 		<profile>
-			<id>sit</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<build>
-				<filters>
-					<filter>src/main/conf/sit/hepet-core.properties</filter>
-					<filter>src/main/conf/sit/log4j.properties</filter>
-					<filter>src/main/conf/sit/redis.properties</filter>
-	   			</filters>
-   			</build>
-			<properties>
-			</properties>
-		</profile>		
-		<profile>
 			<id>pro</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>

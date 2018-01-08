@@ -11,7 +11,9 @@ import java.util.TreeMap;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.project.hepet.common.utils.CommonUtils;
 import com.project.hepet.common.utils.HttpService;
@@ -50,6 +53,12 @@ public class OrderServiceImpl implements OrderService {
 	@Value("${hepet.boccfc.api.url}")
 	private String BOCCFC_API_URL;
 
+	@Value("${kuaidi_query_url}")
+	private String KUAIDI_QUERY_URL;
+	
+	@Value("${kuaidi_query_appcode}")
+	private String KUAIDI_QUERY_APPCODE;
+	
 	private static String MERCHANR_ID = "ZY00000002";
 	
 	@Override
@@ -257,6 +266,20 @@ public class OrderServiceImpl implements OrderService {
 		return JSONObject.parseObject(resp);
 	}
 
+	private JSONObject doKuaiDiQuery(String number) throws HttpException{
+		String resp = null;
+		try {
+			Header[] headers = new  Header[1];
+			Header header = new Header("Authorization", "APPCODE " + KUAIDI_QUERY_APPCODE);
+			headers[0] = header;
+			resp = new HttpService().doGet(KUAIDI_QUERY_URL+"?number="+number+"&type=auto", headers);
+		} catch (IOException e) {
+			logger.error("doKuaiDiQuery error number:" + number , e );
+			throw new HttpException("调用异常");
+		}
+		return JSONObject.parseObject(resp);
+	}
+	
 	@Override
 	public JSONObject getAvailAmt(String tel, Long customerId, String token) throws HttpException {
 		SortedMap<String, Object> param = new TreeMap<String, Object>();
@@ -329,10 +352,45 @@ public class OrderServiceImpl implements OrderService {
 		}, 30*times - 25 , TimeUnit.SECONDS);//第一次5秒去确认,第二次35秒去确认，第三次65秒，95 。。125
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
-	public JSONObject queryKdInfo(long orderId) {
-		// TODO Auto-generated method stub
-		return null;
+	public JSONObject queryKdInfo(long orderId , long customerId) {
+		JSONObject result = JsonUtils.commonJsonReturn();
+		HepetOrder order = orderDao.findDetail(orderId, customerId);
+		if(!canQueryKd(order))
+			return JsonUtils.commonJsonReturn("0001", "无可查询信息");
+		Date now = new Date();
+		if( (order.getIsGetGoods()!=null && 1 == order.getIsGetGoods()) 
+				|| (order.getKdLastQueryTime()!=null && order.getKdLastQueryTime().after(DateUtils.addHours(now, -4))) ){//已收件||间隔4小时之内
+			result.getJSONObject("body").put("kdInfo", JSON.parse(order.getKdStateInfo()));
+			return result;
+		}
+		try {
+			JSONObject kdInfo = doKuaiDiQuery(order.getKdNo());
+			result.getJSONObject("body").put("kdInfo", kdInfo);
+			HepetOrder orderUpdate = new HepetOrder();
+			orderUpdate.setId(orderId);
+			orderUpdate.setKdLastQueryTime(now);
+			Integer hasQueryTimes = order.getKdQueryTimes(); 
+			orderUpdate.setKdQueryTimes(hasQueryTimes==null? 1 : (hasQueryTimes+1));
+			orderUpdate.setKdStateInfo(kdInfo.toJSONString());
+			int status = kdInfo.getIntValue("status");
+			if(status==0){//查询到有数据
+				Integer deliverystatus = kdInfo.getJSONObject("result").getInteger("deliverystatus");
+				if(deliverystatus!=null && deliverystatus.intValue() == 3)//已收件
+					orderUpdate.setIsGetGoods(1);
+			}
+			orderUpdate.setUpdateTime(now);
+			orderDao.update(orderUpdate);
+		} catch (HttpException e) {
+			return JsonUtils.commonJsonReturn("0001", "无可查询信息");
+		}
+		return result;
 	}
 
+	private boolean canQueryKd(HepetOrder order) {
+		 /** 商品状态NOPAY待付款NOSEND待发货NORECEIVE待收货CLOSED已关闭REFUND已退货SUCCESS完成 */
+		return order!=null && ("NORECEIVE".equals(order.getStatus()) || "SUCCESS".equals(order.getStatus()) || "REFUND".equals(order.getStatus()));
+	}
+	
 }

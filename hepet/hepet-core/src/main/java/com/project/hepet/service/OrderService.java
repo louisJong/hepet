@@ -56,6 +56,6 @@ public interface OrderService {
 
 	void confirmAgain(final Long orderId,final String orderNum , final String tradeId, final String tel , final int times);
 
-	JSONObject queryKdInfo(long orderId);
+	JSONObject queryKdInfo(long orderId , long customerId);
 
 }

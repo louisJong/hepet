@@ -88,7 +88,7 @@
 	</div> 
 <#elseif orderInfo.status=='NORECEIVE' || orderInfo.status=='SUCCESS'>
 	<div class="btn-box">
-		<div class="normal-btn" id="look">查看物流</div>
+		<div class="normal-btn" id="look" onclick="window.location.href='${host.base}/hepet/order/kd_query?orderId=${orderInfo.id}'">查看物流</div>
 	</div> 
 </#if>
 <script>

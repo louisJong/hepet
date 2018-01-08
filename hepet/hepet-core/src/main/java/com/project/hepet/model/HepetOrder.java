@@ -58,6 +58,14 @@ public class HepetOrder  extends BaseObject {
   private  Long  goodsId;
   /** 列表图片Url */
   private  String  listImgUrl;
+  /** 最新物流状态信息 */
+  private  String  kdStateInfo;
+  /** 是否已收件 */
+  private  Integer  isGetGoods;
+  /** 上次查询时间 */
+  private  Date  kdLastQueryTime;
+  /** 已查询次数 */
+  private  Integer  kdQueryTimes;
   /** 类目代码 */
 	public String getCategoryCode(){
 		return this.categoryCode;
@@ -290,6 +298,42 @@ public class HepetOrder  extends BaseObject {
   /** 列表图片Url */
 	public HepetOrder setListImgUrl(String listImgUrl){
 		 this.listImgUrl=listImgUrl;
+		 return this;
+	}
+  /** 最新物流状态信息 */
+	public String getKdStateInfo(){
+		return this.kdStateInfo;
+	}
+  /** 最新物流状态信息 */
+	public HepetOrder setKdStateInfo(String kdStateInfo){
+		 this.kdStateInfo=kdStateInfo;
+		 return this;
+	}
+  /** 是否已收件 */
+	public Integer getIsGetGoods(){
+		return this.isGetGoods;
+	}
+  /** 是否已收件 */
+	public HepetOrder setIsGetGoods(Integer isGetGoods){
+		 this.isGetGoods=isGetGoods;
+		 return this;
+	}
+  /** 上次查询时间 */
+	public Date getKdLastQueryTime(){
+		return this.kdLastQueryTime;
+	}
+  /** 上次查询时间 */
+	public HepetOrder setKdLastQueryTime(Date kdLastQueryTime){
+		 this.kdLastQueryTime=kdLastQueryTime;
+		 return this;
+	}
+  /** 已查询次数 */
+	public Integer getKdQueryTimes(){
+		return this.kdQueryTimes;
+	}
+  /** 已查询次数 */
+	public HepetOrder setKdQueryTimes(Integer kdQueryTimes){
+		 this.kdQueryTimes=kdQueryTimes;
 		 return this;
 	}
 	public String toString(){

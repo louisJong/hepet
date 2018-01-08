@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.project.hepet.common.utils.JsonUtils;
 import com.project.hepet.common.utils.LoginDesc;
@@ -163,9 +164,14 @@ public class OrderController {
 	
 	@LoginDesc
 	@RequestMapping("/hepet/order/kd_query")
-	@ResponseBody
-	String kd_query(HttpServletRequest request , @RequestParam(required = true) final long orderId) throws Exception{
-			return orderService.queryKdInfo(orderId).toJSONString();
+	String kd_query(ModelMap model , HttpServletRequest request , @RequestParam(required = true) long orderId) throws Exception{
+		JSONObject result = orderService.queryKdInfo(orderId ,  WebUtil.getCustomerId(request));
+		JSONArray list = new JSONArray();
+		if(JsonUtils.isSuccessCode(result) && result.getJSONObject("body").getIntValue("status") == 0){
+			list = result.getJSONObject("body").getJSONObject("kdInfo").getJSONObject("result").getJSONArray("list");
+		}
+		model.put("list", list);
+		return "express_info";
 	}
 	
 	@LoginDesc
