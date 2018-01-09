@@ -97,7 +97,8 @@
 		// do sometiong
 	})
 	var countDown = 120,
-    time = null;
+    time = null,
+    hasClickSend = false;
 	// 浮层禁止滑动
 	$(".alert-mask, .mask").on("touchmove", function(e) {
 		e.preventDefault();
@@ -107,6 +108,10 @@
 	})
 	// 成功跳转
 	$("#maskOk").on("click", function() {
+		if(!hasClickSend){
+			$.mask({type:'alert', alertTips: "请先发送验证码", alertTime: 2000});
+			return;
+		}
 		if($("#codeInput").val().length == 0){
 			$.mask({type:'alert', alertTips: "验证码不能为空", alertTime: 2000});
 			return;
@@ -139,6 +144,7 @@
     sendMesAjax(function(data) {
 	  $.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
       sendMessage();
+      hasClickSend = true;
     });
   }
   //发送验证码的ajax事件

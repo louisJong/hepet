@@ -123,6 +123,7 @@
     sendMesAjax(function(data) {
 	  $.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
       sendMessage();
+	  hasClickSend = true;
     });
   }
   //发送验证码的ajax事件
@@ -140,10 +141,6 @@
   			}
   		}
   	})
-  }
-	//最后成功的事件
-  function onSuss(data) {
-	hasClickSend = true;
   }
   //发送验证码倒计时事件
   function sendMessage() {

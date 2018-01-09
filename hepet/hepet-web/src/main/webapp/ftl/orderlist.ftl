@@ -32,7 +32,7 @@ $(function() {
 				tip: "暂无相关数据~", 
 				btntext: "去逛逛 >", 
 				btnClick: function(){
-					alert("点击了按钮,具体逻辑自行实现");
+					window.location.href='${host.base}/hepet/mall';
 				} 
 			},
 			clearEmptyId: "dataList", //相当于同时设置了clearId和empty.warpId; 简化写法;默认null
