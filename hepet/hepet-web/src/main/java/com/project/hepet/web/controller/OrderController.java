@@ -1,11 +1,13 @@
 package com.project.hepet.web.controller;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.httpclient.HttpException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,6 +30,8 @@ import com.project.hepet.web.utils.WebUtil;
 @Controller
 public class OrderController {
 
+	private static final Logger logger = Logger.getLogger(OrderController.class);
+	
 	@Autowired
 	private OrderService orderService;
 	
@@ -164,11 +168,16 @@ public class OrderController {
 	
 	@LoginDesc
 	@RequestMapping("/hepet/order/kd_query")
-	String kd_query(ModelMap model , HttpServletRequest request , @RequestParam(required = true) long orderId) throws Exception{
-		JSONObject result = orderService.queryKdInfo(orderId ,  WebUtil.getCustomerId(request));
-		JSONArray list = new JSONArray();
-		if(JsonUtils.isSuccessCode(result) && result.getJSONObject("body").getIntValue("status") == 0){
-			list = result.getJSONObject("body").getJSONObject("kdInfo").getJSONObject("result").getJSONArray("list");
+	String kd_query(ModelMap model , HttpServletRequest request , @RequestParam(required = true) long orderId){
+		JSONArray list = null;
+		try {
+			JSONObject result = orderService.queryKdInfo(orderId ,  WebUtil.getCustomerId(request));
+			if(JsonUtils.isSuccessCode(result) && result.getJSONObject("body").getIntValue("status") == 0){
+				list = result.getJSONObject("body").getJSONObject("kdInfo").getJSONObject("result").getJSONArray("list");
+			}
+		}catch(Exception e) {
+			logger.error("kd_query error orderId:"+orderId, e);
+			list = new JSONArray();
 		}
 		model.put("list", list);
 		return "express_info";

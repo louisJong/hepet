@@ -224,7 +224,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("instalPeriod", order.getPeriod());
 		param.put("dynamicPwd", dynamicPwd);
 		param.put("comUseType", "9");
-		param.put("payDescription", "分期支付");
+		param.put("payDescription", "");
 		param.put("merchantCode", "C00131990010001");
 		JSONObject payResult = doTrans(param, token);
 		HepetOrder updateOrder = new HepetOrder();
@@ -267,17 +267,12 @@ public class OrderServiceImpl implements OrderService {
 		return JSONObject.parseObject(resp);
 	}
 
-	private JSONObject doKuaiDiQuery(String number) throws HttpException{
+	private JSONObject doKuaiDiQuery(String number) throws IOException{
 		String resp = null;
-		try {
-			Header[] headers = new  Header[1];
-			Header header = new Header("Authorization", "APPCODE " + KUAIDI_QUERY_APPCODE);
-			headers[0] = header;
-			resp = new HttpService().doGet(KUAIDI_QUERY_URL+"?number="+number+"&type=auto", headers);
-		} catch (IOException e) {
-			logger.error("doKuaiDiQuery error number:" + number , e );
-			throw new HttpException("调用异常");
-		}
+		Header[] headers = new  Header[1];
+		Header header = new Header("Authorization", "APPCODE " + KUAIDI_QUERY_APPCODE);
+		headers[0] = header;
+		resp = new HttpService().doGet(KUAIDI_QUERY_URL+"?number="+number+"&type=auto", headers);
 		return JSONObject.parseObject(resp);
 	}
 	
@@ -355,7 +350,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
-	public JSONObject queryKdInfo(long orderId , long customerId) {
+	public JSONObject queryKdInfo(long orderId , long customerId) throws IOException {
 		JSONObject result = JsonUtils.commonJsonReturn();
 		HepetOrder order = orderDao.findDetail(orderId, customerId);
 		if(!canQueryKd(order))
@@ -366,26 +361,22 @@ public class OrderServiceImpl implements OrderService {
 			result.getJSONObject("body").put("kdInfo", JSON.parse(order.getKdStateInfo()));
 			return result;
 		}
-		try {
-			JSONObject kdInfo = doKuaiDiQuery(order.getKdNo());
-			result.getJSONObject("body").put("kdInfo", kdInfo);
-			HepetOrder orderUpdate = new HepetOrder();
-			orderUpdate.setId(orderId);
-			orderUpdate.setKdLastQueryTime(now);
-			Integer hasQueryTimes = order.getKdQueryTimes(); 
-			orderUpdate.setKdQueryTimes(hasQueryTimes==null? 1 : (hasQueryTimes+1));
-			orderUpdate.setKdStateInfo(kdInfo.toJSONString());
-			int status = kdInfo.getIntValue("status");
-			if(status==0){//查询到有数据
-				Integer deliverystatus = kdInfo.getJSONObject("result").getInteger("deliverystatus");
-				if(deliverystatus!=null && deliverystatus.intValue() == 3)//已收件
-					orderUpdate.setIsGetGoods(1);
-			}
-			orderUpdate.setUpdateTime(now);
-			orderDao.update(orderUpdate);
-		} catch (HttpException e) {
-			return JsonUtils.commonJsonReturn("0001", "无可查询信息");
+		JSONObject kdInfo = doKuaiDiQuery(order.getKdNo());
+		result.getJSONObject("body").put("kdInfo", kdInfo);
+		HepetOrder orderUpdate = new HepetOrder();
+		orderUpdate.setId(orderId);
+		orderUpdate.setKdLastQueryTime(now);
+		Integer hasQueryTimes = order.getKdQueryTimes(); 
+		orderUpdate.setKdQueryTimes(hasQueryTimes==null? 1 : (hasQueryTimes+1));
+		orderUpdate.setKdStateInfo(kdInfo.toJSONString());
+		int status = kdInfo.getIntValue("status");
+		if(status==0){//查询到有数据
+			Integer deliverystatus = kdInfo.getJSONObject("result").getInteger("deliverystatus");
+			if(deliverystatus!=null && deliverystatus.intValue() == 3)//已收件
+				orderUpdate.setIsGetGoods(1);
 		}
+		orderUpdate.setUpdateTime(now);
+		orderDao.update(orderUpdate);
 		return result;
 	}
 

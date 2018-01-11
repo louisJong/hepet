@@ -1,5 +1,6 @@
 package com.project.hepet.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.httpclient.HttpException;
@@ -56,6 +57,6 @@ public interface OrderService {
 
 	void confirmAgain(final Long orderId,final String orderNum , final String tradeId, final String tel , final int times);
 
-	JSONObject queryKdInfo(long orderId , long customerId);
+	JSONObject queryKdInfo(long orderId , long customerId) throws IOException;
 
 }

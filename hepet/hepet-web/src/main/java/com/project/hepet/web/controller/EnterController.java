@@ -1,7 +1,6 @@
 package com.project.hepet.web.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -67,9 +66,4 @@ public class EnterController {
 		return "my";
 	}
 	
-	public static void main(String[] args) {
-		String time = new Date().getTime()+"";
-		System.out.println("time:"+time);
-		System.out.println(MD5Util.MD5Encode("1018217148462"+time+"123HepetMall2018"));
-	}
 }

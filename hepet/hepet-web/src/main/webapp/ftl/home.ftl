@@ -25,7 +25,7 @@
 	<!-- 告知 -->
 	<div class="page-law">
 		<p>
-		  这里是一些相关的政策法规和需要用户注意的特别说明， <br/>关于额度 <br/>关于还款 <br/>关于实名认证 <br/>关于配送  <br/>订单从保税仓发出，自物流公司<br/>		  
+		订单从保税仓发出，自物流公司<br/>		  
 		</p>
 	</div>
 	<footer></footer>
@@ -54,7 +54,7 @@
 			if(banners.length <= 0) {
 				return;
 			}		
-		  var str = '<div class="title">国际打牌折扣季</div>';
+		  var str = '<div class="title">国际大牌折扣季</div>';
 			str += '<div class="banner swiper-container">';
       str += '<div class="swiper-wrapper">';
       banners.map(function(item, index){
