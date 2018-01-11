@@ -81,7 +81,7 @@
 					},
 					clearEmptyId: clearEmptyId, //相当于同时设置了clearId和empty.warpId; 简化写法;默认null
 					toTop:{ //配置回到顶部按钮
-						src : "mock/res/img/mescroll-totop.png", 
+						src : "${host.img}/mescroll-totop.png", 
 						offset : 1000
 					}
 				}
