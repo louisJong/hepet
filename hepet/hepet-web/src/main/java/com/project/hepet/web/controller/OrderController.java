@@ -196,4 +196,12 @@ public class OrderController {
 		return "order_result";
 	}
 	
+	@LoginDesc
+	@ResponseBody
+	@RequestMapping("/hepet/order/finish")
+	String orderFinish(HttpServletRequest request , ModelMap modelMap , long orderId){
+		orderService.confirmOrder(orderId, WebUtil.getCustomerId(request));
+		return JsonUtils.commonJsonReturn().toJSONString();
+	}
+	
 }

@@ -127,6 +127,9 @@
 		<if test="orderNum!=null">
 			AND order_num=#{orderNum}
 		</if>
+		<if test="customerId != null">
+			AND customer_id=#{customerId}
+		</if>
 	</where> 
 	
 </update>

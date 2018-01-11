@@ -384,5 +384,17 @@ public class OrderServiceImpl implements OrderService {
 		 /** 商品状态NOPAY待付款NOSEND待发货NORECEIVE待收货CLOSED已关闭REFUND已退货SUCCESS完成 */
 		return order!=null && ("NORECEIVE".equals(order.getStatus()) || "SUCCESS".equals(order.getStatus()) || "REFUND".equals(order.getStatus()));
 	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public void confirmOrder(long orderId, long customerId) {
+		HepetOrder orderUpdate = new HepetOrder();
+		orderUpdate.setId(orderId);
+		orderUpdate.setUpdateTime(new Date());
+		orderUpdate.setCustomerId(customerId);
+		orderUpdate.setStatus("SUCCESS");
+		int effectCount = orderDao.update(orderUpdate);
+		Assert.isTrue(effectCount==1, "操作失败");
+	}
 	
 }
