@@ -51,7 +51,7 @@
 	select pro_detail,status from hepet_goods where id=#{goodsId}  
 </select>  
 <select id="findByIdAllDetail" parameterType="long"  resultMap="hepet_goods">
-    select brand_name,market_price,send_type,region,pro_detail,goods_name,sub_desc,detail_img_urls,price,period,price_per_period,is_logistics,status,stock,tags,sold_count from hepet_goods where id=#{goodsId}  
+    select brand_name,descript,market_price,send_type,region,pro_detail,goods_name,sub_desc,detail_img_urls,price,period,price_per_period,is_logistics,status,stock,tags,sold_count from hepet_goods where id=#{goodsId}  
 </select>  
 <select id="findGoodsCount" parameterType="hashmap"  resultType="long">
 	select count(1) from hepet_goods 

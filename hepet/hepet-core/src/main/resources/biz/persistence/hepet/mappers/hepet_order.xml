@@ -121,7 +121,7 @@
 		<if test="id!=null">
 			id=#{id}
 		</if>
-		<if test="status!=null">
+		<if test="status!=null and status!='NORECEIVE'">
 			AND status &lt;&gt; #{status}
 		</if>
 		<if test="orderNum!=null">
