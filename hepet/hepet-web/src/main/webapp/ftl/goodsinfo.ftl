@@ -32,8 +32,9 @@
 </div>
 <!-- 说明 -->
 <div class="pd-info">
-	<p>说明：<span>商品包税</span><span>假一赔十</span><span>7天无忧退货</span></p>
-	<p style="text-indent: 3em"><span>不可使用优惠券</span><span>${goodsInfo.sendType}</span></p>
+	<p>说明：<span>${goodsInfo.descript?default('无')}</span></p>
+	<p>产地：<span>${goodsInfo.region?default('无')}</span></p>
+	<p>发货方式：<span>${goodsInfo.sendType?default('无')}</span></p>
 </div>
 <!-- 图文详情	 -->
 <div class="pd-detail">

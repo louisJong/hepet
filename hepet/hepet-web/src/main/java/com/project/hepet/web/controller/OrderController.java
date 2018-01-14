@@ -1,6 +1,5 @@
 package com.project.hepet.web.controller;
 
-import java.io.IOException;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -198,7 +198,7 @@ public class OrderController {
 	
 	@LoginDesc
 	@ResponseBody
-	@RequestMapping("/hepet/order/finish")
+	@RequestMapping(value="/hepet/order/finish" , method = RequestMethod.POST)
 	String orderFinish(HttpServletRequest request , ModelMap modelMap , long orderId){
 		orderService.confirmOrder(orderId, WebUtil.getCustomerId(request));
 		return JsonUtils.commonJsonReturn().toJSONString();
