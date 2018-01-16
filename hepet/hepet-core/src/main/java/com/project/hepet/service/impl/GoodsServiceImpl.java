@@ -53,8 +53,8 @@ public class GoodsServiceImpl implements GoodsService {
 		else
 			goods = goodsDao.findByIdAllDetail(goodsId);
 		JSONObject result = JsonUtils.commonJsonReturn();
-		if( goods==null || 0==goods.getStatus() ){//下架
-			return JsonUtils.commonJsonReturn("1001", "商品已下架");
+		if( goods==null || 1!=goods.getStatus() ){//未上架
+			return JsonUtils.commonJsonReturn("1001", "商品未上架");
 		}
 		JsonUtils.setBody(result, "info", goods);
 		return result;

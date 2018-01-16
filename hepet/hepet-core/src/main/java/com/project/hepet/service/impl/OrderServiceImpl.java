@@ -75,6 +75,9 @@ public class OrderServiceImpl implements OrderService {
 	public JSONObject order(long goodsId , long num , long addId, String tel , Long customerId, String orderNum, String tradeId) {
 		Assert.isTrue(num>0);
 		HepetGoods goods = goodsDao.findById(goodsId);
+		if(goods.getStatus()!=1){//未上架
+			return JsonUtils.commonJsonReturn("0001", "商品未上架");
+		}
 		Map<String , Object> AddrParam = new HashMap<String, Object>();
 		AddrParam.put("id", addId);
 		AddrParam.put("customerId", customerId);
@@ -151,6 +154,9 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public JSONObject getPaySmsCode(String tel, Long customerId, String token , long goodsId , String orderNum) throws HttpException {
 		HepetGoods goods = goodsDao.findById(goodsId);
+		if(goods.getStatus()!=1){//未上架
+			return JsonUtils.commonJsonReturn("0001", "商品未上架");
+		}
 		SortedMap<String, Object> param = new TreeMap<String, Object>();
 		param.put("transCode", "TS2001");
 		param.put("mobile", tel);
@@ -208,6 +214,10 @@ public class OrderServiceImpl implements OrderService {
 	public JSONObject pay(long orderId, String tel, Long customerId, String dynamicPwd, String token, String tradeId) throws HttpException {
 		HepetOrder order = orderDao.findDetail(orderId, customerId);
 		Assert.isTrue(order!=null, "订单不存在");
+		HepetGoods goods = goodsDao.findById(order.getGoodsId());
+		if(goods.getStatus()!=1){//未上架
+			return JsonUtils.commonJsonReturn("0001", "商品未上架");
+		}
 		Date now = new Date();
 		SortedMap<String, Object> param = new TreeMap<String, Object>();
 		param.put("transCode", "TS2002");
