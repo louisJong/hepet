@@ -1,9 +1,17 @@
 package com.project.hepet.admin.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,11 +36,31 @@ public class OrderController {
 	public String orderList(HttpServletRequest request , HttpServletResponse response , HttpSession session ,
 			@RequestParam(value="pageIndex" , required = true) long pageIndex,
 			@RequestParam(value="limit" , required = true) long limit ,
-			@RequestParam(value="status" , required = false) String status ){
+			String status,
+			String goodsName,
+			String categoryCode,
+			String brandName,
+			String orderNum,
+			String startTime,
+			String endTime,
+			String phone) throws ParseException{
 		//用户账户名和密码验证
 		JSONObject result = JsonUtils.commonJsonReturn();
-		JsonUtils.setBody(result, "orderList", orderService.orderList(pageIndex, limit, status));
-		JsonUtils.setBody(result, "count", orderService.orderCount(status, null , null ));
+		Map<String , Object> params = new HashMap<String , Object>();
+		params.put("startRow", pageIndex*limit);
+		params.put("limit", limit);
+		params.put("status", status);
+		params.put("goodsName", goodsName);
+		params.put("categoryCode", categoryCode);
+		params.put("brandName", brandName);
+		params.put("orderNum", orderNum);
+		params.put("startTime", startTime);
+		if(StringUtils.isNotBlank(endTime)){
+			params.put("endTime", DateUtils.addDays(new SimpleDateFormat("yyyy-MM-dd").parse(endTime), 1));
+		}
+		params.put("phone", phone);
+		JsonUtils.setBody(result, "orderList", orderService.orderList(params));
+		JsonUtils.setBody(result, "count", orderService.allOrderCount(params));
 		return result.toJSONString();
 	}
 	

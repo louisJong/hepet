@@ -2,6 +2,7 @@ package com.project.hepet.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.httpclient.HttpException;
 
@@ -17,7 +18,7 @@ public interface OrderService {
 	 * @param status 状态
 	 * @return
 	 */
-	List<HepetOrder> orderList(long pageIndex , long limit , String status);
+	List<HepetOrder> orderList(Map<String , Object> params);
 	
 	/**
 	 * 订单列表
@@ -35,7 +36,7 @@ public interface OrderService {
 	 * @param customerId
 	 * @return
 	 */
-	long orderCount( String status , String tel , Long customerId);
+	long orderCount(String status, String tel, Long customerId);
 	
 	/**
 	 * 订单详情
@@ -60,5 +61,7 @@ public interface OrderService {
 	JSONObject queryKdInfo(long orderId , long customerId) throws IOException;
 	
 	void confirmOrder(long orderId , long customerId);
+
+	long allOrderCount(Map<String, Object> params);
 
 }

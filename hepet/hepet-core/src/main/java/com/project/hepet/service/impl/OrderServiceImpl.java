@@ -62,12 +62,8 @@ public class OrderServiceImpl implements OrderService {
 	private static String MERCHANR_ID = "ZY00000002";
 	
 	@Override
-	public List<HepetOrder> orderList(long pageIndex, long limit, String status) {
-		Map<String , Object> param = new HashMap<String, Object>();
-		param.put("startRow", pageIndex*limit);
-		param.put("limit", limit);
-		param.put("status", status);
-		return orderDao.findOrders(param);
+	public List<HepetOrder> orderList(Map<String , Object> params) {
+		return orderDao.findOrders(params);
 	}
 
 	@Override
@@ -395,6 +391,11 @@ public class OrderServiceImpl implements OrderService {
 		orderUpdate.setStatus("SUCCESS");
 		int effectCount = orderDao.update(orderUpdate);
 		Assert.isTrue(effectCount==1, "操作失败");
+	}
+
+	@Override
+	public long allOrderCount(Map<String, Object> params) {
+		return orderDao.allOrderCount(params);
 	}
 	
 }

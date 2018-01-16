@@ -39,7 +39,7 @@
 		<div class="item">
 			<div class="left">支付信息</div>
 			<div class="right">
-				<p class="font-base font-weight">月供 ￥ ${funUtils.formatNumber(orderInfo.pricePerPeriod,'#,###')} | 总计12期</p>
+				<p class="font-base font-weight">月供 ￥ ${funUtils.formatNumber(orderInfo.pricePerPeriod,'#,###')} | 总计${orderInfo.period}期</p>
 				<p class="small-font font-gray">每月 15号还款即可</p>
 			</div>
 		</div>

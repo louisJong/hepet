@@ -41,10 +41,10 @@
 <select id="orderCount" parameterType="hashmap"  resultType="long">
 	select count(1) from hepet_order
 	<where>
-		<if test="status!=null and status!=''">
+		<if test="status!=null and status.trim()!=''">
 			status = #{status}
 		</if>
-		<if test="tel!=null and status!=''">
+		<if test="tel!=null and tel!=''">
 			and tel = #{tel}
 		</if>
 		<if test="customerId!=null">
@@ -56,17 +56,73 @@
 	select id,goods_id,kd_state_info,is_get_goods,kd_last_query_time,kd_query_times,create_time,brand_name,list_img_url,goods_name,sub_desc,num,price,period,address,contact,phone,kd_no,kd_name,status,pay_time,order_num,price_per_period from hepet_order 
 	where id = #{orderId} and customer_id=#{customerId}
 </select> 
+<select id="allOrderCount" parameterType="hashmap"  resultType="long">
+	select count(1) from hepet_order
+	<where>
+		<if test="status!=null and status.trim()!=''">
+			status = #{status}
+		</if>
+		<if test="tel!=null and tel!=''">
+			and tel = #{tel}
+		</if>
+		<if test="customerId!=null">
+			and customer_id = #{customerId}
+		</if>
+		<if test="goodsName!=null and goodsName.trim()!=''">
+			and goods_name like CONCAT(#{goodsName} ,'%')
+		</if>
+		<if test="categoryCode!=null and categoryCode.trim()!=''">
+			and category_code = #{categoryCode}
+		</if>
+		<if test="brandName!=null and brandName.trim()!=''">
+			and brand_name like CONCAT(#{brandName} ,'%')
+		</if>
+		<if test="startTime!=null and startTime.trim()!=''">
+			and create_time &gt;= #{startTime}
+		</if>
+		<if test="endTime!=null">
+			and create_time &lt;= #{endTime}
+		</if>
+		<if test="orderNum!=null and orderNum.trim()!=''">
+			and order_num like CONCAT(#{orderNum} ,'%')
+		</if>
+		<if test="phone!=null and phone.trim()!=''">
+			and tel like CONCAT(#{phone} ,'%')
+		</if>
+	</where>
+</select>  
 <select id="findOrders" parameterType="hashmap"  resultMap="hepet_order">
 	select id,goods_id,create_time,list_img_url,brand_name,goods_name,sub_desc,num,price,period,address,contact,phone,kd_no,kd_name,status,pay_time,order_num from hepet_order 
 	<where>
-		<if test="tel!=null">
+		<if test="tel!=null and tel.trim()!=''">
 			tel = #{tel}
 		</if>
 		<if test="customerId!=null">
 			and customer_id = #{customerId}
 		</if>
-		<if test="status!=null">
+		<if test="status!=null and status.trim()!=''">
 			and status = #{status}
+		</if>
+		<if test="goodsName!=null and goodsName.trim()!=''">
+			and goods_name like CONCAT(#{goodsName} ,'%')
+		</if>
+		<if test="categoryCode!=null and categoryCode.trim()!=''">
+			and category_code = #{categoryCode}
+		</if>
+		<if test="brandName!=null and brandName.trim()!=''">
+			and brand_name like CONCAT(#{brandName} ,'%')
+		</if>
+		<if test="startTime!=null and startTime.trim()!=''">
+			and create_time &gt;= #{startTime}
+		</if>
+		<if test="endTime!=null">
+			and create_time &lt;= #{endTime}
+		</if>
+		<if test="orderNum!=null and orderNum.trim()!=''">
+			and order_num like CONCAT(#{orderNum} ,'%')
+		</if>
+		<if test="phone!=null and phone.trim()!=''">
+			and tel like CONCAT(#{phone} ,'%')
 		</if>
 	</where>  
 	order by create_time desc
@@ -121,7 +177,7 @@
 		<if test="id!=null">
 			id=#{id}
 		</if>
-		<if test="status!=null and status!='NORECEIVE'">
+		<if test="status!=null and status.trim()!=''">
 			AND status &lt;&gt; #{status}
 		</if>
 		<if test="orderNum!=null">
@@ -141,6 +197,6 @@
 	status = 'NORECEIVE'
 	, update_time=now()
 	</set> 
-	where status = 'NOSEND' AND id=#{id}
+	where id=#{id}
 </update>
 </mapper>
