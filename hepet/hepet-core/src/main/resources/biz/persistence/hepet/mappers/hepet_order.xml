@@ -121,7 +121,7 @@
 		<if test="id!=null">
 			id=#{id}
 		</if>
-		<if test="status!=null and status!='NORECEIVE'">
+		<if test="status!=null and status.trim()!=''">
 			AND status &lt;&gt; #{status}
 		</if>
 		<if test="orderNum!=null">
@@ -141,6 +141,6 @@
 	status = 'NORECEIVE'
 	, update_time=now()
 	</set> 
-	where status = 'NOSEND' AND id=#{id}
+	where id=#{id}
 </update>
 </mapper>
