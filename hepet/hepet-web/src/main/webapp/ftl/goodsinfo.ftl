@@ -49,21 +49,13 @@
 	<div class="buy">立即购买</div>
 </div>
 <script type="text/javascript">
-var mySwiper = new Swiper('.swiper-container', {
-    direction: 'horizontal',
-    loop: true,
-    autoHeight: true,
-    
-    // 如果需要分页器
-    pagination: '.swiper-pagination'
-}) 
 var imgs = '${goodsInfo.detailImgUrls}';
 var banners = imgs.split(",");
 
 function initBanners() {
 	var str = ''
 	banners.map(function(item, index) {
-    str += '<div class="swiper-slide"><img src="'+ item +'"></div>'
+    str += '<div class="swiper-slide"><img src="'+ item +'"/></div>'
 	})
 	$(".swiper-wrapper").append($(str));
 }

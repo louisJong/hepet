@@ -79,11 +79,7 @@
 							window.location.href = '${host.base}/hepet/index';
 						} 
 					},
-					clearEmptyId: clearEmptyId, //相当于同时设置了clearId和empty.warpId; 简化写法;默认null
-					toTop:{ //配置回到顶部按钮
-						src : "${host.img}/mescroll-totop.png", 
-						offset : 1000
-					}
+					clearEmptyId: clearEmptyId, //相当于同时设置了clearId和empty.warpId; 简化写法;默认null					
 				}
 			});
 			return mescroll;

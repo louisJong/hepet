@@ -70,12 +70,12 @@ $(function() {
 
   //进入此页面有值的情况下
   <#if address??>
-      fieldsCheck = {contact: {checkv: true}, phone: {checkv: true}, address: {checkv: true}, area: {checkv: true}};
-      $("#contact").val('${address.contact}');
-      $("#phone").val('${address.phone}');
-      $("#address").val('${address.address}');
-      $("#area").val('${address.area}');
-      checkBtn();
+		fieldsCheck = {contact: {checkv: true}, phone: {checkv: true}, address: {checkv: true}, area: {checkv: true}};
+		$("#contact").val('${address.contact}');
+		$("#phone").val('${address.phone}');
+		$("#address").val('${address.address}');
+		$("#area").val('${address.area}');
+		checkBtn();
   </#if>
   //绑定事件
   $("#contact").on("input propertychange", handelName);
@@ -83,7 +83,7 @@ $(function() {
   $("#area").on("click", function() {$("input[id^=AddrMobiscroll]").click();  })
   $("#address").on("input propertychange", handelAddressDetail);
 })
- function submit() {
+function submit() {
   if($(this).hasClass("disable")) {
   	return;
   } else {
@@ -102,12 +102,17 @@ $(function() {
     </#if>
     subAjax(params)  	
   }
- }
- function subAjax(params) {
+}
+function subAjax(params) {
  	var url = '${host.base}/hepet/addRecAddr';
  	<#if id??>
  		url = '${host.base}/hepet/editRecAddr';
  	</#if>
+	 if($("#submit").hasClass("disable")) {
+		  return;
+	  }
+	  $("#submit").addClass("disable");
+	  
   $.ajax({
     url: url,
     type: 'post',
@@ -119,6 +124,7 @@ $(function() {
           if(fromUrl.indexOf('?') > -1) {
             var str = commonUtils.changeURLArg(fromUrl, 'from', 'addAdd');
             str = commonUtils.changeURLArg(str, 'addid', data.body.id);
+						$("#submit").removeClass("disable");
             window.location.href = str;
           } else {
             window.location.href = fromUrl + "?addid="+data.body.id+"&from=addAdd";
@@ -131,8 +137,8 @@ $(function() {
       }
     }
   })
- }
- function handelName() {
+}
+function handelName() {
  	var v;
  	if(!$(this).val()) {
  		v = false;
@@ -140,7 +146,7 @@ $(function() {
  		v = true;
  	}
  	updateBtn($(this).attr("id"), v);
- }
+}
  function handelTel() {
  	var v;
  	$(this).val($(this).val().replace(/[^\d]/g,'').substr(0,11));
