@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.project.hepet.common.utils.JsonUtils;
+import com.project.hepet.model.HepetGoods;
 import com.project.hepet.model.HepetGoodsCategory;
 import com.project.hepet.service.GoodsService;
 
@@ -75,6 +76,11 @@ public class GoodsController {
 
 	@RequestMapping("/hepet/goodsInfo")
 	String goodsInfo(ModelMap modelMap , @RequestParam(value="goodsId" , required=true) long goodsId){
+		HepetGoods goods = goodsService.goodsAllDetail(goodsId);
+		if(goods==null || 1!=goods.getStatus().intValue()){//未上架
+			modelMap.put("info", "商品未上架");
+			return "common_result";
+		}
 		modelMap.put("goodsInfo", goodsService.goodsAllDetail(goodsId));
 		modelMap.put("goodsId", goodsId);
 		return "goodsinfo";
