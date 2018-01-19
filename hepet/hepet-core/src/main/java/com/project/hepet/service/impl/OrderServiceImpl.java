@@ -407,5 +407,21 @@ public class OrderServiceImpl implements OrderService {
 	public long allOrderCount(Map<String, Object> params) {
 		return orderDao.allOrderCount(params);
 	}
+
+	@Override
+	public void cancelOrder(long orderId, long customerId) {
+		HepetOrder orderUpdate = new HepetOrder();
+		orderUpdate.setId(orderId);
+		orderUpdate.setUpdateTime(new Date());
+		orderUpdate.setCustomerId(customerId);
+		orderUpdate.setStatus("CANCEL");
+		int effectCount = orderDao.update(orderUpdate);
+		Assert.isTrue(effectCount==1, "操作失败");
+	}
+
+	@Override
+	public double allOrderSum(Map<String, Object> params) {
+		return orderDao.allOrderSum(params);
+	}
 	
 }

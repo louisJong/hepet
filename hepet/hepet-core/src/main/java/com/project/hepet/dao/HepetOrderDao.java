@@ -35,4 +35,8 @@ public class HepetOrderDao extends GenericDAOImpl<HepetOrder> {
 	public long allOrderCount(Map<String, Object> params) {
 		return this.getSqlSession().selectOne(this.getNameSpace()+".allOrderCount", params);
 	}
+	
+	public double allOrderSum(Map<String, Object> params) {
+		return this.getSqlSession().selectOne(this.getNameSpace()+".allOrderSum", params);
+	}
 }

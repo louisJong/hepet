@@ -36,7 +36,7 @@ public class HepetOrder  extends BaseObject {
   private  String  kdNo;
   /** 快递公司 */
   private  String  kdName;
-  /** 商品状态NOPAY待付款NOSEND待发货NORECEIVE待收货CLOSED已关闭REFUND已退货SUCCESS完成 */
+  /** 商品状态NOPAY待付款NOSEND待发货NORECEIVE待收货CANCEL已取消CLOSED已关闭REFUND已退货SUCCESS完成 */
   private  String  status;
   /**  */
   private  Date  updateTime;

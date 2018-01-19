@@ -2,7 +2,6 @@ package com.project.hepet.admin.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +60,7 @@ public class OrderController {
 		params.put("phone", phone);
 		JsonUtils.setBody(result, "orderList", orderService.orderList(params));
 		JsonUtils.setBody(result, "count", orderService.allOrderCount(params));
+		JsonUtils.setBody(result, "sum", orderService.allOrderSum(params));
 		return result.toJSONString();
 	}
 	

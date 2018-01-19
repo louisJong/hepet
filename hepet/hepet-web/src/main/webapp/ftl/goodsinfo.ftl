@@ -22,7 +22,7 @@
 </div>
 <!-- 商品价格 -->
 <div class="pd-price">
-	<span class="small-font">￥</span><span>${funUtils.formatNumber(goodsInfo.price,'#,###')} </span> <span class="market">￥${funUtils.formatNumber(goodsInfo.marketPrice,'#,###')}</span>
+	<span class="small-font">￥</span><span>${funUtils.formatAmt(goodsInfo.price)} </span> <span class="market">￥${funUtils.formatAmt(goodsInfo.marketPrice)}</span>
 	<span class="icon">${goodsInfo.tags}</span>
 </div>
 <!-- 商品名称及副标题 -->

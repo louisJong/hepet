@@ -20,7 +20,7 @@
 </div>	
 <script type="text/javascript">
 var _mescroll = null;
-var statusMap = {'NOPAY':'待付款', 'NOSEND': '待发货', 'NORECEIVE': '待收货', 'CLOSED':'已关闭', 'REFUND':'已退货', 'SUCCESS':'完成'}
+var statusMap = {'NOPAY':'待付款', 'NOSEND': '待发货', 'NORECEIVE': '待收货', 'CLOSED':'已关闭', 'REFUND':'已退货', 'SUCCESS':'完成' , 'CANCEL':'已取消'}
 $(function() {
 	_mescroll = new MeScroll("mescroll", {
 		//上拉加载的配置项

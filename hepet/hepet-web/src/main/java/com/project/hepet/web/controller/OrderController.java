@@ -199,8 +199,16 @@ public class OrderController {
 	@LoginDesc
 	@ResponseBody
 	@RequestMapping(value="/hepet/order/finish" , method = RequestMethod.POST)
-	String orderFinish(HttpServletRequest request , ModelMap modelMap , long orderId){
+	String orderFinish(HttpServletRequest request , long orderId){
 		orderService.confirmOrder(orderId, WebUtil.getCustomerId(request));
+		return JsonUtils.commonJsonReturn().toJSONString();
+	}
+	
+	@LoginDesc
+	@ResponseBody
+	@RequestMapping(value="/hepet/order/cancel" , method = RequestMethod.POST)
+	String orderCancel(HttpServletRequest request , long orderId){
+		orderService.cancelOrder(orderId, WebUtil.getCustomerId(request));
 		return JsonUtils.commonJsonReturn().toJSONString();
 	}
 	

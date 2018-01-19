@@ -31,18 +31,18 @@
 		<div class="pd-info">
 			<p>发货：${goods.sendType}</p>
 		</div>
-		<p class="pd-price">RMB ${funUtils.formatNumber(goods.price,'#,###')} </p>
+		<p class="pd-price">RMB ${funUtils.formatAmt(goods.price)} </p>
 	</div>
 </div>
 <!-- 支付信息 -->
 <div class="payinfo">
 	<div class="item">
 		<div class="left">分期付款</div>
-		<div class="right font-base">RMB ${funUtils.formatNumber(goods.pricePerPeriod,'#,###')}  X ${goods.period}期</div>
+		<div class="right font-base">RMB ${funUtils.formatAmt(goods.pricePerPeriod)}  X ${goods.period}期</div>
 	</div>
 	<div class="item">
 		<div class="left">支付方式</div>
-		<div class="right">油彩信用额度<span class='small-font' id ="avaiAmt">（可用${funUtils.formatNumber(availAmt,'#,###')}额度）</span></div>
+		<div class="right">油彩信用额度<span class='small-font' id ="avaiAmt">（可用${funUtils.formatAmt(availAmt)}额度）</span></div>
 	</div>
 </div>
 <!-- 支付按钮 -->

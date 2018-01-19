@@ -15,6 +15,21 @@
 		<#return defaultVal>
 	</#if>
 </#function>
+
+<#function formatAmt numVal=0 format=",###.##" defaultVal="0.00">
+	<#if numVal?exists>
+		<#if numVal?is_number>
+			<#if numVal==0>
+				<#return defaultVal>
+			</#if>
+			<#return numVal?string(format)>
+		<#else>
+			<#return defaultVal>
+		</#if>	
+	<#else>
+		<#return defaultVal>
+	</#if>
+</#function>
 <#--
   * 格式化数字 取到格式化后数字 的整数位部分 注意方法小数位会四舍五入
   -->

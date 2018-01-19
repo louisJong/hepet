@@ -61,7 +61,11 @@ public interface OrderService {
 	JSONObject queryKdInfo(long orderId , long customerId) throws IOException;
 	
 	void confirmOrder(long orderId , long customerId);
+	
+	void cancelOrder(long orderId , long customerId);
 
 	long allOrderCount(Map<String, Object> params);
+	
+	double allOrderSum(Map<String, Object> params);
 
 }

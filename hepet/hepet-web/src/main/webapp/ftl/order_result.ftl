@@ -25,6 +25,8 @@
 			<p class="status">订单已发货</p>
 		<#elseif orderInfo.status=='CLOSED'>
 			<p class="status">订单已关闭</p>
+		<#elseif orderInfo.status=='CANCEL'>
+			<p class="status">订单已取消</p>
 		<#elseif orderInfo.status=='REFUND'>
 			<p class="status">订单已退货</p>
 		<#elseif orderInfo.status=='SUCCESS'>
@@ -39,7 +41,7 @@
 		<div class="item">
 			<div class="left">支付信息</div>
 			<div class="right">
-				<p class="font-base font-weight">月供 ￥ ${funUtils.formatNumber(orderInfo.pricePerPeriod,'#,###')} | 总计${orderInfo.period}期</p>
+				<p class="font-base font-weight">月供 ￥ ${funUtils.formatAmt(orderInfo.pricePerPeriod)} | 总计${orderInfo.period}期</p>
 				<p class="small-font font-gray">每月 15号还款即可</p>
 			</div>
 		</div>
