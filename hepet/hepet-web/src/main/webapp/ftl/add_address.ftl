@@ -62,11 +62,7 @@ $(function() {
 	//初始化省市区选择器
 	initCity(city);
 	
-	if(!from){
-		 $("#submit").html('确定');
-	}else{
-		 $("#submit").html('确认并使用本地址');	
-	}
+	$("#submit").html('确定');
 
   //进入此页面有值的情况下
   <#if address??>
@@ -121,14 +117,8 @@ function subAjax(params) {
     success: function(data) {
       if(data.head.code == '0000') {
         if( from && from == 'order') {
-          if(fromUrl.indexOf('?') > -1) {
-            var str = commonUtils.changeURLArg(fromUrl, 'from', 'addAdd');
-            str = commonUtils.changeURLArg(str, 'addid', data.body.id);
-						$("#submit").removeClass("disable");
-            window.location.href = str;
-          } else {
-            window.location.href = fromUrl + "?addid="+data.body.id+"&from=addAdd";
-          }          
+					window.location.href = fromUrl;
+					
         } else {
           window.location.href = '${host.base}/hepet/addresses';
         }

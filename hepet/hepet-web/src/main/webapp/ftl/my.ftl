@@ -8,13 +8,16 @@
 	<link rel="stylesheet" type="text/css" href="${host.css}/base.css">
 	<link rel="stylesheet" type="text/css" href="${host.css}/my.css">
 	<!-- 引入js -->
-  <script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
-  <script type="text/javascript" src="${host.js}/common.js"></script>
+  	<script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
+  	<script type="text/javascript" src="${host.js}/common.js"></script>
+	<script>
+		var curUrl = encodeURIComponent(window.location.href);
+	</script>
 </head>
 <body style="background: #f5f5f5;">
 <div class="list">
 	<!-- 如果没有地址跳转add_address.html 有地址跳转address.html -->
-	<a class="list-item" href='${host.base}/hepet/addresses'>
+	<a class="list-item" id="goToAddress">
 		<div class="left">管理地址</div>
 		<div class="right icon-right"></div>
 	</a>
@@ -27,6 +30,9 @@
 </body>
 <script type="text/javascript">
 $(function() {
+	$("#goToAddress").on("click", function() {
+		window.location.href="${host.base}/hepet/addresses?from=my&curUrl="+curUrl;
+	})
     $("footer").append(new Footer([{text:'精选推荐', code:'jxtj', link:'${host.base}/hepet/index'},{text: '商品分类', code:'spfl', link:'${host.base}/hepet/mall'}, {text: '我的', code:'wode', link:'${host.base}/hepet/my'}], 2).init());
 });
 </script>

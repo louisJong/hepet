@@ -12,62 +12,76 @@
 	<script type="text/javascript" src='${host.js}/common.js'></script>
 </head>
 <body style="padding-bottom: 20px">
+
 <!-- 地址列表	 -->
 <div class="address-list"></div>
 <!-- 新增地址按钮 -->
-<div class="btn-box">
-	<div class="green-btn" id="btn">新增收货地址</div>
+<div class="button" id="btn">
+	<p><i class="add-icon"></i>添加新地址</p>
 </div>
 
 <script type="text/javascript">
 	var defaultId = commonUtils.getUrlParam('addid') || '';
 	var from = commonUtils.getUrlParam('from');
-  var curUrl = decodeURIComponent(commonUtils.getUrlParam('curUrl')); //来源路径
 	$(function() {
 		getAddList();
-		if(from == 'order') {
-			$("#btn").html("确认");
-			$("#btn").on("click", function() {
+		$("body").on("click",".no-address, #btn", function() {
+			if(from === 'order'){
+				var curUrl = commonUtils.getUrlParam('curUrl');
+				window.location.href = '${host.base}/hepet/addAddr?curUrl='+curUrl+'&from=order';
+			}else {
+				var curUrl = window.location.href.split("?")[0];
+				window.location.href = '${host.base}/hepet/addAddr?curUrl='+encodeURIComponent(curUrl);
+			}
+		})
+		$(".address-list").on("click", ".edite", function(e) {
+			e.preventDefault()
+			if(from === 'order'){
+				var curUrl = commonUtils.getUrlParam('curUrl');
+				window.location.href = '${host.base}/hepet/addAddr?id='+$(this).data("id")+'&curUrl='+curUrl+'&from=order';
+			}else {
+				var curUrl = window.location.href.split("?")[0];
+				window.location.href = '${host.base}/hepet/addAddr?id='+$(this).data("id")+'&curUrl='+encodeURIComponent(curUrl);
+			}
+			
+		})
+		$(".address-list").on("click", '.touchBtn', function(e) {	
+			e.preventDefault()		
+			if(from=="order"){
+				var curUrl = decodeURIComponent(commonUtils.getUrlParam('curUrl'));
+				$(this).parents(".address-card").addClass("touch");
+				defaultId = $(this).parents(".address-card").data("id");
 				var str = commonUtils.changeURLArg(curUrl, 'from', 'addresslist');
 				str = commonUtils.changeURLArg(str, 'addid', defaultId);
 				window.location.href = str
-			})
-		} else {
-			$("#btn").on("click", function() {
-				window.location.href = '${host.base}/hepet/addAddr';
-			})
-		}
-
-		$("body").on("click", '.address-item', function() {
-			if(from=="order"){
-				$(this).addClass("actived").siblings().removeClass("actived");
-				defaultId = $(this).data("id");
-			}else{
-				window.location.href = '${host.base}/hepet/addAddr?id='+$(this).data("id");
 			}
 		})
 	})
 	function initAddressList(data) {
 		var str = ''
-		data.map(function(item, index) {
-			var actived = '';
-			if(defaultId) {
-        actived = item['id'] == defaultId ? 'actived' : ''
-			} else {
-				actived = index == 0 ? 'actived' : '';
-			}
-      	str += '<div class="address-item '+ actived +'" data-id="'+ item['id'] +'">';
-	    str += '<div class="left">';
-	    str += '<p class="add-name">'+ item['contact'] +' '+ item['phone'] +'</p>';
-	    str += '<div class="add-add">';
-	    str += '<p>'+ item['area'] +'</p>';
-	    str += '<p>'+ item['address'] +'</p>';
-	    str += '</div></div>';
-	    str += '<div class="right"></div>';
-	    str += '</div>'
-		})
+		if(data.length <=0) {
+			$("#btn").hide();
+			str += '<div class="no-address">';
+			str += '<p class="add-icon"></p>';
+			str += '<p>点击添加地址</p></div>';  
+			str += '<div class="gray-line"></div>'; 
+			$("body").prepend($(str));
+		} else {
+			data.map(function(item, index) {
+				str += '<div class="address-card" data-id="'+ item['id'] +'">';
+				str += '<div class="card-top touchBtn">';
+				str += '<p><b>'+ item['contact'] +'</b><span>'+ item['phone'] +'</span></p>';
+				str += '<p class="addressdesc">'+ item['area'] + item['address'] +'</p>';
+				str += '</div>';
+				str += '<div class="card-bottom">';
+				str += '<p data-id="'+ item['id'] +'" class="edite"><i class="edite-icon icon"></i><span>编辑</span></p>';
+				str += '<p data-id="'+ item['id'] +'" class="delete"><i class="delete-icon icon"></i><span>删除</span></p>';            
+				str += '</div></div>'
+			})
 
-		$(".address-list").append($(str));
+			$(".address-list").append($(str));
+		}
+		
     
 	}
 	function getAddList() {
@@ -76,11 +90,11 @@
 			dataType: 'json',
 			type: 'GET',
 			success: function(data) {
-        if(data.head.code == '0000') {
-          initAddressList(data.body.addresses||[]);
-        } else {
-        	$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
-        }
+				if(data.head.code == '0000') {
+					initAddressList(data.body.addresses||[]);
+				} else {
+					$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
+				}
 			}
 		})
 	}
