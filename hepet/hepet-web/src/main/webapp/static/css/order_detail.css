@@ -1,0 +1,245 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+body {
+  width: 100%; }
+
+.no-address {
+  width: 100%;
+  height: 80px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background: #ffffff; }
+  .no-address .add-icon {
+    width: 20px;
+    height: 20px;
+    background: url(../images/add-icon.png) no-repeat;
+    background-size: 100% 100%; }
+  .no-address p {
+    font-size: 17px;
+    color: #4a90e2;
+    margin-top: 8px; }
+
+.address {
+  width: 100%;
+  height: 68px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  background: #FFFEF4 url(../images/address-bg.png) repeat-x;
+  background-size: auto 4px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  font-size: 14px;
+  line-height: 21px; }
+
+.gray-line {
+  width: 100%;
+  height: 10px;
+  background: #f5f5f5; }
+
+.prod-info {
+  width: 100%;
+  padding-left: 15px;
+  box-sizing: border-box; }
+  .prod-info .top {
+    height: 30px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    line-height: 20px;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between; }
+  .prod-info .status {
+    color: #888; }
+    .prod-info .status.no-pay {
+      color: #D5182F; }
+    .prod-info .status.send {
+      color: #FF9F00; }
+  .prod-info .bottom {
+    height: 100px;
+    width: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center; }
+    .prod-info .bottom .img {
+      width: 70px;
+      height: 70px;
+      -ms-flex-negative: 0;
+      flex-shrink: 0;
+      -ms-flex-positive: 0;
+      flex-grow: 0;
+      border-radius: 2px;
+      background: #eee;
+      margin-right: 20px; }
+      .prod-info .bottom .img img {
+        width: 100%; }
+        .prod-info .bottom .right {
+          -ms-flex-negative: 4;
+          flex-shrink: 4;
+          -ms-flex-positive: 4;
+          flex-grow: 4;
+        }
+    .prod-info .bottom .right .title {
+      font-size: 15px;
+      line-height: 21px; }
+    .prod-info .bottom .right .tags {
+      font-size: 12px;
+      color: #888888;
+      line-height: 17px;
+      margin-top: 5px; }
+    .prod-info .bottom .right .price {
+      font-size: 18px;
+      color: #000000;
+      margin-top: 5px;
+      line-height: 25px; }
+    .prod-info .bottom .logic {
+      width: 72px;
+      height: 24px;
+      margin-right: 15px;
+      border: 1px solid #ddd;
+      border-radius: 2px;
+      text-align: center;
+      line-height: 24px;
+      font-size: 14px;
+      -ms-flex-item-align: end;
+      align-self: flex-end;
+      bottom: 15px;
+      position: relative; }
+      .prod-info .bottom .logic.light {
+        color: #008CEC;
+        border-color: #008CEC; }
+
+.order-info {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 0 20px 15px;
+  font-size: 14px;
+  line-height: 20px; }
+  .order-info span {
+    display: inline-block;
+    width: 60px;
+    text-align: right;
+    margin-right: 15px;
+    color: #888; }
+  .order-info b {
+    font-weight: normal; }
+
+.fix-button {
+  position: fixed;
+  z-index: 1;
+  height: 50px;
+  width: 100%;
+  bottom: 0; }
+  .fix-button .left,
+  .fix-button .right {
+    width: 50%;
+    line-height: 50px;
+    background: #F9F9F9;
+    color: #000000;
+    font-size: 17px;
+    float: left;
+    text-align: center; }
+  .fix-button .right {
+    background: #008CEC;
+    color: #fff; }
+    .mask {
+      position: fixed;
+      z-index: 9;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.4); }
+      .mask .mask-wrapper {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: calc(100% - 80px);
+        height: 230px;
+        border-radius: 5px;
+        background: #fff;
+        margin: auto; }
+      .mask .mask-header {
+        padding: 20px 8px 0;
+        text-align: center;
+        font-size: 17px;
+        color: #000;
+        line-height: 1; }
+        .mask .mask-header .tips {
+          font-size: 15px;
+          color: #888;
+          margin-top: 18px;
+        }
+      .mask .mask-body {
+        width: calc(100% - 30px);
+        margin: 30px auto;
+        border-bottom: #1caaf0 1px solid;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: space-between; }
+        .mask .mask-body input {
+          border: none;
+          outline: none;
+          max-width: 120px;
+          line-height: 40px;
+          margin-right: 15px; }
+        .mask .mask-body .sendcode {
+          flex-shrink: 0;
+          flex-grow: 0;
+          color: #32a6e4; }
+        .mask .mask-body.disabled {
+          background: #ccc;
+          color: #888; }
+      .mask .mask-footer {
+        width: 100%;
+        padding: 0 15px;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between; }
+        .mask .mask-footer .button {
+          width: calc(50% - 5px);
+          line-height: 35px;
+          background: #32a6e4;
+          color: #fff;
+          font-size: 17px;
+          text-align: center; }
+        .mask .mask-footer .button.gray {
+          background: #afafaf;
+          color: #fff;
+        }

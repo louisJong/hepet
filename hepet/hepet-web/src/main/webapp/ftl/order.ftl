@@ -175,6 +175,10 @@
 	  }
 	  $(".mask").show();
   }
+
+	$("#codeInput").on("input propertychange", function(){
+		$(this).val($(this).val().replace(/[^\d]/g,'').substr(0,6));
+	})
   //初始地址
   function initAdd() {
   	var str = ''

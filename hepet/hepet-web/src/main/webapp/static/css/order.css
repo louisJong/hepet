@@ -219,14 +219,16 @@ html {
             align-items: center;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
-            justify-content: center; }
+            justify-content: space-between; }
     .mask .mask-body input {
       border: none;
       outline: none;
+      max-width: 120px;
       line-height: 40px;
       margin-right: 15px; }
     .mask .mask-body .sendcode {
-      padding: 5px;
+      flex-shrink: 0;
+      flex-grow: 0;
       color: #32a6e4; }
     .mask .mask-body.disabled {
       background: #ccc;
