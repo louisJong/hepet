@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
 	<!-- 引入css -->
 	<link rel="stylesheet" type="text/css" href="${host.css}/base.css">
-	<link rel="stylesheet" type="text/css" href="${host.css}/order.css">
+	<link rel="stylesheet" type="text/css" href="${host.css}/order.css?1">
 	<!-- 引入js -->
 	<script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
 	<script type="text/javascript" src='${host.js}/common.js'></script>
@@ -52,16 +52,16 @@
 <div class="mask" style="display: none;">
     <div class="mask-wrapper">
       <div class="mask-header">
-        <p>请输入分期支付验证码</p>
-        <div class="bar"></div>
+        <p>输入短信验证码</p>
+        <p class="tips">验证码已发送至您的手机${tel}</p>
       </div>
       <div class="mask-body">
-		<input type="text" id="codeInput">
-		<div class="sendcode" id="sendCode">发送验证码</div>
+				<input type="text" id="codeInput" placeholder="6位数字">
+				<div class="sendcode" id="sendCode">发送验证码</div>	
         
       </div>
       <div class="mask-footer">
-        <di class="cancle button" id="maskCancle">取消</di>
+        <di class="cancle button gray" id="maskCancle">取消</di>
         <di class="ok button" id="maskOk">确定</di>
       </div>
     </div>

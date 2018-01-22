@@ -197,17 +197,18 @@ html {
   .mask .mask-header {
     padding: 20px 8px 0;
     text-align: center;
-    font-size: 24px;
-    color: #32a6e4;
+    font-size: 17px;
+    color: #000;
     line-height: 1; }
-    .mask .mask-header .bar {
-      margin-top: 15px;
-      width: 100%;
-      height: 3px;
-      background: #32a6e4; }
+    .mask .mask-header .tips {
+      font-size: 15px;
+      color: #888;
+      margin-top: 18px;
+    }
   .mask .mask-body {
-    width: 100%;
-    padding: 30px 15px;
+    width: calc(100% - 30px);
+    margin: 30px auto;
+    border-bottom: #1caaf0 1px solid;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     display: -webkit-box;
@@ -222,16 +223,11 @@ html {
     .mask .mask-body input {
       border: none;
       outline: none;
-      background: #e6e6e6;
-      border-radius: 6px;
-      width: 120px;
       line-height: 40px;
       margin-right: 15px; }
     .mask .mask-body .sendcode {
       padding: 5px;
-      background: #32a6e4;
-      border-radius: 4px;
-      color: #fff; }
+      color: #32a6e4; }
     .mask .mask-body.disabled {
       background: #ccc;
       color: #888; }
@@ -250,10 +246,13 @@ html {
         -ms-flex-pack: justify;
             justify-content: space-between; }
     .mask .mask-footer .button {
-      width: calc(50% - 15px);
+      width: calc(50% - 5px);
       line-height: 35px;
       background: #32a6e4;
       color: #fff;
-      font-size: 20px;
-      text-align: center;
-      border-radius: 6px; }
+      font-size: 17px;
+      text-align: center; }
+    .mask .mask-footer .button.gray {
+      background: #afafaf;
+      color: #fff;
+    }
