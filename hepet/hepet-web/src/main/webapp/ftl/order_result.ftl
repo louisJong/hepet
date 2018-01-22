@@ -98,11 +98,11 @@
 	</div>
 </main>
 <!-- 查看订单按钮 -->
-	<#if orderInfo.status=!'NOPAY'>
+	<#if orderInfo.status!='NOPAY'>
 <div class="btn-box">
 	<div class="normal-btn" onclick="window.location.href='${host.base}/hepet/myOrders'">查看我的订单</div>
 </div>
-<#else>
+<#elseif orderInfo.status=='NOPAY'>
 <div class="fix-button">
         <div class="left">取消订单</div>
         <div class="right" id="confirm">立即支付</div>
