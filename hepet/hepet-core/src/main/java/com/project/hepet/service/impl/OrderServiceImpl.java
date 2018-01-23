@@ -423,5 +423,10 @@ public class OrderServiceImpl implements OrderService {
 	public double allOrderSum(Map<String, Object> params) {
 		return orderDao.allOrderSum(params);
 	}
+
+	@Override
+	public void closeOrder() {
+		orderDao.closeOrder(DateUtils.addHours(new Date(), -7));
+	}
 	
 }

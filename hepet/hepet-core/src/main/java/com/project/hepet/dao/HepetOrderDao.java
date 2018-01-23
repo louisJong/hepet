@@ -1,4 +1,5 @@
 package com.project.hepet.dao ;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,5 +39,9 @@ public class HepetOrderDao extends GenericDAOImpl<HepetOrder> {
 	
 	public double allOrderSum(Map<String, Object> params) {
 		return this.getSqlSession().selectOne(this.getNameSpace()+".allOrderSum", params);
+	}
+
+	public void closeOrder(Date date) {
+		this.getSqlSession().update(this.getNameSpace()+".closeOrder", date);
 	}
 }

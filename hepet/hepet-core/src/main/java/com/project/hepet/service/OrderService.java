@@ -68,4 +68,6 @@ public interface OrderService {
 	
 	double allOrderSum(Map<String, Object> params);
 
+	void closeOrder();
+
 }

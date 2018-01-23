@@ -236,4 +236,12 @@
 	</set> 
 	where id=#{id}
 </update>
+
+<update id="closeOrder" parameterType="java.util.Date">
+    update hepet_order 
+	set
+	status = 'CLOSED'
+	, update_time=now()
+	where create_time &lt; #{date} AND status = 'NOPAY'
+</update>
 </mapper>
