@@ -104,7 +104,7 @@
 </div>
 <#elseif orderInfo.status=='NOPAY'>
 <div class="fix-button">
-        <div class="left">取消订单</div>
+        <div class="left" id="cancle">取消订单</div>
         <div class="right" id="confirm">立即支付</div>
     </div>
 </#if>
@@ -130,6 +130,24 @@
 	$(function(){
 		$("#codeInput").on("input propertychange", function(){
 			$(this).val($(this).val().replace(/[^\d]/g,'').substr(0,6));
+		})
+		// 取消订单
+		$("#cancle").on("click", function(){
+			$.ajax({
+				type:'post',
+				url:'${host.base}/hepet/order/cancel',
+				type: 'post',
+				dataType: 'json',
+				data: {'orderId' : ${orderInfo.id}},
+				success: function(data) {
+					if(data.head.code == '0000') {
+						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000});
+						window.location.reload();
+					} else {
+						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
+					}
+  			}
+			})
 		})
 	})
 	$("#confirm").on("click", confirm);
@@ -190,7 +208,7 @@
   		url:'${host.base}/hepet/order/getPaySmsCode',
   		type: 'post',
   		dataType: 'json',
-  		data: {'goodsId' : 21},
+  		data: {'goodsId' : ${orderInfo.goodsId}},
   		success: function(data) {
   			if(data.head.code == '0000') {
 				onSuss(data)

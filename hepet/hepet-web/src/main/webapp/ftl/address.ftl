@@ -45,6 +45,26 @@
 			}
 			
 		})
+
+		$(".address-list").on("click", ".delete", function(e) {
+			e.preventDefault()
+			$.ajax({
+				url: '${host.base}/hepet/address/delete',
+				type:'post',
+				dataType: 'json',
+				data: {"id": $(this).data("id")},
+				success: function(data) {
+					console.log(data)
+					if(data.head.code == '0000') {
+						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000});
+						window.location.reload();
+					} else {
+						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
+					}
+				}
+
+			})
+		})
 		$(".address-list").on("click", '.touchBtn', function(e) {	
 			e.preventDefault()		
 			if(from=="order"){

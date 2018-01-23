@@ -12,6 +12,11 @@
 	<!-- 引入js -->
   <script src="${host.js}/jquery-1.11.3.min.js"></script>
   <script src="${host.js}/swiper.jquery.min.js"></script>
+  <style>
+  .pd-detail {width: 100%;}
+  .media-wrap {width: 100%;}
+  .media-wrap img{width: 100%;}
+  </style>
 </head>
 <body style="background: #f5f5f5; padding-bottom: 60px;">
 <!-- banner滚动 -->
