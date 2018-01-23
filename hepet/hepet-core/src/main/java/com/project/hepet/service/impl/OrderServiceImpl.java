@@ -426,7 +426,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void closeOrder() {
-		orderDao.closeOrder(DateUtils.addHours(new Date(), -7));
+		orderDao.closeOrder(DateUtils.addHours(new Date(), -24));
 	}
 	
 }
