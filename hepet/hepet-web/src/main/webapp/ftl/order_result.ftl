@@ -98,11 +98,8 @@
 	</div>
 </main>
 <!-- 查看订单按钮 -->
-	<#if orderInfo.status!='NOPAY'>
-<div class="btn-box">
-	<div class="normal-btn" onclick="window.location.href='${host.base}/hepet/myOrders'">查看我的订单</div>
-</div>
-<#elseif orderInfo.status=='NOPAY'>
+
+<#if orderInfo.status=='NOPAY'>
 <div class="fix-button">
         <div class="left" id="cancle">取消订单</div>
         <div class="right" id="confirm">立即支付</div>
@@ -230,6 +227,7 @@
         window.clearInterval(time); //停止计时器
         $("#sendCode").removeClass('disabled'); //启用按钮
         $("#sendCode").html("发送验证码");
+				countDown = 120;
       } else {
         countDown--;
         $("#sendCode").html(countDown + "秒");

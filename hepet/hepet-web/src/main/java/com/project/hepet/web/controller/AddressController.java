@@ -39,12 +39,12 @@ public class AddressController {
 			@RequestParam(value="areaId" , required=true) String areaId
 			){
 		HepetReceiveAddress receiveAddress = new HepetReceiveAddress();
-		receiveAddress.setAddress(address);
-		receiveAddress.setArea(area);
-		receiveAddress.setContact(contact);
+		receiveAddress.setAddress(address.trim());
+		receiveAddress.setArea(area.trim());
+		receiveAddress.setContact(contact.trim());
 		receiveAddress.setCreateTime(new Date());
 		receiveAddress.setCustomerId(WebUtil.getCustomerId(request));
-		receiveAddress.setPhone(phone);
+		receiveAddress.setPhone(phone.trim());
 		JSONObject reginInfo = new JSONObject();
 		reginInfo.put("provinceId", provinceId);
 		reginInfo.put("cityId", cityId);

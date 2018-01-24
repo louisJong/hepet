@@ -71,7 +71,7 @@ public class OrderController {
 			@RequestParam( required = true) String kdName,
 			@RequestParam( required = true) long orderId){
 		try{
-			orderService.addKdInfo(kdNo, kdName , orderId);
+			orderService.addKdInfo(kdNo.trim(), kdName.trim() , orderId);
 	    	return JsonUtils.commonJsonReturn().toJSONString();
     	}catch(Exception e){
 			logger.error("addKdInfo error " ,e);
