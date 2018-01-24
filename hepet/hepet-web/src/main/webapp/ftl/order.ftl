@@ -121,9 +121,9 @@
       return;
     }
     sendMesAjax(function(data) {
-	  $.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
+	  	$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
       sendMessage();
-	  hasClickSend = true;
+	  	hasClickSend = true;
     });
   }
   //发送验证码的ajax事件
@@ -135,8 +135,8 @@
   		data: {'goodsId' : #{goodsId}},
   		success: function(data) {
   			if(data.head.code == '0000') {
-				onSuss(data)
-			} else {
+					onSuss(data)
+				} else {
   				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
   			}
   		}
@@ -154,6 +154,7 @@
         window.clearInterval(time); //停止计时器
         $("#sendCode").removeClass('disabled'); //启用按钮
         $("#sendCode").html("发送验证码");
+				countDown = 120;
       } else {
         countDown--;
         $("#sendCode").html(countDown + "秒");
