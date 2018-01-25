@@ -2,6 +2,7 @@ package com.project.hepet.service.impl;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -447,6 +448,7 @@ public class OrderServiceImpl implements OrderService {
 			addDealThread(oList);
 		}
 	}
+<<<<<<< HEAD
 	private static final ExecutorService executor = Executors.newFixedThreadPool(10);
 	private void addDealThread(final List<HepetOrder> oList) {
 		executor.execute(new Runnable() {
@@ -532,6 +534,34 @@ public class OrderServiceImpl implements OrderService {
 				}
 			}
 		});
+=======
+
+	private void addDealThread(final List<HepetOrder> oList) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				for(HepetOrder order : oList){
+					//关订单
+					order.setStatus("CLOSED");
+					order.setUpdateTime(new Date());
+					int effectCount = orderDao.update(order);
+					if(effectCount == 0){//已支付
+						continue;
+					}
+					//解库存
+					HepetGoods goods = goodsDao.findById(order.getGoodsId());
+					Map<String , Object> param = new HashMap<String, Object>();
+					param.put("id", order.getGoodsId());
+					if(goods.getStock()!=null){
+						param.put("num", order.getNum()*-1);//加库存
+						goodsDao.deductStock(param);
+					}
+					param.put("soldNum", order.getNum()*-1);//减销量
+					goodsDao.addSoldCount(param);
+				}
+			}
+		}).start();
+>>>>>>> branch 'master' of https://github.com/louisJong/hepet.git
 	}
 	
 }
