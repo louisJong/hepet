@@ -11,11 +11,7 @@ public class HepetCreditJob {
 	private OrderService orderService;
 
 	@Scheduled(fixedRate = 20 * 60 * 1000)
-<<<<<<< HEAD
 	public void orderClose() {
-=======
-	public void order() {
->>>>>>> branch 'master' of https://github.com/louisJong/hepet.git
 		orderService.closeOrder();
 	}
 	
