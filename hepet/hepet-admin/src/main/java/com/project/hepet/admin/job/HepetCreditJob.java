@@ -10,7 +10,7 @@ public class HepetCreditJob {
 	@Autowired
 	private OrderService orderService;
 
-	@Scheduled(fixedRate = 1 * 60 * 1000)
+	@Scheduled(fixedRate = 20 * 60 * 1000)
 	public void order() {
 		orderService.closeOrder();
 	}

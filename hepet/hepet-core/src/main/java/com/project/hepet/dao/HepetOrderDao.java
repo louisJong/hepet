@@ -41,7 +41,8 @@ public class HepetOrderDao extends GenericDAOImpl<HepetOrder> {
 		return this.getSqlSession().selectOne(this.getNameSpace()+".allOrderSum", params);
 	}
 
-	public void closeOrder(Date date) {
-		this.getSqlSession().update(this.getNameSpace()+".closeOrder", date);
+	public List<HepetOrder> queryCanCloseOrder(Date queryTime) {
+		return this.getSqlSession().selectList(this.getNameSpace()+".queryCanCloseOrder", queryTime);
 	}
+
 }

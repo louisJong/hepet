@@ -237,11 +237,8 @@
 	where id=#{id}
 </update>
 
-<update id="closeOrder" parameterType="java.util.Date">
-    update hepet_order 
-	set
-	status = 'CLOSED'
-	, update_time=now()
+<select id="queryCanCloseOrder" parameterType="java.util.Date"  resultMap="hepet_order">
+	select id,goods_id,num from hepet_order 
 	where create_time &lt; #{date} AND status = 'NOPAY'
-</update>
+</select> 
 </mapper>

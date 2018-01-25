@@ -81,7 +81,8 @@ public class GoodsController {
 		goods.setGoodsName(goodsName).setIsLogistics(isLogistics).setListImgUrl(listImgUrl).setPricePerPeriod(new BigDecimal(price).divide(new BigDecimal(period), RoundingMode.CEILING))
 		.setPeriod(period).setPrice(new BigDecimal(price)).setProDetail(proDetail).setProfit(profit)
 		.setRestrictDesc(restrictDesc).setRestrictNum(restrictNum).setRestrictType(restrictType)
-		.setSendType(sendType).setSource(source).setTags(tags).setSubDesc(subDesc).setStock(stock).setRegion(region).setMarketPrice(new BigDecimal(marketPrice));
+		.setSendType(sendType).setSource(source).setTags(tags).setSubDesc(subDesc).setStock(stock).setRegion(region).setMarketPrice(new BigDecimal(marketPrice))
+		.setSoldCount(0l);
 		if(id == null){
 			goodsService.addGoods(goods);
 		}else{
