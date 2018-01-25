@@ -66,7 +66,31 @@ public class HepetOrder  extends BaseObject {
   private  Date  kdLastQueryTime;
   /** 已查询次数 */
   private  Integer  kdQueryTimes;
-  /** 类目代码 */
+  /** 商户名称 */
+  private  String  merchantName;
+  /** 商户code */
+  private  String  merchantCode;
+  /** 添加快递日期 */
+  private  Date  addKdTime;
+  public String getMerchantName() {
+	return merchantName;
+}
+public void setMerchantName(String merchantName) {
+	this.merchantName = merchantName;
+}
+public String getMerchantCode() {
+	return merchantCode;
+}
+public void setMerchantCode(String merchantCode) {
+	this.merchantCode = merchantCode;
+}
+public Date getAddKdTime() {
+	return addKdTime;
+}
+public void setAddKdTime(Date addKdTime) {
+	this.addKdTime = addKdTime;
+}
+/** 类目代码 */
 	public String getCategoryCode(){
 		return this.categoryCode;
 	}

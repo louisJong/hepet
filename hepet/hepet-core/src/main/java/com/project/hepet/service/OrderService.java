@@ -70,4 +70,6 @@ public interface OrderService {
 
 	void closeOrder();
 
+	void orderFinish();
+
 }

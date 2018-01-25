@@ -9,8 +9,11 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.lang3.time.DateUtils;
@@ -35,6 +38,7 @@ import com.project.hepet.model.HepetGoods;
 import com.project.hepet.model.HepetOrder;
 import com.project.hepet.model.HepetReceiveAddress;
 import com.project.hepet.service.OrderService;
+import com.project.hepet.utils.EnvUtil;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -378,8 +382,10 @@ public class OrderServiceImpl implements OrderService {
 		int status = kdInfo.getIntValue("status");
 		if(status==0){//查询到有数据
 			Integer deliverystatus = kdInfo.getJSONObject("result").getInteger("deliverystatus");
-			if(deliverystatus!=null && deliverystatus.intValue() == 3)//已收件
+			if(deliverystatus!=null && deliverystatus.intValue() == 3){//已收件
 				orderUpdate.setIsGetGoods(1);
+				orderUpdate.setStatus("SUCCESS");
+			}
 		}
 		orderUpdate.setUpdateTime(now);
 		orderDao.update(orderUpdate);
@@ -426,7 +432,106 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void closeOrder() {
-		orderDao.closeOrder(DateUtils.addHours(new Date(), -24));
+		List<HepetOrder> orders = orderDao.queryCanCloseOrder(DateUtils.addMinutes(new Date(), -30));
+		if(CollectionUtils.isEmpty(orders))
+			return;
+		int unitSize = 100;
+		int cycleCount = orders.size()/unitSize;//遍历次数
+		for(int j = 0 ; j < cycleCount ; j++){
+			final List<HepetOrder> oList = orders.subList(unitSize*j, unitSize*j+unitSize); 
+			addDealThread(oList);
+		}
+		int left = orders.size() % unitSize;
+		if(left>0){
+			final List<HepetOrder> oList = orders.subList(orders.size()-left , orders.size()); 
+			addDealThread(oList);
+		}
+	}
+	private static final ExecutorService executor = Executors.newFixedThreadPool(10);
+	private void addDealThread(final List<HepetOrder> oList) {
+		executor.execute(new Runnable() {
+			@Override
+			public void run() {
+				for(HepetOrder order : oList){
+					//关订单
+					order.setStatus("CLOSED");
+					order.setUpdateTime(new Date());
+					int effectCount = orderDao.update(order);
+					if(effectCount == 0){//已支付
+						continue;
+					}
+					//解库存
+					HepetGoods goods = goodsDao.findById(order.getGoodsId());
+					Map<String , Object> param = new HashMap<String, Object>();
+					param.put("id", order.getGoodsId());
+					if(goods.getStock()!=null){
+						param.put("num", order.getNum()*-1);//加库存
+						goodsDao.deductStock(param);
+					}
+					param.put("soldNum", order.getNum()*-1);//减销量
+					goodsDao.addSoldCount(param);
+				}
+			}
+		});
+	}
+
+	@Override
+	public void orderFinish() {
+		List<HepetOrder> orders = orderDao.queryCanFinishOrder(DateUtils.addDays(new Date(), -7));
+		if(CollectionUtils.isEmpty(orders))
+			return;
+		int unitSize = 50;
+		int cycleCount = orders.size()/unitSize;//遍历次数
+		for(int j = 0 ; j < cycleCount ; j++){
+			final List<HepetOrder> oList = orders.subList(unitSize*j, unitSize*j+unitSize); 
+			addDealFinishThread(oList);
+		}
+		int left = orders.size() % unitSize;
+		if(left>0){
+			final List<HepetOrder> oList = orders.subList(orders.size()-left , orders.size()); 
+			addDealFinishThread(oList);
+		}
+	}
+	
+	private void addDealFinishThread(final List<HepetOrder> oList) {
+		executor.execute(new Runnable() {
+			@Override
+			public void run() {
+				for(HepetOrder order : oList){
+					JSONObject kdInfo = null;
+					if(EnvUtil.isDev()){
+						kdInfo = new JSONObject();
+						JSONObject result= new JSONObject();
+						result.put("deliverystatus", 3);
+						kdInfo.put("result", result);
+						kdInfo.put("status", 0);
+					}else if(EnvUtil.isPro()){
+						try{
+							kdInfo = doKuaiDiQuery(order.getKdNo());
+						}catch(Exception e){
+							continue;
+						}
+					}
+					Date now = new Date();
+					HepetOrder orderUpdate = new HepetOrder();
+					orderUpdate.setId(order.getId());
+					orderUpdate.setKdLastQueryTime(now);
+					Integer hasQueryTimes = order.getKdQueryTimes(); 
+					orderUpdate.setKdQueryTimes(hasQueryTimes==null? 1 : (hasQueryTimes+1));
+					orderUpdate.setKdStateInfo(kdInfo.toJSONString());
+					int status = kdInfo.getIntValue("status");
+					if(status==0){//查询到有数据
+						Integer deliverystatus = kdInfo.getJSONObject("result").getInteger("deliverystatus");
+						if(deliverystatus!=null && deliverystatus.intValue() == 3){//已收件
+							orderUpdate.setIsGetGoods(1);
+							orderUpdate.setStatus("SUCCESS");
+						}
+					}
+					orderUpdate.setUpdateTime(now);
+					orderDao.update(orderUpdate);
+				}
+			}
+		});
 	}
 	
 }
