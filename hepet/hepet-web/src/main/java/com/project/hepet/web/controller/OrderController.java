@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.project.hepet.common.utils.CommonUtils;
 import com.project.hepet.common.utils.JsonUtils;
 import com.project.hepet.common.utils.LoginDesc;
 import com.project.hepet.common.utils.UniqueNoUtils;
@@ -92,6 +93,7 @@ public class OrderController {
 		modelMap.put("goodsId", goodsId);
 		modelMap.put("availAmt", amtJson.get("availAmt"));
 		modelMap.put("goods", goods);
+		modelMap.put("tel", CommonUtils.getTuoMinTel(WebUtil.getTel(request)));
 		modelMap.put("hasMore", addressService.haseMore(WebUtil.getTel(request), WebUtil.getCustomerId(request)));
 		return "order";
 	}
@@ -193,6 +195,7 @@ public class OrderController {
 	@RequestMapping("/hepet/order/result")
 	String orderConfirm(HttpServletRequest request , ModelMap modelMap , long orderId){
 		modelMap.put("orderInfo", orderService.orderDetail(orderId, WebUtil.getCustomerId(request)));
+		modelMap.put("tel", CommonUtils.getTuoMinTel(WebUtil.getTel(request)));
 		return "order_result";
 	}
 	

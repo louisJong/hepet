@@ -35,4 +35,8 @@ public class HepetReceiveAddressDao extends GenericDAOImpl<HepetReceiveAddress> 
 	public int setUnRecentUse(Map<String, Object> param) {
 		return  this.getSqlSession().update(this.getNameSpace()+".setUnRecentUse", param);
 	}
+
+	public void addressDelete(Map<String, Object> param) {
+		this.getSqlSession().delete(this.getNameSpace()+".addressDelete", param);
+	}
 }

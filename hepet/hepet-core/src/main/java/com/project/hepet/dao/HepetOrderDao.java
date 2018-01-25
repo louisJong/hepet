@@ -41,24 +41,11 @@ public class HepetOrderDao extends GenericDAOImpl<HepetOrder> {
 		return this.getSqlSession().selectOne(this.getNameSpace()+".allOrderSum", params);
 	}
 
-<<<<<<< HEAD
 	public List<HepetOrder> queryCanCloseOrder(Date date) {
 		return this.getSqlSession().selectList(this.getNameSpace()+".queryCanCloseOrder", date);
-=======
-	public List<HepetOrder> queryCanCloseOrder(Date queryTime) {
-		return this.getSqlSession().selectList(this.getNameSpace()+".queryCanCloseOrder", queryTime);
->>>>>>> branch 'master' of https://github.com/louisJong/hepet.git
 	}
-
-<<<<<<< HEAD
-	public void batchUpdateHasGetGoodsOrders() {
-		this.getSqlSession().update(this.getNameSpace()+".batchUpdateHasGetGoodsOrders");
-	}
-
+	
 	public List<HepetOrder> queryCanFinishOrder(Date date) {
 		return this.getSqlSession().selectList(this.getNameSpace()+".queryCanFinishOrder", date);
 	}
-
-=======
->>>>>>> branch 'master' of https://github.com/louisJong/hepet.git
 }

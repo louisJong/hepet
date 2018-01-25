@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.alibaba.fastjson.JSONObject;
 import com.project.hepet.common.utils.JsonUtils;
@@ -83,5 +85,15 @@ public class AddressServiceImpl implements AddressService {
 		param.put("customerId", customerId);
 		param.put("tel", tel);
 		return addressDao.setUnRecentUse(param);
+	}
+
+	@Override
+	public void addressDelete(long id, String tel, Long customerId) {
+		Assert.isTrue(id>0 && StringUtils.isNoneBlank(tel) && customerId!=null);
+		Map<String , Object> param = new HashMap<String, Object>();
+		param.put("customerId", customerId);
+		param.put("tel", tel);
+		param.put("id", id);
+		addressDao.addressDelete(param);
 	}
 }

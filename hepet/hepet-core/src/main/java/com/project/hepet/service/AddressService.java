@@ -22,4 +22,6 @@ public interface AddressService {
 	int setRecentUse(Long addid, String tel, Long customerId);
 
 	int setUnRecentUse(String tel, Long customerId);
+
+	void addressDelete(long id, String tel, Long customerId);
 }

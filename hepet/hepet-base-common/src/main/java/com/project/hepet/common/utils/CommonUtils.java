@@ -308,8 +308,14 @@ public class CommonUtils {
 	        return false;
 	    }
 	    
-	public static void main(String[] args) {
-		System.out.println(isChinese("琌椠s"));
+	public static String getTuoMinTel(String tel){
+		if(StringUtils.isBlank(tel) || tel.length()<7){
+			return "";
+		}
+		return tel.substring(0, 3)+"****"+tel.substring(7);
 	}
 	
+	public static void main(String[] args) {
+		System.out.println(getTuoMinTel("18214827318"));
+	}
 }

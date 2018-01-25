@@ -65,43 +65,45 @@
         </div>
         <div class="bottom">
             <div class="img">
-                <img src="./images/alert.png">
+                <img src="${orderInfo.listImgUrl}">
             </div>
             <div class="right">
                 <p class="title">${orderInfo.goodsName}</p>
-                <p class="tags">原木色</p>
-                <p class="price">¥ 299</p>
+                <p class="tags">${orderInfo.subDesc}</p>
+                <p class="price">¥ ${orderInfo.price}</p>
             </div>
 						<#if orderInfo.status=='NORECEIVE'>
-						<div class="logic light" onclick="window.location.href='${host.base}/hepet/order/kd_query?orderId=${orderInfo.id}'">查看物流</div>
+							<div class="logic light" onclick="window.location.href='${host.base}/hepet/order/kd_query?orderId=${orderInfo.id}'">查看物流</div>
 						<#elseif orderInfo.status=='SUCCESS'>
-						<div class="logic" onclick="window.location.href='${host.base}/hepet/order/kd_query?orderId=${orderInfo.id}'">查看物流</div>
-						
+							<div class="logic" onclick="window.location.href='${host.base}/hepet/order/kd_query?orderId=${orderInfo.id}'">查看物流</div>
 						</#if>
-        </div>
+           </div>
     </div>
 		<div class="gray-line"></div>
     <div class="order-info">
         <p><span>支付方式</span><b>花样金信用额度预付</b></p>
-        <p><span>产品金额</span><b>299元</b></p>
+        <p><span>产品金额</span><b>${orderInfo.price}元</b></p>
         <p><span>分期方式</span><b>${orderInfo.period}期</b></p>
         <p><span>还款方式</span><b>等额本息，每月还款</b></p>
         <p><span>还款计划</span><b>每期还${funUtils.formatAmt(orderInfo.pricePerPeriod)}元</b></p>
         <p><span>还款日</span><b>每月15日</b></p>
         <div style="width: 100%; border-bottom: 1px solid #ddd; margin-top: 10px; margin-bottom: 10px;"></div>
-        <p><span>订单编号</span><b>1783422</b></p>
-        <p><span>下单时间</span><b>2018-02-10 12:00</b></p>
+        <p><span>订单编号</span><b>${orderInfo.orderNum}</b></p>
+        <p><span>下单时间</span><b>${orderInfo.createTime?string("yyyy-MM-dd HH:mm:ss")}</b></p>
 				<#if orderInfo.status=!'NOPAY'>
-				<p><span>支付时间</span><b>2018-02-10 12:00</b></p>
+				<p><span>支付时间</span><b>${orderInfo.payTime?string("yyyy-MM-dd HH:mm:ss")}</b></p>
 				</#if>
     </div>		
 	</div>
 </main>
 <!-- 查看订单按钮 -->
-
-<#if orderInfo.status=='NOPAY'>
+	<#if orderInfo.status!='NOPAY'>
+<div class="btn-box">
+	<div class="normal-btn" onclick="window.location.href='${host.base}/hepet/myOrders'">查看我的订单</div>
+</div>
+<#elseif orderInfo.status=='NOPAY'>
 <div class="fix-button">
-        <div class="left" id="cancle">取消订单</div>
+        <div class="left">取消订单</div>
         <div class="right" id="confirm">立即支付</div>
     </div>
 </#if>
@@ -127,24 +129,6 @@
 	$(function(){
 		$("#codeInput").on("input propertychange", function(){
 			$(this).val($(this).val().replace(/[^\d]/g,'').substr(0,6));
-		})
-		// 取消订单
-		$("#cancle").on("click", function(){
-			$.ajax({
-				type:'post',
-				url:'${host.base}/hepet/order/cancel',
-				type: 'post',
-				dataType: 'json',
-				data: {'orderId' : ${orderInfo.id}},
-				success: function(data) {
-					if(data.head.code == '0000') {
-						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000});
-						window.location.reload();
-					} else {
-						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
-					}
-  			}
-			})
 		})
 	})
 	$("#confirm").on("click", confirm);
@@ -205,7 +189,7 @@
   		url:'${host.base}/hepet/order/getPaySmsCode',
   		type: 'post',
   		dataType: 'json',
-  		data: {'goodsId' : ${orderInfo.goodsId}},
+  		data: {'goodsId' : 21},
   		success: function(data) {
   			if(data.head.code == '0000') {
 				onSuss(data)
@@ -227,7 +211,6 @@
         window.clearInterval(time); //停止计时器
         $("#sendCode").removeClass('disabled'); //启用按钮
         $("#sendCode").html("发送验证码");
-				countDown = 120;
       } else {
         countDown--;
         $("#sendCode").html(countDown + "秒");

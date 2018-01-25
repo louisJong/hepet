@@ -77,7 +77,7 @@
 </#function>
 
 <#-- 日期格式化 -->
-<#function formatDate sDate=null fmt="yyyy-MM-dd" defaultVal="--">
+<#function formatDate sDate=null fmt="yyyy-MM-dd HH:mm:ss" defaultVal="--">
 	<#if sDate ??>
 		<#return sDate?string(fmt)>
 	<#else>

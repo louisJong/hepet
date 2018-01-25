@@ -39,12 +39,12 @@ public class AddressController {
 			@RequestParam(value="areaId" , required=true) String areaId
 			){
 		HepetReceiveAddress receiveAddress = new HepetReceiveAddress();
-		receiveAddress.setAddress(address.trim());
-		receiveAddress.setArea(area.trim());
-		receiveAddress.setContact(contact.trim());
+		receiveAddress.setAddress(address);
+		receiveAddress.setArea(area);
+		receiveAddress.setContact(contact);
 		receiveAddress.setCreateTime(new Date());
 		receiveAddress.setCustomerId(WebUtil.getCustomerId(request));
-		receiveAddress.setPhone(phone.trim());
+		receiveAddress.setPhone(phone);
 		JSONObject reginInfo = new JSONObject();
 		reginInfo.put("provinceId", provinceId);
 		reginInfo.put("cityId", cityId);
@@ -61,6 +61,15 @@ public class AddressController {
 	String addressList(HttpServletRequest request){
 		JSONObject result = JsonUtils.commonJsonReturn();
 		JsonUtils.setBody(result, "addresses", addressService.addressList(WebUtil.getTel(request), WebUtil.getCustomerId(request)));
+		return result.toJSONString();
+	}
+	
+	@LoginDesc
+	@RequestMapping("/hepet/address/delete")
+	@ResponseBody
+	String addressDelete(HttpServletRequest request , @RequestParam long id){
+		JSONObject result = JsonUtils.commonJsonReturn();
+		addressService.addressDelete(id , WebUtil.getTel(request), WebUtil.getCustomerId(request));
 		return result.toJSONString();
 	}
 	

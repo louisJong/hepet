@@ -100,4 +100,8 @@
 <update id="setUnRecentUse">
 	update hepet_receive_address set recent_use = 0, update_time=now() where customer_id=#{customerId} and tel = #{tel} and recent_use = 1
 </update>
+<delete id="addressDelete" parameterType="hashMap">
+	delete from hepet_receive_address 
+	where customer_id=#{customerId} and tel = #{tel} and id=#{id}
+</delete>
 </mapper>
