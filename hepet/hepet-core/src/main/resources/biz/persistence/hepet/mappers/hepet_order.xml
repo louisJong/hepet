@@ -242,15 +242,6 @@
 	</set> 
 	where id=#{id}
 </update>
-<<<<<<< HEAD
-<update id="batchUpdateHasGetGoodsOrders">
-    update hepet_order 
-	<set>
-	status = 'SUCCESS'
-	, update_time=now(),
-	</set> 
-	where is_get_goods=1
-</update>
 <select id="queryCanCloseOrder" parameterType="java.util.Date"  resultMap="hepet_order">
 	select id,goods_id,num from hepet_order 
 	where create_time &lt; #{date} AND status = 'NOPAY'
@@ -258,11 +249,5 @@
 <select id="queryCanFinishOrder" parameterType="java.util.Date"  resultMap="hepet_order">
 	select * from hepet_order 
 	where add_kd_time &lt; #{date} AND status = 'NORECEIVE'
-=======
-
-<select id="queryCanCloseOrder" parameterType="java.util.Date"  resultMap="hepet_order">
-	select id,goods_id,num from hepet_order 
-	where create_time &lt; #{date} AND status = 'NOPAY'
->>>>>>> branch 'master' of https://github.com/louisJong/hepet.git
 </select> 
 </mapper>
