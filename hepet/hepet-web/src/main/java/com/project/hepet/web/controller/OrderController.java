@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -81,6 +82,9 @@ public class OrderController {
 		}
 		if(address == null){
 			address = addressService.getRecentUse(WebUtil.getTel(request), WebUtil.getCustomerId(request));
+		}
+		if(address!=null && StringUtils.isNoneBlank(address.getAddress())){
+			address.setAddress(CommonUtils.replaceBlank(address.getAddress()));
 		}
 		result = goodsService.goodsDetail(goodsId, false);
 		HepetGoods goods = (HepetGoods) JsonUtils.getBodyValue(result, "info");
