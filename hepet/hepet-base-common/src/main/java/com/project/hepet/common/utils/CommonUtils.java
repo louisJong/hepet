@@ -315,7 +315,19 @@ public class CommonUtils {
 		return tel.substring(0, 3)+"****"+tel.substring(7);
 	}
 	
+	public static String replaceBlank(String str) {
+		String dest = "";
+		if (str!=null) {
+			Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+			Matcher m = p.matcher(str);
+			dest = m.replaceAll("");
+		}
+		return dest;
+	}
+	
 	public static void main(String[] args) {
-		System.out.println(getTuoMinTel("18214827318"));
+		String s = "1821482731\n8";
+		System.out.println(s);
+		System.out.println(replaceBlank(s));
 	}
 }
