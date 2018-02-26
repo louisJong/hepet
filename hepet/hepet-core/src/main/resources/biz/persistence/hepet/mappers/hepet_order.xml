@@ -34,6 +34,9 @@
 	<result column="is_get_goods" property="isGetGoods"/>
 	<result column="kd_last_query_time" property="kdLastQueryTime"/>
 	<result column="kd_query_times" property="kdQueryTimes"/>
+	<result column="merchant_name" property="merchantName"/>
+	<result column="merchant_code" property="merchantCode"/>
+	<result column="add_kd_time" property="addKdTime"/>
 </resultMap>
 <select id="findById" parameterType="long"  resultMap="hepet_order">
 	select * 	from hepet_order where id=#{id}  
@@ -166,14 +169,14 @@
 	limit #{startRow} , #{limit}
 </select>  
 <insert id="insert"  parameterType="com.project.hepet.model.HepetOrder"  useGeneratedKeys="true" keyProperty="id">
-	insert into hepet_order(id ,category_code ,brand_code ,brand_name ,goods_name ,sub_desc ,profit ,num ,price ,period ,price_per_period ,address ,contact ,phone ,kd_no ,kd_name ,status ,update_time ,create_time ,pay_time ,customer_id ,tel ,order_num ,pay_num ,pay_code ,pay_info ,goods_id ,list_img_url ,kd_state_info ,is_get_goods ,kd_last_query_time ,kd_query_times)
-   values(#{id,jdbcType=INTEGER} ,#{categoryCode,jdbcType=VARCHAR} ,#{brandCode,jdbcType=VARCHAR} ,#{brandName,jdbcType=VARCHAR} ,#{goodsName,jdbcType=VARCHAR} ,#{subDesc,jdbcType=VARCHAR} ,#{profit,jdbcType=INTEGER} ,#{num,jdbcType=INTEGER} ,#{price,jdbcType=DECIMAL} ,#{period,jdbcType=INTEGER} ,#{pricePerPeriod,jdbcType=DECIMAL} ,#{address,jdbcType=VARCHAR} ,#{contact,jdbcType=VARCHAR} ,#{phone,jdbcType=VARCHAR} ,#{kdNo,jdbcType=VARCHAR} ,#{kdName,jdbcType=VARCHAR} ,#{status,jdbcType=VARCHAR} ,#{updateTime,jdbcType=TIMESTAMP} ,#{createTime,jdbcType=TIMESTAMP} ,#{payTime,jdbcType=TIMESTAMP} ,#{customerId,jdbcType=INTEGER} ,#{tel,jdbcType=VARCHAR} ,#{orderNum,jdbcType=VARCHAR} ,#{payNum,jdbcType=VARCHAR} ,#{payCode,jdbcType=VARCHAR} ,#{payInfo,jdbcType=VARCHAR} ,#{goodsId,jdbcType=INTEGER} ,#{listImgUrl,jdbcType=LONGVARCHAR} ,#{kdStateInfo,jdbcType=LONGVARCHAR} ,#{isGetGoods,jdbcType=TINYINT} ,#{kdLastQueryTime,jdbcType=TIMESTAMP} ,#{kdQueryTimes,jdbcType=TINYINT}) 
+	insert into hepet_order(id ,category_code ,brand_code ,brand_name ,goods_name ,sub_desc ,profit ,num ,price ,period ,price_per_period ,address ,contact ,phone ,kd_no ,kd_name ,status ,update_time ,create_time ,pay_time ,customer_id ,tel ,order_num ,pay_num ,pay_code ,pay_info ,goods_id ,list_img_url ,kd_state_info ,is_get_goods ,kd_last_query_time ,kd_query_times ,merchant_name ,merchant_code ,add_kd_time)
+   values(#{id,jdbcType=INTEGER} ,#{categoryCode,jdbcType=VARCHAR} ,#{brandCode,jdbcType=VARCHAR} ,#{brandName,jdbcType=VARCHAR} ,#{goodsName,jdbcType=VARCHAR} ,#{subDesc,jdbcType=VARCHAR} ,#{profit,jdbcType=INTEGER} ,#{num,jdbcType=INTEGER} ,#{price,jdbcType=DECIMAL} ,#{period,jdbcType=INTEGER} ,#{pricePerPeriod,jdbcType=DECIMAL} ,#{address,jdbcType=VARCHAR} ,#{contact,jdbcType=VARCHAR} ,#{phone,jdbcType=VARCHAR} ,#{kdNo,jdbcType=VARCHAR} ,#{kdName,jdbcType=VARCHAR} ,#{status,jdbcType=VARCHAR} ,#{updateTime,jdbcType=TIMESTAMP} ,#{createTime,jdbcType=TIMESTAMP} ,#{payTime,jdbcType=TIMESTAMP} ,#{customerId,jdbcType=INTEGER} ,#{tel,jdbcType=VARCHAR} ,#{orderNum,jdbcType=VARCHAR} ,#{payNum,jdbcType=VARCHAR} ,#{payCode,jdbcType=VARCHAR} ,#{payInfo,jdbcType=VARCHAR} ,#{goodsId,jdbcType=INTEGER} ,#{listImgUrl,jdbcType=LONGVARCHAR} ,#{kdStateInfo,jdbcType=LONGVARCHAR} ,#{isGetGoods,jdbcType=TINYINT} ,#{kdLastQueryTime,jdbcType=TIMESTAMP} ,#{kdQueryTimes,jdbcType=TINYINT} ,#{merchantName,jdbcType=VARCHAR} ,#{merchantCode,jdbcType=VARCHAR} ,#{addKdTime,jdbcType=DATE}) 
 </insert>
 <insert id="batchInsert"  parameterType="list">
-	insert into hepet_order(id ,category_code ,brand_code ,brand_name ,goods_name ,sub_desc ,profit ,num ,price ,period ,price_per_period ,address ,contact ,phone ,kd_no ,kd_name ,status ,update_time ,create_time ,pay_time ,customer_id ,tel ,order_num ,pay_num ,pay_code ,pay_info ,goods_id ,list_img_url ,kd_state_info ,is_get_goods ,kd_last_query_time ,kd_query_times)
+	insert into hepet_order(id ,category_code ,brand_code ,brand_name ,goods_name ,sub_desc ,profit ,num ,price ,period ,price_per_period ,address ,contact ,phone ,kd_no ,kd_name ,status ,update_time ,create_time ,pay_time ,customer_id ,tel ,order_num ,pay_num ,pay_code ,pay_info ,goods_id ,list_img_url ,kd_state_info ,is_get_goods ,kd_last_query_time ,kd_query_times ,merchant_name ,merchant_code ,add_kd_time)
    values
 	<foreach collection="list" item="item" index="index"   separator=","> 
-    (#{item.id,jdbcType=INTEGER} ,#{item.categoryCode,jdbcType=VARCHAR} ,#{item.brandCode,jdbcType=VARCHAR} ,#{item.brandName,jdbcType=VARCHAR} ,#{item.goodsName,jdbcType=VARCHAR} ,#{item.subDesc,jdbcType=VARCHAR} ,#{item.profit,jdbcType=INTEGER} ,#{item.num,jdbcType=INTEGER} ,#{item.price,jdbcType=DECIMAL} ,#{item.period,jdbcType=INTEGER} ,#{item.pricePerPeriod,jdbcType=DECIMAL} ,#{item.address,jdbcType=VARCHAR} ,#{item.contact,jdbcType=VARCHAR} ,#{item.phone,jdbcType=VARCHAR} ,#{item.kdNo,jdbcType=VARCHAR} ,#{item.kdName,jdbcType=VARCHAR} ,#{item.status,jdbcType=VARCHAR} ,#{item.updateTime,jdbcType=TIMESTAMP} ,#{item.createTime,jdbcType=TIMESTAMP} ,#{item.payTime,jdbcType=TIMESTAMP} ,#{item.customerId,jdbcType=INTEGER} ,#{item.tel,jdbcType=VARCHAR} ,#{item.orderNum,jdbcType=VARCHAR} ,#{item.payNum,jdbcType=VARCHAR} ,#{item.payCode,jdbcType=VARCHAR} ,#{item.payInfo,jdbcType=VARCHAR} ,#{item.goodsId,jdbcType=INTEGER} ,#{item.listImgUrl,jdbcType=LONGVARCHAR} ,#{item.kdStateInfo,jdbcType=LONGVARCHAR} ,#{item.isGetGoods,jdbcType=TINYINT} ,#{item.kdLastQueryTime,jdbcType=TIMESTAMP} ,#{item.kdQueryTimes,jdbcType=TINYINT})
+    (#{item.id,jdbcType=INTEGER} ,#{item.categoryCode,jdbcType=VARCHAR} ,#{item.brandCode,jdbcType=VARCHAR} ,#{item.brandName,jdbcType=VARCHAR} ,#{item.goodsName,jdbcType=VARCHAR} ,#{item.subDesc,jdbcType=VARCHAR} ,#{item.profit,jdbcType=INTEGER} ,#{item.num,jdbcType=INTEGER} ,#{item.price,jdbcType=DECIMAL} ,#{item.period,jdbcType=INTEGER} ,#{item.pricePerPeriod,jdbcType=DECIMAL} ,#{item.address,jdbcType=VARCHAR} ,#{item.contact,jdbcType=VARCHAR} ,#{item.phone,jdbcType=VARCHAR} ,#{item.kdNo,jdbcType=VARCHAR} ,#{item.kdName,jdbcType=VARCHAR} ,#{item.status,jdbcType=VARCHAR} ,#{item.updateTime,jdbcType=TIMESTAMP} ,#{item.createTime,jdbcType=TIMESTAMP} ,#{item.payTime,jdbcType=TIMESTAMP} ,#{item.customerId,jdbcType=INTEGER} ,#{item.tel,jdbcType=VARCHAR} ,#{item.orderNum,jdbcType=VARCHAR} ,#{item.payNum,jdbcType=VARCHAR} ,#{item.payCode,jdbcType=VARCHAR} ,#{item.payInfo,jdbcType=VARCHAR} ,#{item.goodsId,jdbcType=INTEGER} ,#{item.listImgUrl,jdbcType=LONGVARCHAR} ,#{item.kdStateInfo,jdbcType=LONGVARCHAR} ,#{item.isGetGoods,jdbcType=TINYINT} ,#{item.kdLastQueryTime,jdbcType=TIMESTAMP} ,#{item.kdQueryTimes,jdbcType=TINYINT} ,#{item.merchantName,jdbcType=VARCHAR} ,#{item.merchantCode,jdbcType=VARCHAR} ,#{item.addKdTime,jdbcType=DATE})
 	</foreach> 
 </insert>
 <update id="update"	parameterType="com.project.hepet.model.HepetOrder">
@@ -208,7 +211,10 @@
 	<if test="kdStateInfo != null">kd_state_info=#{kdStateInfo},</if>
 	<if test="isGetGoods != null">is_get_goods=#{isGetGoods},</if>
 	<if test="kdLastQueryTime != null">kd_last_query_time=#{kdLastQueryTime},</if>
-	<if test="kdQueryTimes != null">kd_query_times=#{kdQueryTimes}</if>
+	<if test="kdQueryTimes != null">kd_query_times=#{kdQueryTimes},</if>
+	<if test="merchantName != null">merchant_name=#{merchantName},</if>
+	<if test="merchantCode != null">merchant_code=#{merchantCode},</if>
+	<if test="addKdTime != null">add_kd_time=#{addKdTime}</if>
 </set>
 	<where>
 		<if test="id!=null">
@@ -232,8 +238,17 @@
 	<if test="kdNo != null">kd_no=#{kdNo},</if>
 	<if test="kdName != null">kd_name=#{kdName},</if>
 	status = 'NORECEIVE'
-	, update_time=now()
+	, update_time=now(),
+	add_kd_time=now()
 	</set> 
 	where id=#{id}
 </update>
+<select id="queryCanCloseOrder" parameterType="java.util.Date"  resultMap="hepet_order">
+	select id,goods_id,num from hepet_order 
+	where create_time &lt; #{date} AND status = 'NOPAY'
+</select> 
+<select id="queryCanFinishOrder" parameterType="java.util.Date"  resultMap="hepet_order">
+	select * from hepet_order 
+	where add_kd_time &lt; #{date} AND status = 'NORECEIVE'
+</select> 
 </mapper>
