@@ -119,7 +119,11 @@ public class AddressController {
 		modelMap.put("curUrl", curUrl);
 		if(id!=null){
 			modelMap.put("id", id);
-			modelMap.put("address", addressService.getAddress(WebUtil.getTel(request), WebUtil.getCustomerId(request), id));
+			HepetReceiveAddress address = addressService.getAddress(WebUtil.getTel(request), WebUtil.getCustomerId(request), id);
+			if(address!=null && StringUtils.isNoneBlank(address.getAddress())){
+				address.setAddress(CommonUtils.replaceBlank(address.getAddress()));
+			}
+			modelMap.put("address", address);
 		}
 		return "add_address";
 	}
