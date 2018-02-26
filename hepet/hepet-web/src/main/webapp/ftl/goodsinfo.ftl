@@ -16,6 +16,7 @@
   .pd-detail {width: 100%;}
   .media-wrap {width: 100%;}
   .media-wrap img{width: 100%;}
+  #pd-detail img{width: 100%;}
   </style>
 </head>
 <body style="background: #f5f5f5; padding-bottom: 60px;">

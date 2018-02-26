@@ -98,12 +98,12 @@
 </main>
 <!-- 查看订单按钮 -->
 	<#if orderInfo.status!='NOPAY'>
-<div class="btn-box">
+<#--  <div class="btn-box">
 	<div class="normal-btn" onclick="window.location.href='${host.base}/hepet/myOrders'">查看我的订单</div>
-</div>
+</div>  -->
 <#elseif orderInfo.status=='NOPAY'>
 <div class="fix-button">
-        <div class="left">取消订单</div>
+        <div class="left" id='cancel'>取消订单</div>
         <div class="right" id="confirm">立即支付</div>
     </div>
 </#if>
@@ -132,6 +132,26 @@
 		})
 	})
 	$("#confirm").on("click", confirm);
+	$("#cancel").on("click", cancel);
+
+	function cancel() {
+		$.ajax({
+			url:'${host.base}//hepet/order/cancel',
+  		type: 'post',
+  		dataType: 'json',
+  		data: {'orderId' : ${orderInfo.id}},
+			success: function(data) {
+				if(data.head.code == '0000') {
+						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
+						window.location.reload();
+	  			} else {
+	  				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
+	  			}
+			}
+		})
+	}
+
+
 	var countDown = 120,
     time = null,
     hasClickSend = false;
@@ -163,7 +183,8 @@
 	  		data: params,
 	  		success: function(data) {
 	  			if(data.head.code == '0000') {
-					window.reload();
+						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
+						window.location.reload();
 	  			} else {
 	  				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
 	  			}
@@ -189,7 +210,7 @@
   		url:'${host.base}/hepet/order/getPaySmsCode',
   		type: 'post',
   		dataType: 'json',
-  		data: {'goodsId' : 21},
+  		data: {'goodsId' : ${orderInfo.goodsId}},
   		success: function(data) {
   			if(data.head.code == '0000') {
 				onSuss(data)
