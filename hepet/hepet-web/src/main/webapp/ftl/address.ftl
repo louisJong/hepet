@@ -16,8 +16,10 @@
 <!-- 地址列表	 -->
 <div class="address-list"></div>
 <!-- 新增地址按钮 -->
-<div class="button" id="btn">
-	<p><i class="add-icon"></i>添加新地址</p>
+<div id="addressBox">
+	<div class="button" id="btn">
+		<p><i class="add-icon"></i>添加新地址</p>
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -25,7 +27,10 @@
 	var from = commonUtils.getUrlParam('from');
 	$(function() {
 		getAddList();
-		$("body").on("click",".no-address, #btn", function() {
+		/*$("#btn").on("click", function() {
+			alert(1)
+		})*/
+		$("#addressBox").on("click",".no-address, #btn", function() {	
 			if(from === 'order'){
 				var curUrl = commonUtils.getUrlParam('curUrl');
 				window.location.href = '${host.base}/hepet/addAddr?curUrl='+curUrl+'&from=order';
@@ -57,7 +62,7 @@
 					console.log(data)
 					if(data.head.code == '0000') {
 						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000});
-						window.location.reload();
+						setTimeout(function(){window.location.reload()}, 2000);
 					} else {
 						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
 					}
@@ -85,7 +90,7 @@
 			str += '<p class="add-icon"></p>';
 			str += '<p>点击添加地址</p></div>';  
 			str += '<div class="gray-line"></div>'; 
-			$("body").prepend($(str));
+			$("#addressBox").prepend($(str));
 		} else {
 			data.map(function(item, index) {
 				str += '<div class="address-card" data-id="'+ item['id'] +'">';

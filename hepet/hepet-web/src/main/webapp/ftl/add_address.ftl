@@ -130,6 +130,7 @@ function subAjax(params) {
 }
 function handelName() {
  	var v;
+	$(this).val($(this).val().substr(0,20));
  	if(!$(this).val()) {
  		v = false;
  	} else {
