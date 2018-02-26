@@ -14,8 +14,8 @@
 	<div class="header">
         <div class="left"></div>
         <div class="right">
-            <p>物流公司: 圆通快递</p>
-            <p>物流单号: 7827497949434935</p>
+            <p>物流公司: ${kdNo?default('--')}</p>
+            <p>物流单号: ${kdName?default('--')}</p>
         </div>
     </div>
     <div class="gray-line"></div>

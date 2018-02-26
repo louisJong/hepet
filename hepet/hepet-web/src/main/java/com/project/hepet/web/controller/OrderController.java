@@ -177,15 +177,16 @@ public class OrderController {
 	@LoginDesc
 	@RequestMapping("/hepet/order/kd_query")
 	String kd_query(ModelMap model , HttpServletRequest request , @RequestParam(required = true) long orderId){
-		JSONArray list = null;
+		JSONArray list = new JSONArray();
 		try {
 			JSONObject result = orderService.queryKdInfo(orderId ,  WebUtil.getCustomerId(request));
+			model.put("kdNo", result.getJSONObject("body").getString("kdNo"));
+			model.put("kdName", result.getJSONObject("body").getString("kdName"));
 			if(JsonUtils.isSuccessCode(result) && result.getJSONObject("body").getIntValue("status") == 0){
 				list = result.getJSONObject("body").getJSONObject("kdInfo").getJSONObject("result").getJSONArray("list");
 			}
 		}catch(Exception e) {
 			logger.error("kd_query error orderId:"+orderId, e);
-			list = new JSONArray();
 		}
 		model.put("list", list);
 		return "express_info";
