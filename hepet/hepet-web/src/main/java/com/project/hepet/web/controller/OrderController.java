@@ -1,5 +1,6 @@
 package com.project.hepet.web.controller;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -89,9 +90,10 @@ public class OrderController {
 		} catch (HttpException e) {
 			amtJson = new JSONObject();
 		}
+		Long availAmt = amtJson.getLong("availAmt");
 		modelMap.put("address", address);
 		modelMap.put("goodsId", goodsId);
-		modelMap.put("availAmt", amtJson.get("availAmt"));
+		modelMap.put("availAmt", availAmt == null? 0 : (BigDecimal.valueOf(availAmt).divide(new BigDecimal(100))));
 		modelMap.put("goods", goods);
 		modelMap.put("tel", CommonUtils.getTuoMinTel(WebUtil.getTel(request)));
 		modelMap.put("hasMore", addressService.haseMore(WebUtil.getTel(request), WebUtil.getCustomerId(request)));
