@@ -65,7 +65,7 @@
 	</where>
 </select>  
 <select id="findGoods" parameterType="hashmap"  resultMap="hepet_goods">
-	select id,brand_name,market_price,goods_name,sub_desc,list_img_url,pro_sort,price,period,is_logistics,status,stock,tags,sold_count from hepet_goods 
+	select id,brand_name,market_price,goods_name,profit,sub_desc,list_img_url,pro_sort,price,period,is_logistics,status,stock,tags,sold_count from hepet_goods 
   	<where>
   		<if test="categoryCode!=null and categoryCode!=''">
   			category_code = #{categoryCode}
