@@ -14,8 +14,8 @@
 	<div class="header">
         <div class="left"></div>
         <div class="right">
-            <p>物流公司: ${kdName?default('--')}</p>
-            <p>物流单号: ${kdNo?default('--')}</p>
+            <p>物流公司: ${kdName?default('--')} </p>
+            <p>物流单号: ${kdNo?default('--')} </p>
         </div>
     </div>
     <div class="gray-line"></div>
