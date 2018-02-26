@@ -21,7 +21,7 @@
 <body>
 <form id="addressForm">
 	<div class="input-label">
-		<span class="input-tips">收件人</span><input type="text" name="contact" placeholder="请输入收件人姓名" id='contact'>
+		<span class="input-tips">收件人</span><input type="text" name="contact" placeholder="请输入收件人姓名" id='contact' maxlength=20>
 	</div>
 	<div class="input-label">
 		<span class="input-tips">手机号</span><input type="text" name="phone" placeholder="请输入收件人手机号" id="phone">
@@ -130,7 +130,6 @@ function subAjax(params) {
 }
 function handelName() {
  	var v;
-	$(this).val($(this).val().substr(0,20));
  	if(!$(this).val()) {
  		v = false;
  	} else {

@@ -146,7 +146,7 @@
 			success: function(data) {
 				if(data.head.code == '0000') {
 						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
-						window.location.reload();
+						setTimeout(function(){window.location.reload()},2000);
 	  			} else {
 	  				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
 	  			}
@@ -164,7 +164,7 @@
 			success: function(data) {
 				if(data.head.code == '0000') {
 						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
-						window.location.reload();
+						setTimeout(function(){window.location.reload()},2000);
 	  			} else {
 	  				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
 	  			}
