@@ -64,7 +64,11 @@ public class OrderServiceImpl implements OrderService {
 	@Value("${kuaidi_query_appcode}")
 	private String KUAIDI_QUERY_APPCODE;
 	
-	private static String MERCHANR_ID = "ZY00000002";
+	@Value("${mall.merchantId}")
+	private String merchantId;
+	
+	@Value("${mall.merchantCode}")
+	private String merchantCode;
 	
 	@Override
 	public List<HepetOrder> orderList(Map<String , Object> params) {
@@ -166,7 +170,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("transCode", "TS2001");
 		param.put("mobile", tel);
 		param.put("timeStamp", new Date().getTime()+"");
-		param.put("merchantId", MERCHANR_ID);
+		param.put("merchantId", merchantId);
 		param.put("thirdOrderNo", orderNum);
 		param.put("transReqNo", UUID.randomUUID().toString().replace("-", ""));
 		param.put("amount", (goods.getPrice().multiply(new BigDecimal(100))).longValue());
@@ -192,7 +196,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("transCode", "TS2002");
 		param.put("mobile", tel);
 		param.put("timeStamp", now.getTime()+"");
-		param.put("merchantId", MERCHANR_ID);
+		param.put("merchantId", merchantId);
 		param.put("thirdOrderNo", orderNum);
 		param.put("transReqNo", tradeId);
 		param.put("amount", (goods.getPrice().multiply(new BigDecimal(100))).longValue());
@@ -200,7 +204,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("dynamicPwd", dynamicPwd);
 		param.put("comUseType", "9");
 		param.put("payDescription", desc);
-		param.put("merchantCode", "C00131990010001");
+		param.put("merchantCode", merchantCode);
 		JSONObject payResult = doTrans(param, token);
 		updateOrder.setPayCode(payResult.getString("code"));
 		updateOrder.setPayInfo(payResult.getString("msg"));
@@ -228,7 +232,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("transCode", "TS2002");
 		param.put("mobile", tel);
 		param.put("timeStamp", now.getTime()+"");
-		param.put("merchantId", MERCHANR_ID);
+		param.put("merchantId", merchantId);
 		param.put("thirdOrderNo", order.getOrderNum());
 		param.put("transReqNo", tradeId);
 		param.put("amount", (order.getPrice().multiply(new BigDecimal(100))).longValue());
@@ -236,7 +240,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("dynamicPwd", dynamicPwd);
 		param.put("comUseType", "9");
 		param.put("payDescription", "");
-		param.put("merchantCode", "C00131990010001");
+		param.put("merchantCode", merchantCode);
 		JSONObject payResult = doTrans(param, token);
 		HepetOrder updateOrder = new HepetOrder();
 		updateOrder.setId(orderId);
@@ -293,7 +297,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("transCode", "TS1001");
 		param.put("mobile", tel);
 		param.put("timeStamp", new Date().getTime()+"");
-		param.put("merchantId", MERCHANR_ID);
+		param.put("merchantId", merchantId);
 		return doTrans(param, token);
 	}
 
@@ -307,7 +311,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("transCode", "TS2003");
 		param.put("mobile", tel);
 		param.put("timeStamp", now.getTime()+"");
-		param.put("merchantId", MERCHANR_ID);
+		param.put("merchantId", merchantId);
 		param.put("transReqNo", tradeId);
 		JSONObject payResult = null;
 		try {
