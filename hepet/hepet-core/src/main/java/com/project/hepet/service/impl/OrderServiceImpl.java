@@ -368,15 +368,24 @@ public class OrderServiceImpl implements OrderService {
 	public JSONObject queryKdInfo(long orderId , long customerId) throws IOException {
 		JSONObject result = JsonUtils.commonJsonReturn();
 		HepetOrder order = orderDao.findDetail(orderId, customerId);
-		if(!canQueryKd(order))
+		if(order==null || !canQueryKd(order))
 			return JsonUtils.commonJsonReturn("0001", "无可查询信息");
+		JsonUtils.setBody(result, "kdNo", order.getKdNo());
+		JsonUtils.setBody(result, "kdName", order.getKdName());
 		Date now = new Date();
 		if( (order.getIsGetGoods()!=null && 1 == order.getIsGetGoods()) 
 				|| (order.getKdLastQueryTime()!=null && order.getKdLastQueryTime().after(DateUtils.addHours(now, -4))) ){//已收件||间隔4小时之内
 			result.getJSONObject("body").put("kdInfo", JSON.parse(order.getKdStateInfo()));
 			return result;
 		}
-		JSONObject kdInfo = doKuaiDiQuery(order.getKdNo());
+		JSONObject kdInfo = null;
+		try{
+			kdInfo = doKuaiDiQuery(order.getKdNo());
+		}catch(Exception e){
+			logger.error("doKuaiDiQuery error " , e);
+			JsonUtils.setHead(result, "9999", "查询异常");
+			return result;
+		}
 		result.getJSONObject("body").put("kdInfo", kdInfo);
 		HepetOrder orderUpdate = new HepetOrder();
 		orderUpdate.setId(orderId);
