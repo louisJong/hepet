@@ -249,6 +249,6 @@
 </select> 
 <select id="queryCanFinishOrder" parameterType="java.util.Date"  resultMap="hepet_order">
 	select * from hepet_order 
-	where add_kd_time &lt; #{date} AND status = 'NORECEIVE'
+	where add_kd_time &lt;= #{date} AND status = 'NORECEIVE'
 </select> 
 </mapper>
