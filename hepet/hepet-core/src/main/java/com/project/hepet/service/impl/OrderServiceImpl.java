@@ -263,10 +263,15 @@ public class OrderServiceImpl implements OrderService {
 		try {
 			resp = new HttpService().doPostRequestEntity(BOCCFC_API_URL, paramJson.toJSONString());
 		} catch (IOException e) {
-			logger.error("doTrans erroe param:" + param , e );
+			logger.error("doTrans error param:" + param , e );
 			throw new HttpException("调用异常");
 		}
-		return JSONObject.parseObject(resp);
+		JSONObject result = JSONObject.parseObject(resp);
+		if("9000".equals(result.getString("code"))){//处理中
+			logger.info("doTrans 处理中  result:" + result );
+			throw new HttpException("交易处理中");
+		}
+		return result;
 	}
 	
 	private JSONObject doTrans(SortedMap<String, Object> param) throws HttpException{
