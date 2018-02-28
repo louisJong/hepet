@@ -81,7 +81,7 @@
     </div>
 		<div class="gray-line"></div>
     <div class="order-info">
-        <p><span>支付方式</span><b>花样金信用额度预付</b></p>
+        <p><span>支付方式</span><b>中银消费钱包额度预付</b></p>
         <p><span>产品金额</span><b>${orderInfo.price}元</b></p>
         <p><span>分期方式</span><b>${orderInfo.period}期</b></p>
         <p><span>还款方式</span><b>等额本息，每月还款</b></p>

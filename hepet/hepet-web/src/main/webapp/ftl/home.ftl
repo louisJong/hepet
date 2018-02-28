@@ -96,8 +96,7 @@
 		function initInfoPage() {
 			var itemArr = [
 				{title: '100%免费配送', subtit: '在所支持范围内（基本全国）完全免除配送费', icon: 'peisong'},
-			  {title: '100%正品保证', subtit: '正品保障 假一赔十', icon: 'zhengping'},
-			  {title: '30天无忧退货', subtit: '国内退货 售后无忧', icon: 'tuihuo'}
+			  {title: '100%正品保证', subtit: '正品保障 假一赔十', icon: 'zhengping'}
 			]
 
 			var title = '<div class="info-title"><img src="${host.img}/logo.png"></div>';

@@ -42,7 +42,7 @@
 	</div>
 	<div class="item">
 		<div class="left">支付方式</div>
-		<div class="right">油彩信用额度<span class='small-font' id ="avaiAmt">（可用${funUtils.formatAmt(availAmt)}额度）</span></div>
+		<div class="right">中银消费钱包额度<span class='small-font' id ="avaiAmt">（可用${funUtils.formatAmt(availAmt)}额度）</span></div>
 	</div>
 </div>
 <!-- 支付按钮 -->
