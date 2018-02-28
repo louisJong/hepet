@@ -15,7 +15,7 @@ public class HepetCreditJob {
 		orderService.closeOrder();
 	}
 	
-	@Scheduled(cron = "0 0/30 * * * ?")
+	@Scheduled(cron = "0 0 0 * * ?")
 	public void orderFinish() {
 		orderService.orderFinish();
 	}
