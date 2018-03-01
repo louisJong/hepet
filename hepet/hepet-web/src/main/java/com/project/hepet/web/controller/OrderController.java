@@ -147,7 +147,7 @@ public class OrderController {
 			String msg = "支付异常，请重试";
 			if(e instanceof HttpException){
 				orderService.confirmAgain(null , orderNum , tradeId , tel , 1);
-				msg = "支付异常,请稍后查看订单状态";
+				msg = "交易处理中,请稍后查看订单状态";
 			}
 			return JsonUtils.commonJsonReturn("9999", msg).toJSONString();
 		}
