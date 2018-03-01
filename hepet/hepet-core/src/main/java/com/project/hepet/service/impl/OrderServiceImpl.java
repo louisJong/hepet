@@ -323,14 +323,14 @@ public class OrderServiceImpl implements OrderService {
 			payResult = doTrans(param);
 		} catch (HttpException e) {
 			logger.error("confirmPay error param:" + param , e );
-			confirmAgain(orderId, orderNum ,tradeId, tel , times++);
+			confirmAgain(orderId, orderNum ,tradeId, tel , ++times);
 			return;
 		}
 		String code = payResult.getString("code");
 		if("1000".equals(code)){//交易不存在
 			return;
 		}else if(!"0000".equals(code)){//请求不成功
-			confirmAgain(orderId, orderNum ,tradeId, tel , times++);
+			confirmAgain(orderId, orderNum ,tradeId, tel , ++times);
 		}
 		int status = payResult.getIntValue("status");//0：支付成功1：支付失败2：处理中3：待支付
 		HepetOrder updateOrder = new HepetOrder();
@@ -348,7 +348,7 @@ public class OrderServiceImpl implements OrderService {
 			updateOrder.setPayInfo("支付成功");
 			break;
 		case 2: 
-			confirmAgain(orderId, orderNum ,tradeId, tel , times++);
+			confirmAgain(orderId, orderNum ,tradeId, tel , ++times);
 			return;
 		case 3: 
 			updateOrder.setPayCode("1000");
