@@ -24,9 +24,6 @@
 	<div class="page-info"></div>
 	<!-- 告知 -->
 	<div class="page-law">
-		<p>
-		订单从保税仓发出，自物流公司<br/>		  
-		</p>
 	</div>
 	<footer></footer>
 	<script type="text/javascript">
@@ -112,7 +109,7 @@
         list += itemStr;
 			})
 			list += '</div>';
-      $(".page-info").append($(title)).append($(list));
+      $(".page-info").append($(list));
 		}
 	</script>
 </body>
