@@ -2,7 +2,6 @@ package com.project.hepet.service.impl;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -327,12 +326,14 @@ public class OrderServiceImpl implements OrderService {
 			return;
 		}
 		String code = payResult.getString("code");
+		int status = 0;
 		if("1000".equals(code)){//交易不存在
-			return;
+			status = 1;
 		}else if(!"0000".equals(code)){//请求不成功
 			confirmAgain(orderId, orderNum ,tradeId, tel , ++times);
+		}else{
+			status = payResult.getIntValue("status");//0：支付成功1：支付失败2：处理中3：待支付
 		}
-		int status = payResult.getIntValue("status");//0：支付成功1：支付失败2：处理中3：待支付
 		HepetOrder updateOrder = new HepetOrder();
 		updateOrder.setId(orderId);
 		updateOrder.setOrderNum(orderNum);
@@ -363,6 +364,7 @@ public class OrderServiceImpl implements OrderService {
 		CommonUtils.scheduledThreadPool.schedule(new Runnable() {
 			@Override
 			public void run() {
+				logger.info("confirmAgain start orderId:"+orderId+",times"+times);
 				confirmPay(orderId , orderNum , tradeId , tel , times);
 			}
 		}, 30*times - 25 , TimeUnit.SECONDS);//第一次5秒去确认,第二次35秒去确认，第三次65秒，95 。。125
@@ -553,5 +555,4 @@ public class OrderServiceImpl implements OrderService {
 			}
 		});
 	}
-
 }
