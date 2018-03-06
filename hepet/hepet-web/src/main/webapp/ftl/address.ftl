@@ -53,22 +53,35 @@
 
 		$(".address-list").on("click", ".delete", function(e) {
 			e.preventDefault()
-			$.ajax({
-				url: '${host.base}/hepet/address/delete',
-				type:'post',
-				dataType: 'json',
-				data: {"id": $(this).data("id")},
-				success: function(data) {
-					console.log(data)
-					if(data.head.code == '0000') {
-						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000});
-						setTimeout(function(){window.location.reload()}, 2000);
-					} else {
-						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
-					}
-				}
+			var _this = this;
+			$.mask({
+			type:'normal', 
+			title: '是否确认删除此地址?', 
+			text: '', 
+			buttons: [
+				{buttonTxt: '取消' }, 
+				{	buttonTxt: '确认', 
+				    buttonFn: function() {
+						$.ajax({
+							url: '${host.base}/hepet/address/delete',
+							type:'post',
+							dataType: 'json',
+							data: {"id": $(_this).data("id")},
+							success: function(data) {
+								console.log(data)
+								if(data.head.code == '0000') {
+									$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000});
+									setTimeout(function(){window.location.reload()}, 2000);
+								} else {
+									$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
+								}
+							}
 
+						})
+					}
+				}]
 			})
+			
 		})
 		$(".address-list").on("click", '.touchBtn', function(e) {	
 			e.preventDefault()		

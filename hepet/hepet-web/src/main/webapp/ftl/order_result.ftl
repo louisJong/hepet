@@ -156,20 +156,32 @@
 
 	// 确认收货
 	function confirmReceipt() {
-		$.ajax({
-			url:'${host.base}/hepet/order/finish',
-  		type: 'post',
-  		dataType: 'json',
-  		data: {'orderId' : ${orderInfo.id}},
-			success: function(data) {
-				if(data.head.code == '0000') {
-						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
-						setTimeout(function(){window.location.reload()},2000);
-	  			} else {
-	  				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
-	  			}
-			}
-		})
+		$.mask({
+			type:'normal', 
+			title: '是否确认收货?', 
+			text: '', 
+			buttons: [
+				{buttonTxt: '取消' }, 
+				{	buttonTxt: '确认', 
+					buttonFn: function() {
+						$.ajax({
+							url:'${host.base}/hepet/order/finish',
+							type: 'post',
+							dataType: 'json',
+							data: {'orderId' : ${orderInfo.id}},
+							success: function(data) {
+								if(data.head.code == '0000') {
+										$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
+										setTimeout(function(){window.location.reload()},2000);
+									} else {
+										$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
+									}
+							}
+						})
+					}
+				}]
+			});
+		
 	}
 
 	var countDown = 120,
