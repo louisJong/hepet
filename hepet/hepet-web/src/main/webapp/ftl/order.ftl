@@ -106,7 +106,8 @@
 	  		data: params,
 	  		success: function(data) {
 	  			if(data.head.code == '0000') {
-					window.location.href = '${host.base}/hepet/order/result?orderId='+data.body.id;
+						$(".mask").hide();
+						window.location.href = '${host.base}/hepet/order/result?orderId='+data.body.id;
 	  			} else {
 	  				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
 	  			}
@@ -172,7 +173,7 @@
   })
   function confirm() {
 	  if($(this).hasClass("disable")){
-	  return;
+	  	return;
 	  }
 	  $(".mask").show();
   }
