@@ -105,8 +105,8 @@
 	  		dataType: 'json',
 	  		data: params,
 	  		success: function(data) {
+	  			$(".mask").hide();
 	  			if(data.head.code == '0000') {
-						$(".mask").hide();
 						window.location.href = '${host.base}/hepet/order/result?orderId='+data.body.id;
 	  			} else {
 	  				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
