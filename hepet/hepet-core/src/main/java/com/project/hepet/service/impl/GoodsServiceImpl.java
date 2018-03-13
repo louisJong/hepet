@@ -78,7 +78,9 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Override
 	public long addGoods(HepetGoods goods) {
-		goods.setCreateTime(new Date());
+		Date now = new Date();
+		goods.setCreateTime(now);
+		goods.setUpdateTime(now);
 		goods.setStatus(0);
 		return goodsDao.insert(goods);
 	}

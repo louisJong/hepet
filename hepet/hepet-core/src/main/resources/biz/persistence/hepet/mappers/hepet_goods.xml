@@ -76,7 +76,7 @@
   	</where>
   	 <choose>  
 	    <when test="fetchSj == 1">order by sold_count ,id desc</when>  
-	    <when test="fetchSj == 0">order by id desc</when>  
+	    <when test="fetchSj == 0">order by update_time desc</when>  
 	 </choose>
   	limit #{startRow} , #{limit}
 </select>
