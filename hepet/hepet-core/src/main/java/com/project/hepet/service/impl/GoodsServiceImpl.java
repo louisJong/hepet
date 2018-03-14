@@ -35,11 +35,13 @@ public class GoodsServiceImpl implements GoodsService {
 	private HepetBannerDao bannerDao;
 	
 	@Override
-	public List<HepetGoods> goodsList(long pageIndex, long limit, String categoryCode , int fetchSj) {
+	public List<HepetGoods> goodsList(long pageIndex, long limit, String categoryCode , int fetchSj , String brandName , String goodsName) {
 		limit = limit==0? 10 : limit;
 		Map<String , Object> param = new HashMap<String, Object>();
 		param.put("startRow", pageIndex*limit);
 		param.put("limit", limit);
+		param.put("brandName", brandName);
+		param.put("goodsName", goodsName);
 		param.put("categoryCode", categoryCode);
 		param.put("fetchSj", fetchSj);
 		return goodsDao.findGoods(param);

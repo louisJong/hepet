@@ -62,6 +62,12 @@
 		<if test="fetchSj == 1">
   			and status = 1
   		</if>
+  		<if test="brandName!=null and brandName.trim()!=''">
+  			and brand_name like CONCAT(#{brandName} , '%')
+  		</if>
+  		<if test="goodsName!=null and goodsName.trim()!=''">
+  			and goods_name like CONCAT(#{goodsName} , '%')
+  		</if>
 	</where>
 </select>  
 <select id="findGoods" parameterType="hashmap"  resultMap="hepet_goods">
@@ -69,6 +75,15 @@
   	<where>
   		<if test="categoryCode!=null and categoryCode!=''">
   			category_code = #{categoryCode}
+  		</if>
+  		<if test="fetchSj == 1">
+  			and status = 1
+  		</if>
+  		<if test="brandName!=null and brandName.trim()!=''">
+  			and brand_name like CONCAT(#{brandName} , '%')
+  		</if>
+  		<if test="goodsName!=null and goodsName.trim()!=''">
+  			and goods_name like CONCAT(#{goodsName} , '%')
   		</if>
   		<if test="fetchSj == 1">
   			and status = 1

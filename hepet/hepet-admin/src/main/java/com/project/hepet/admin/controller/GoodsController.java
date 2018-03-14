@@ -121,11 +121,13 @@ public class GoodsController {
 	@RequestMapping("/hepet/goodsList")
 	@ResponseBody
 	String goodsList(HttpServletRequest request ,
-			@RequestParam(value="pageIndex" , required=true) long pageIndex ,
-			@RequestParam(value="limit" , required=true) long limit ,
-			@RequestParam(value="categoryCode" , required=false) String categoryCode){
+			@RequestParam(value="pageIndex") long pageIndex ,
+			@RequestParam(value="limit") long limit ,
+			String categoryCode,
+			String goodsName , 
+			String brandName){
 		JSONObject result = JsonUtils.commonJsonReturn();
-		JsonUtils.setBody(result, "goodsList" , goodsService.goodsList(pageIndex, limit, categoryCode , 0));
+		JsonUtils.setBody(result, "goodsList" , goodsService.goodsList(pageIndex, limit, categoryCode , 0 , brandName , goodsName));
 		JsonUtils.setBody(result, "count" , goodsService.goodsCount(categoryCode, 0));
 		return result.toJSONString();
 	}
