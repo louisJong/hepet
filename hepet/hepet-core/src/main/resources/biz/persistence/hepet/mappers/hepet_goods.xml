@@ -73,6 +73,15 @@
   		<if test="fetchSj == 1">
   			and status = 1
   		</if>
+  		<if test="brandName!=null and brandName.trim()!=''">
+  			and brand_name like CONCAT(#{brandName} , '%')
+  		</if>
+  		<if test="goodsName!=null and goodsName.trim()!=''">
+  			and goods_name like CONCAT(#{goodsName} , '%')
+  		</if>
+  		<if test="fetchSj == 1">
+  			and status = 1
+  		</if>
   	</where>
   	 <choose>  
 	    <when test="fetchSj == 1">order by sold_count ,id desc</when>  

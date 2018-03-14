@@ -17,7 +17,7 @@ public interface GoodsService {
 	 * @param fetchSj 是否查询上架
 	 * @return
 	 */
-	 List<HepetGoods>  goodsList(long pageIndex , long limit , String categoryCode , int fetchSj);
+	 List<HepetGoods>  goodsList(long pageIndex , long limit , String categoryCode , int fetchSj , String brandName , String goodsName);
 
 	 /**
 	  * 商品总个数
