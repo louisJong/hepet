@@ -128,7 +128,7 @@ public class GoodsController {
 			String brandName){
 		JSONObject result = JsonUtils.commonJsonReturn();
 		JsonUtils.setBody(result, "goodsList" , goodsService.goodsList(pageIndex, limit, categoryCode , 0 , brandName , goodsName));
-		JsonUtils.setBody(result, "count" , goodsService.goodsCount(categoryCode, 0));
+		JsonUtils.setBody(result, "count" , goodsService.goodsCount(categoryCode, 0, brandName , goodsName));
 		return result.toJSONString();
 	}
 	

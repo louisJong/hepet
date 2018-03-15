@@ -49,7 +49,7 @@ public class GoodsController {
 			@RequestParam(value="categoryCode" , required=false) String categoryCode){
 		JSONObject result = JsonUtils.commonJsonReturn();
 		JsonUtils.setBody(result, "goodsList" , goodsService.goodsList(pageIndex, limit, categoryCode , 1 , null , null));
-		JsonUtils.setBody(result, "count" , goodsService.goodsCount(categoryCode , 1));
+		JsonUtils.setBody(result, "count" , goodsService.goodsCount(categoryCode , 1 , null , null));
 		return result.toJSONString();
 	}
 	
