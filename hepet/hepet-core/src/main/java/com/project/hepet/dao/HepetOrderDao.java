@@ -48,4 +48,8 @@ public class HepetOrderDao extends GenericDAOImpl<HepetOrder> {
 	public List<HepetOrder> queryCanFinishOrder(Date date) {
 		return this.getSqlSession().selectList(this.getNameSpace()+".queryCanFinishOrder", date);
 	}
+
+	public HepetOrder queryByPayNum(String payNum) {
+		return this.getSqlSession().selectOne(this.getNameSpace()+".queryByPayNum", payNum);
+	}
 }

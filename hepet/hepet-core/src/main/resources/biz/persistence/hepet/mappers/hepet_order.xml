@@ -59,6 +59,10 @@
 	select id,goods_id,kd_state_info,is_get_goods,kd_last_query_time,kd_query_times,create_time,brand_name,list_img_url,goods_name,sub_desc,num,price,period,address,contact,phone,kd_no,kd_name,status,pay_time,order_num,price_per_period from hepet_order 
 	where id = #{orderId} and customer_id=#{customerId}
 </select> 
+<select id="queryByPayNum" parameterType="java.lang.String"  resultMap="hepet_order">
+	select id,goods_id,kd_state_info,is_get_goods,kd_last_query_time,kd_query_times,create_time,brand_name,list_img_url,goods_name,sub_desc,num,price,period,address,contact,phone,kd_no,kd_name,status,pay_time,order_num,price_per_period from hepet_order 
+	where pay_num = #{payNum}
+</select> 
 <select id="allOrderCount" parameterType="hashmap"  resultType="long">
 	select count(1) from hepet_order
 	<where>

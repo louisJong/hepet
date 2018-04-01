@@ -2,16 +2,15 @@ package com.project.hepet.service.impl;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.httpclient.Header;
@@ -27,10 +26,11 @@ import org.springframework.util.Assert;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.project.hepet.common.utils.CommonUtils;
+import com.project.hepet.common.utils.GateApiUtils;
 import com.project.hepet.common.utils.HttpService;
 import com.project.hepet.common.utils.JsonUtils;
-import com.project.hepet.common.utils.MD5Util;
+import com.project.hepet.common.utils.PayConfig;
+import com.project.hepet.common.utils.RSADatagram;
 import com.project.hepet.dao.HepetGoodsDao;
 import com.project.hepet.dao.HepetOrderDao;
 import com.project.hepet.dao.HepetReceiveAddressDao;
@@ -63,11 +63,14 @@ public class OrderServiceImpl implements OrderService {
 	@Value("${kuaidi_query_appcode}")
 	private String KUAIDI_QUERY_APPCODE;
 	
-	@Value("${mall.merchantId}")
-	private String merchantId;
+	@Value("${mall.channelId}")
+	private String channelId;
 	
-	@Value("${mall.merchantCode}")
-	private String merchantCode;
+	@Value("${mall.pay.notifyUrl}")
+	private String notifyUrl;
+	
+	@Value("${mall.pay.retUrl}")
+	private String retUrl;
 	
 	@Override
 	public List<HepetOrder> orderList(Map<String , Object> params) {
@@ -159,27 +162,27 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.orderCount(param);
 	}
 
-	@Override
-	public JSONObject getPaySmsCode(String tel, Long customerId, String token , long goodsId , String orderNum) throws HttpException {
-		HepetGoods goods = goodsDao.findById(goodsId);
-		if(goods.getStatus()!=1){//未上架
-			return JsonUtils.commonJsonReturn("0001", "商品未上架");
-		}
-		SortedMap<String, Object> param = new TreeMap<String, Object>();
-		param.put("transCode", "TS2001");
-		param.put("mobile", tel);
-		param.put("timeStamp", new Date().getTime()+"");
-		param.put("merchantId", merchantId);
-		param.put("thirdOrderNo", orderNum);
-		param.put("transReqNo", UUID.randomUUID().toString().replace("-", ""));
-		param.put("amount", (goods.getPrice().multiply(new BigDecimal(100))).longValue());
-		JSONObject sendResult =  doTrans(param, token);
-		return JsonUtils.commonJsonReturn(sendResult.getString("code"), sendResult.getString("msg"));
-	}
+//	@Override
+//	public JSONObject getPaySmsCode(String tel, Long customerId, String token , long goodsId , String orderNum) throws HttpException {
+//		HepetGoods goods = goodsDao.findById(goodsId);
+//		if(goods.getStatus()!=1){//未上架
+//			return JsonUtils.commonJsonReturn("0001", "商品未上架");
+//		}
+//		SortedMap<String, Object> param = new TreeMap<String, Object>();
+//		param.put("transCode", "TS2001");
+//		param.put("mobile", tel);
+//		param.put("timeStamp", new Date().getTime()+"");
+//		param.put("merchantId", merchantId);
+//		param.put("thirdOrderNo", orderNum);
+//		param.put("transReqNo", UUID.randomUUID().toString().replace("-", ""));
+//		param.put("amount", (goods.getPrice().multiply(new BigDecimal(100))).longValue());
+//		JSONObject sendResult =  doTrans(param, token);
+//		return JsonUtils.commonJsonReturn(sendResult.getString("code"), sendResult.getString("msg"));
+//	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public JSONObject pay(long goodsId , String tel , Long customerId , String dynamicPwd , String desc, String token , Long addId, String orderNum , String tradeId) throws Exception {
+	public JSONObject pay(long goodsId , String tel , Long customerId , String desc,Long addId, String orderNum , String tradeId) throws Exception {
 		JSONObject orderResult = this.order(goodsId, 1, addId, tel, customerId , orderNum , tradeId);
 		if(!JsonUtils.isSuccessCode(orderResult)){
 			return orderResult;
@@ -191,80 +194,54 @@ public class OrderServiceImpl implements OrderService {
 		updateOrder.setStatus("NOSEND");
 		updateOrder.setUpdateTime(now);
 		HepetGoods goods = goodsDao.findById(goodsId);
-		SortedMap<String, Object> param = new TreeMap<String, Object>();
-		param.put("transCode", "TS2002");
+		Map<String, String> param = new HashMap<String, String>();
 		param.put("mobile", tel);
-		param.put("timeStamp", now.getTime()+"");
-		param.put("merchantId", merchantId);
-		param.put("thirdOrderNo", orderNum);
-		param.put("transReqNo", tradeId);
-		param.put("amount", (goods.getPrice().multiply(new BigDecimal(100))).longValue());
-		param.put("instalPeriod", goods.getPeriod());
-		param.put("dynamicPwd", dynamicPwd);
-		param.put("comUseType", "9");
-		param.put("payDescription", desc);
-		param.put("merchantCode", merchantCode);
-		JSONObject payResult = doTrans(param, token);
-		updateOrder.setPayCode(payResult.getString("code"));
-		updateOrder.setPayInfo(payResult.getString("msg"));
-		updateOrder.setPayTime(now);
-		if(!"0000".equals(payResult.getString("code"))){
-			updateOrder.setStatus(null);
-		}
-		int effectCount = orderDao.update(updateOrder);
-		orderResult.getJSONObject("head").put("code", payResult.getString("code"));
-		orderResult.getJSONObject("head").put("msg", payResult.getString("msg"));
+		param.put("comUseType", "A");
+		param.put("channelId", channelId);
+		param.put("outOrderNo", tradeId);
+		param.put("subject", "iphone");
+		param.put("payAmt", (goods.getPrice().multiply(new BigDecimal(100))).longValue()+"");
+		param.put("instalPeriod", goods.getPeriod()+"");
+		param.put("notifyUrl", notifyUrl);
+		param.put("retUrl", retUrl);
+		param.put("transDesc", desc);
+		param.put("_input_charset", "utf-8");
+		String payHtml= GateApiUtils.getPayHtml(param, "POST", "支付确认", PayConfig.clientPrivateKey);
+		orderResult.getJSONObject("body").put("payHtml", payHtml);
 		return orderResult;
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public JSONObject pay(long orderId, String tel, Long customerId, String dynamicPwd, String token, String tradeId) throws HttpException {
+	public JSONObject pay(long orderId, String tel, Long customerId, String tradeId) throws HttpException {
 		HepetOrder order = orderDao.findDetail(orderId, customerId);
 		Assert.isTrue(order!=null, "订单不存在");
 		HepetGoods goods = goodsDao.findById(order.getGoodsId());
 		if(goods.getStatus()!=1){//未上架
 			return JsonUtils.commonJsonReturn("0001", "商品未上架");
 		}
-		Date now = new Date();
-		SortedMap<String, Object> param = new TreeMap<String, Object>();
-		param.put("transCode", "TS2002");
+		Map<String, String> param = new HashMap<String, String>();
 		param.put("mobile", tel);
-		param.put("timeStamp", now.getTime()+"");
-		param.put("merchantId", merchantId);
-		param.put("thirdOrderNo", order.getOrderNum());
-		param.put("transReqNo", tradeId);
-		param.put("amount", (order.getPrice().multiply(new BigDecimal(100))).longValue());
-		param.put("instalPeriod", order.getPeriod());
-		param.put("dynamicPwd", dynamicPwd);
-		param.put("comUseType", "9");
-		param.put("payDescription", "");
-		param.put("merchantCode", merchantCode);
-		JSONObject payResult = doTrans(param, token);
-		HepetOrder updateOrder = new HepetOrder();
-		updateOrder.setId(orderId);
-		updateOrder.setPayCode(payResult.getString("code"));
-		updateOrder.setPayInfo(payResult.getString("msg"));
-		updateOrder.setPayTime(now);
-		if("0000".equals(payResult.getString("code"))){
-			updateOrder.setStatus("NORECEIVE");
-		}
-		int effectCount = orderDao.update(updateOrder);
-		JSONObject result = JsonUtils.commonJsonReturn(payResult.getString("code"), payResult.getString("msg"));
-		result.getJSONObject("body").put("id", orderId);
+		param.put("comUseType", "A");
+		param.put("channelId", channelId);
+		param.put("outOrderNo", tradeId);
+		param.put("subject", "iphone");
+		param.put("payAmt", (order.getPrice().multiply(new BigDecimal(100))).longValue()+"");
+		param.put("instalPeriod", order.getPeriod()+"");
+		param.put("notifyUrl", notifyUrl);
+		param.put("retUrl", retUrl);
+		param.put("_input_charset", "utf-8");
+		String payHtml= GateApiUtils.getPayHtml(param, "POST", "支付确认", PayConfig.clientPrivateKey);
+		JSONObject result = JsonUtils.commonJsonReturn();
+		result.getJSONObject("body").put("payHtml", payHtml);
 		return result;
 	}
 	
-	private JSONObject doTrans(SortedMap<String, Object> param , String token) throws HttpException{
+	private JSONObject doTrans(SortedMap<String, Object> param) throws Exception{
 		JSONObject paramJson = new JSONObject(param);
-		paramJson.put("sign", MD5Util.MD5Encode(paramJson + token).toUpperCase());
-		String resp = null;
-		try {
-			resp = new HttpService().doPostRequestEntity(BOCCFC_API_URL, paramJson.toJSONString());
-		} catch (IOException e) {
-			logger.error("doTrans error param:" + param , e );
-			throw new HttpException("调用异常");
-		}
+		RSADatagram datagram = new RSADatagram(channelId, "TRAN0002", paramJson+"");
+		datagram.initKey(PayConfig.clientPrivateKey, PayConfig.serverPublicKey);
+		String resp = new HttpService().doPostRequestEntity(BOCCFC_API_URL, datagram , "utf-8");
 		JSONObject result = JSONObject.parseObject(resp);
 		if("9000".equals(result.getString("code"))){//处理中
 			logger.info("doTrans 处理中  result:" + result );
@@ -273,19 +250,6 @@ public class OrderServiceImpl implements OrderService {
 		return result;
 	}
 	
-	private JSONObject doTrans(SortedMap<String, Object> param) throws HttpException{
-		JSONObject paramJson = new JSONObject(param);
-		paramJson.put("sign", MD5Util.MD5Encode(paramJson+"").toUpperCase());
-		String resp = null;
-		try {
-			resp = new HttpService().doPostRequestEntity(BOCCFC_API_URL, paramJson.toJSONString());
-		} catch (IOException e) {
-			logger.error("doTrans error param:" + param , e );
-			throw new HttpException("调用异常");
-		}
-		return JSONObject.parseObject(resp);
-	}
-
 	private JSONObject doKuaiDiQuery(String number) throws IOException{
 		String resp = null;
 		Header[] headers = new  Header[1];
@@ -296,79 +260,78 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public JSONObject getAvailAmt(String tel, Long customerId, String token) throws HttpException {
+	public JSONObject getAvailAmt(String tel, Long customerId) throws Exception {
 		SortedMap<String, Object> param = new TreeMap<String, Object>();
-		param.put("transCode", "TS1001");
+		param.put("appMarket", "apple");
 		param.put("mobile", tel);
-		param.put("timeStamp", new Date().getTime()+"");
-		param.put("merchantId", merchantId);
-		return doTrans(param, token);
+		param.put("channelId", channelId);
+		return doTrans(param);
 	}
 
 	
-	private void confirmPay(final Long orderId, String orderNum, final String tradeId, final String tel, int times) {
-		if(times>5){//FIXME 通知机制，超过5次查询失败
-			return ;
-		}
-		Date now = new Date();
-		SortedMap<String, Object> param = new TreeMap<String, Object>();
-		param.put("transCode", "TS2003");
-		param.put("mobile", tel);
-		param.put("timeStamp", now.getTime()+"");
-		param.put("merchantId", merchantId);
-		param.put("transReqNo", tradeId);
-		JSONObject payResult = null;
-		try {
-			payResult = doTrans(param);
-		} catch (HttpException e) {
-			logger.error("confirmPay error param:" + param , e );
-			confirmAgain(orderId, orderNum ,tradeId, tel , ++times);
-			return;
-		}
-		String code = payResult.getString("code");
-		int status = 0;
-		if("1000".equals(code)){//交易不存在
-			status = 1;
-		}else if(!"0000".equals(code)){//请求不成功
-			confirmAgain(orderId, orderNum ,tradeId, tel , ++times);
-		}else{
-			status = payResult.getIntValue("status");//0：支付成功1：支付失败2：处理中3：待支付
-		}
-		HepetOrder updateOrder = new HepetOrder();
-		updateOrder.setId(orderId);
-		updateOrder.setOrderNum(orderNum);
-		updateOrder.setUpdateTime(now);
-		switch (status) {
-		case 1: 
-			updateOrder.setPayCode("1000");
-			updateOrder.setPayInfo("支付失败");
-			break;
-		case 0: 
-			updateOrder.setStatus("NOSEND");
-			updateOrder.setPayCode("0000");
-			updateOrder.setPayInfo("支付成功");
-			break;
-		case 2: 
-			confirmAgain(orderId, orderNum ,tradeId, tel , ++times);
-			return;
-		case 3: 
-			updateOrder.setPayCode("1000");
-			updateOrder.setPayInfo("未支付");
-			break;
-		}
-		orderDao.update(updateOrder);
-	}
+//	private void confirmPay(final Long orderId, String orderNum, final String tradeId, final String tel, int times) {
+//		if(times>5){//FIXME 通知机制，超过5次查询失败
+//			return ;
+//		}
+//		Date now = new Date();
+//		SortedMap<String, Object> param = new TreeMap<String, Object>();
+//		param.put("transCode", "TS2003");
+//		param.put("mobile", tel);
+//		param.put("timeStamp", now.getTime()+"");
+//		param.put("merchantId", merchantId);
+//		param.put("transReqNo", tradeId);
+//		JSONObject payResult = null;
+//		try {
+//			payResult = doTrans(param);
+//		} catch (HttpException e) {
+//			logger.error("confirmPay error param:" + param , e );
+//			confirmAgain(orderId, orderNum ,tradeId, tel , ++times);
+//			return;
+//		}
+//		String code = payResult.getString("code");
+//		int status = 0;
+//		if("1000".equals(code)){//交易不存在
+//			status = 1;
+//		}else if(!"0000".equals(code)){//请求不成功
+//			confirmAgain(orderId, orderNum ,tradeId, tel , ++times);
+//		}else{
+//			status = payResult.getIntValue("status");//0：支付成功1：支付失败2：处理中3：待支付
+//		}
+//		HepetOrder updateOrder = new HepetOrder();
+//		updateOrder.setId(orderId);
+//		updateOrder.setOrderNum(orderNum);
+//		updateOrder.setUpdateTime(now);
+//		switch (status) {
+//		case 1: 
+//			updateOrder.setPayCode("1000");
+//			updateOrder.setPayInfo("支付失败");
+//			break;
+//		case 0: 
+//			updateOrder.setStatus("NOSEND");
+//			updateOrder.setPayCode("0000");
+//			updateOrder.setPayInfo("支付成功");
+//			break;
+//		case 2: 
+//			confirmAgain(orderId, orderNum ,tradeId, tel , ++times);
+//			return;
+//		case 3: 
+//			updateOrder.setPayCode("1000");
+//			updateOrder.setPayInfo("未支付");
+//			break;
+//		}
+//		orderDao.update(updateOrder);
+//	}
 
-	@Override
-	public void confirmAgain(final Long orderId,final String orderNum , final String tradeId, final String tel , final int times) {
-		CommonUtils.scheduledThreadPool.schedule(new Runnable() {
-			@Override
-			public void run() {
-				logger.info("confirmAgain start orderId:"+orderId+",times"+times);
-				confirmPay(orderId , orderNum , tradeId , tel , times);
-			}
-		}, 30*times - 25 , TimeUnit.SECONDS);//第一次5秒去确认,第二次35秒去确认，第三次65秒，95 。。125
-	}
+//	@Override
+//	public void confirmAgain(final Long orderId,final String orderNum , final String tradeId, final String tel , final int times) {
+//		CommonUtils.scheduledThreadPool.schedule(new Runnable() {
+//			@Override
+//			public void run() {
+//				logger.info("confirmAgain start orderId:"+orderId+",times"+times);
+//				confirmPay(orderId , orderNum , tradeId , tel , times);
+//			}
+//		}, 30*times - 25 , TimeUnit.SECONDS);//第一次5秒去确认,第二次35秒去确认，第三次65秒，95 。。125
+//	}
 
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
@@ -555,4 +518,40 @@ public class OrderServiceImpl implements OrderService {
 			}
 		});
 	}
+
+	@Override
+	public HepetOrder queryByPayNum(String payNum) {
+		return orderDao.queryByPayNum(payNum);
+	}
+
+	@Override
+	public void notifyOrder(Map<String,String> params) {
+		String outOrderNo = params.get("outOrderNo");
+		String tradeStatus = params.get("tradeStatus");
+		HepetOrder order = orderDao.queryByPayNum(outOrderNo);
+		HepetOrder updateOrder = new HepetOrder();
+		updateOrder.setId(order.getId());
+		String status = "";
+//		商品状态NOPAY待付款NOSEND待发货NORECEIVE待收货CLOSED已关闭REFUND已退货SUCCESS完成CANCEL已取消
+		if("cancel".equals(tradeStatus))
+			status = "CLOSED";
+		else if("success".equals(tradeStatus))
+			status = "NOSEND";
+		else if("refund_success".equals(tradeStatus))
+			status = "REFUND";
+		else 
+			return;
+		updateOrder.setStatus(status);
+		updateOrder.setUpdateTime(new Date());
+		updateOrder.setPayCode(tradeStatus);
+		updateOrder.setPayInfo(params+"");
+		try{
+			updateOrder.setPayTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(params.get("notifyTime")));
+			int effectCount = orderDao.update(updateOrder);
+			Assert.isTrue(effectCount==1 , "订单已处理");
+		}catch(Exception e){
+			logger.warn("notifyOrder fail params:"+params, e);
+		}
+	}
+
 }

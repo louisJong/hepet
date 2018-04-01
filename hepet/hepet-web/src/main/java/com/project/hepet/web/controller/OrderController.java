@@ -1,12 +1,11 @@
 package com.project.hepet.web.controller;
 
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.project.hepet.common.utils.CommonUtils;
+import com.project.hepet.common.utils.GateApiUtils;
 import com.project.hepet.common.utils.JsonUtils;
 import com.project.hepet.common.utils.LoginDesc;
-import com.project.hepet.common.utils.UniqueNoUtils;
+import com.project.hepet.common.utils.PayConfig;
 import com.project.hepet.model.HepetGoods;
+import com.project.hepet.model.HepetOrder;
 import com.project.hepet.model.HepetReceiveAddress;
 import com.project.hepet.service.AddressService;
 import com.project.hepet.service.GoodsService;
@@ -90,8 +91,8 @@ public class OrderController {
 		HepetGoods goods = (HepetGoods) JsonUtils.getBodyValue(result, "info");
 		JSONObject amtJson;
 		try {
-			amtJson = orderService.getAvailAmt(WebUtil.getTel(request), WebUtil.getCustomerId(request), WebUtil.getToken(request));
-		} catch (HttpException e) {
+			amtJson = orderService.getAvailAmt(WebUtil.getTel(request), WebUtil.getCustomerId(request));
+		} catch (Exception e) {
 			amtJson = new JSONObject();
 		}
 		Long availAmt = amtJson.getLong("availAmt");
@@ -117,59 +118,86 @@ public class OrderController {
 //		return orderService.order(goodsId , num , addId,WebUtil.getTel(request), WebUtil.getCustomerId(request)).toJSONString();
 //	}
 	
-	@LoginDesc
-	@RequestMapping("/hepet/order/getPaySmsCode")
-	@ResponseBody
-	String getPaySmsCode(HttpServletRequest request , HttpSession session , @RequestParam(required=true) long goodsId ){
-		String orderNum = UniqueNoUtils.genOrderNum();
-		session.setAttribute("orderNum", orderNum);
-		try {
-			return orderService.getPaySmsCode(WebUtil.getTel(request), WebUtil.getCustomerId(request) , WebUtil.getToken(request) , goodsId , orderNum).toJSONString();
-		} catch (HttpException e) {
-			return JsonUtils.commonJsonReturn("9999", "支付异常").toJSONString();
-		}
-	}
+//	@LoginDesc
+//	@RequestMapping("/hepet/order/getPaySmsCode")
+//	@ResponseBody
+//	String getPaySmsCode(HttpServletRequest request , HttpSession session , @RequestParam(required=true) long goodsId ){
+//		String orderNum = UniqueNoUtils.genOrderNum();
+//		session.setAttribute("orderNum", orderNum);
+//		try {
+//			return orderService.getPaySmsCode(WebUtil.getTel(request), WebUtil.getCustomerId(request) , WebUtil.getToken(request) , goodsId , orderNum).toJSONString();
+//		} catch (HttpException e) {
+//			return JsonUtils.commonJsonReturn("9999", "支付异常").toJSONString();
+//		}
+//	}
 	
 	@LoginDesc
 	@RequestMapping("/hepet/order/pay")
 	@ResponseBody
 	String pay(HttpServletRequest request , @RequestParam(required = true) long goodsId ,
-			@RequestParam(required = true) String dynamicPwd ,
 			Long addId , 
 			String desc ) throws Exception{
 		final String tradeId = UUID.randomUUID().toString().replace("-", "");
 		final String orderNum =  WebUtil.getOrderNum(request);
 		final String tel = WebUtil.getTel(request);
 		try{
-			JSONObject orderResult = orderService.pay(goodsId ,  tel, WebUtil.getCustomerId(request), dynamicPwd, desc , WebUtil.getToken(request) , addId , orderNum , tradeId);
+			JSONObject orderResult = orderService.pay(goodsId , tel, WebUtil.getCustomerId(request), desc , addId , orderNum , tradeId);
 			return orderResult.toJSONString();
 		}catch(Exception e){
 			String msg = "支付异常，请重试";
-			if(e instanceof HttpException){
-				orderService.confirmAgain(null , orderNum , tradeId , tel , 1);
-				msg = "交易处理中,请稍后查看订单状态";
-			}
+//			if(e instanceof HttpException){
+//				orderService.confirmAgain(null , orderNum , tradeId , tel , 1);
+//				msg = "交易处理中,请稍后查看订单状态";
+//			}
 			return JsonUtils.commonJsonReturn("9999", msg).toJSONString();
 		}
 		
 	}
 	
+	@RequestMapping("/mall/pay/notifyUrl")
+	@ResponseBody
+	String notify(HttpServletRequest request ,  @RequestParam String outOrderNo ,
+			@RequestParam String tradeStatus ,
+			@RequestParam String signature) throws Exception{
+		Map<String,String> params = WebUtil.getRequestParamsMap(request);
+		if(!GateApiUtils.signVerify(params, signature, PayConfig.serverPublicKey)){
+			return "success";
+		}
+		orderService.notifyOrder(params);
+		return "success";
+	}
+	
+	@RequestMapping("/mall/pay/retUrl")
+	String retUrl(HttpServletRequest request , ModelMap modelMap ,
+			@RequestParam String outOrderNo ,
+			@RequestParam String tradeStatus ,
+			@RequestParam String signature) throws Exception{
+		Map<String,String> params = WebUtil.getRequestParamsMap(request);
+		if(!GateApiUtils.signVerify(params, signature, PayConfig.serverPublicKey)){
+			modelMap.put("info", "验签失败");
+			return "common_result";
+		}
+		HepetOrder order = orderService.queryByPayNum(outOrderNo);
+		modelMap.put("orderInfo", order);
+		modelMap.put("tel", order.getTel());
+		return "order_result";
+	}
+	
 	@LoginDesc
 	@RequestMapping("/hepet/order/payAgain")
 	@ResponseBody
-	String payAgain(HttpServletRequest request , @RequestParam(required = true) final long orderId ,
-			@RequestParam(required = true) String dynamicPwd) throws Exception{
+	String payAgain(HttpServletRequest request , @RequestParam(required = true) final long orderId) throws Exception{
 		final String tradeId = UUID.randomUUID().toString().replace("-", "");
 		final String tel = WebUtil.getTel(request);
 		try{
-			JSONObject orderResult = orderService.pay(orderId ,  tel, WebUtil.getCustomerId(request), dynamicPwd, WebUtil.getToken(request) , tradeId);
+			JSONObject orderResult = orderService.pay(orderId ,  tel, WebUtil.getCustomerId(request),  tradeId);
 			return orderResult.toJSONString();
 		}catch(Exception e){
 			String msg = "支付异常，请重试";
-			if(e instanceof HttpException){
-				orderService.confirmAgain(orderId , null , tradeId , tel , 1);
-				msg = "支付异常,请稍后查看订单状态";
-			}
+//			if(e instanceof HttpException){
+//				orderService.confirmAgain(orderId , null , tradeId , tel , 1);
+//				msg = "支付异常,请稍后查看订单状态";
+//			}
 			return JsonUtils.commonJsonReturn("9999", msg).toJSONString();
 		}
 	}
