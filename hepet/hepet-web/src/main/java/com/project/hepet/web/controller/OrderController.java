@@ -169,15 +169,18 @@ public class OrderController {
 	
 	@RequestMapping("/mall/pay/retUrl")
 	String retUrl(HttpServletRequest request , ModelMap modelMap ,
-			@RequestParam String outOrderNo ,
-			@RequestParam String tradeStatus ,
-			@RequestParam String signature) throws Exception{
-		Map<String,String> params = WebUtil.getRequestParamsMap(request);
-		if(!GateApiUtils.signVerify(params, signature, PayConfig.serverPublicKey)){
-			modelMap.put("info", "验签失败");
-			return "common_result";
+			@RequestParam String outOrderNo) throws Exception{
+		long s , e;
+		s = e = System.currentTimeMillis();
+		HepetOrder order = null;
+		while((e-s)<20*1000){//最多等待15秒
+			Thread.currentThread();
+			Thread.sleep(100);
+			order = orderService.queryByPayNum(outOrderNo);
+			e = System.currentTimeMillis();
+			if(!"NOPAY".equals(order.getStatus()))//订单已处理完成
+				break;
 		}
-		HepetOrder order = orderService.queryByPayNum(outOrderNo);
 		modelMap.put("orderInfo", order);
 		modelMap.put("tel", order.getTel());
 		return "order_result";

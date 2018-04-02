@@ -18,7 +18,7 @@ public class PayConfig {
 	public static String clientPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlz2EIr7g45mRho283y1WlP+qmxURxX912DCSGnwF0akCbMSdicFUoZv+BFv58IukwF3qh6A6UPzHbQi8VQRNzm2C4AKHf+PHv6Km9KVYswTSsIS0UG7HnSSZX4teN+9Mai973sp+4Es4RaeCqHzqPnggfZiQDqR5e921twekq+MAG722tvd3woWaKUayGhGSQpEfzpF8l3gV7oxFtg9BHlCk5K8A7pQ4bwAajSpW0F3xHlfUquTa1PzKLOEfCSyp4s/QzZ3/uzIaikhsSDiNcsLniJZ7lO2DM+ooMPE0nXj7fMMwd61h83+Qo96F29/6XnYw0cHvqUbPl1uCNOGgmQIDAQAB";
 	
 	/** 支付请求提交地址 */
-	public static String pay_gateway_url = "http://192.168.31.209:8080/boccfc/pay/gate/call";
+	public static String pay_gateway_url = ResourceUtils.getValue("hepet-core", "mall.payGatewayUrl");
 	
 	public static String input_charset = "utf-8";
 }
