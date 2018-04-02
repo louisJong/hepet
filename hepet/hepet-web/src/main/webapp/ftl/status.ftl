@@ -13,6 +13,7 @@
     <script type="text/javascript" src='${host.js}/common.js'></script>
     <style>
     .icon {
+    display: none;
     width: 77px;
     height: 77px;
     margin-bottom: 20px; }
@@ -35,31 +36,62 @@
 
     .text {
     font-size: 18px; }
-
+    #confirmBtn {
+        display: block;
+        text-decoration: none;
+    }
     </style>
 </head>
 <body>
  <div class="box">
      <!-- 成功icon  -->
-     <img class="icon" src="${host.img}/status-succ.png"/>
+     <img id="succIcon" class="icon" src="${host.img}/status-succ.png"/>
      <!-- 失败icon -->
-     <!-- <img class="icon" src="${host.img}/status-fail.png"/> -->
-     <span class="text">订单支付失败</span>
+     <img id="errIcon" class="icon" src="${host.img}/status-fail.png"/>
+     <span class="text" id="text"></span>
      <!-- 按钮随机设置 -->
      <div class="btn-box">
-        <div class="normal-btn" id="confirmBtn">确认订单</div>
+        <a class="normal-btn" id="confirmBtn" >查看订单</a>
     </div>
  </div>   
  <script>
-    // loading 转。。。
- $.mask({
-    type: 'loading',
-    loadingStatus: 'show',
-    imageSrc: '${host.img}/loading.gif'
- })
 
-  // 隐藏loading $(".bgmask").hide()
- setTimeout(function(){ $(".bgmask").hide()}, 2000)
+
+ $(function() {
+    $.mask({
+        type: 'loading',
+        loadingStatus: 'show',
+        imageSrc: '${host.img}/loading.gif'
+    })
+    $.ajax({
+        url: '${host.base}/mall/pay/result',
+        type: 'get',
+        dataType: 'json',
+        data: {"outOrderNo": "${outOrderNo}"},
+        success: function(data) {
+            if(data.head.code == '0000') {
+                if(data.body.result === "payed") {
+                    $("#succIcon").show()
+                    $("#text").html("订单支付成功")
+                    $("#confirmBtn").attr("href", "${host.base}/hepet/order/result?orderId="+data.body.id)
+                } else {
+                    $("#errIcon").show()
+                    $("#text").html("订单支付失败")
+                    // 我的订单地址。。。。
+                    $("#confirmBtn").attr("href", "${host.base}/hepet/order/result?orderId="+data.body.id)
+                }
+                $(".bgmask").hide();
+
+            } else {
+                $("#errIcon").show()
+                $("#text").html(data.head.msg)
+                // 我的订单地址。。。。
+                $("#confirmBtn").attr("href", "${host.base}/hepet/order/result?orderId="+data.body.id)
+               $(".bgmask").hide();
+            }
+        }
+    })
+ })
  </script>
 </body>
 </html>
