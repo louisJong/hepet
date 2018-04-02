@@ -237,9 +237,9 @@ public class OrderServiceImpl implements OrderService {
 		return result;
 	}
 	
-	private JSONObject doTrans(SortedMap<String, Object> param) throws Exception{
+	private JSONObject doTrans(SortedMap<String, Object> param , String tranCode) throws Exception{
 		JSONObject paramJson = new JSONObject(param);
-		RSADatagram datagram = new RSADatagram(channelId, "TRAN0002", paramJson+"");
+		RSADatagram datagram = new RSADatagram(channelId, tranCode, paramJson+"");
 		datagram.initKey(PayConfig.clientPrivateKey, PayConfig.serverPublicKey);
 		String resp = new HttpService().doPostRequestEntity(BOCCFC_API_URL, datagram , "utf-8");
 		JSONObject result = JSONObject.parseObject(resp);
@@ -265,7 +265,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("appMarket", "apple");
 		param.put("mobile", tel);
 		param.put("channelId", channelId);
-		return doTrans(param);
+		return doTrans(param , "TRAN0001");
 	}
 
 	
