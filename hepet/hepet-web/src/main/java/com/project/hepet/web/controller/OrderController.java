@@ -170,20 +170,31 @@ public class OrderController {
 	@RequestMapping("/mall/pay/retUrl")
 	String retUrl(HttpServletRequest request , ModelMap modelMap ,
 			@RequestParam String outOrderNo) throws Exception{
+		modelMap.put("outOrderNo", outOrderNo);
+		return "status";
+	}
+	
+	@RequestMapping("/mall/pay/result")
+	@ResponseBody
+	String result(HttpServletRequest request ,  @RequestParam String outOrderNo) throws Exception{
+		JSONObject result = JsonUtils.commonJsonReturn();
 		long s , e;
 		s = e = System.currentTimeMillis();
 		HepetOrder order = null;
-		while((e-s)<20*1000){//最多等待15秒
+		while((e-s)<20*1000){//最多等待20秒
 			Thread.currentThread();
 			Thread.sleep(100);
 			order = orderService.queryByPayNum(outOrderNo);
 			e = System.currentTimeMillis();
 			if(!"NOPAY".equals(order.getStatus()))//订单已处理完成
-				break;
+			{
+				result.getJSONObject("body").put("result", "payed");
+				result.getJSONObject("body").put("id", order.getId());
+				return result.toJSONString();
+			}
 		}
-		modelMap.put("orderInfo", order);
-		modelMap.put("tel", order.getTel());
-		return "order_result";
+		result.getJSONObject("body").put("result", "paying");
+		return result.toJSONString();
 	}
 	
 	@LoginDesc
