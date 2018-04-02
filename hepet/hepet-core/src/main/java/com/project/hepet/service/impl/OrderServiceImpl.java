@@ -545,8 +545,8 @@ public class OrderServiceImpl implements OrderService {
 		updateOrder.setUpdateTime(new Date());
 		updateOrder.setPayCode(tradeStatus);
 		updateOrder.setPayInfo(params+"");
+		updateOrder.setPayTime(new Date(Long.valueOf(params.get("notifyTime"))));
 		try{
-			updateOrder.setPayTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(params.get("notifyTime")));
 			int effectCount = orderDao.update(updateOrder);
 			Assert.isTrue(effectCount==1 , "订单已处理");
 		}catch(Exception e){
