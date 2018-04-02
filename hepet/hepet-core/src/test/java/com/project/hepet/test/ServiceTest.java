@@ -47,17 +47,17 @@ public class ServiceTest extends BaseTestCase {
 	}
 	
 	
-	@Test
-	public void test_04() throws InterruptedException{
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				orderService.confirmAgain(116l, "201803011544205360129", UUID.randomUUID().toString().replace("-", ""), "13127856928", 1);
-			}
-		});
-		t.setDaemon(true);
-		t.start();
-		Thread.sleep(100000);
-		System.out.println();
-	}
+//	@Test
+//	public void test_04() throws InterruptedException{
+//		Thread t = new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				orderService.confirmAgain(116l, "201803011544205360129", UUID.randomUUID().toString().replace("-", ""), "13127856928", 1);
+//			}
+//		});
+//		t.setDaemon(true);
+//		t.start();
+//		Thread.sleep(100000);
+//		System.out.println();
+//	}
 }
