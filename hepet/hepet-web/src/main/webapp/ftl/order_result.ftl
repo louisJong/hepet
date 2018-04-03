@@ -107,32 +107,32 @@
         <div class="right" id="confirm">立即支付</div>
     </div>
 </#if>
-
-<div class="mask" style="display: none;">
-    <div class="mask-wrapper">
-      <div class="mask-header">
-        <p>输入短信验证码</p>
-        <p class="tips">验证码已发送至您的手机${tel}</p>
-      </div>
-      <div class="mask-body">
-				<input type="text" id="codeInput" placeholder="6位数字">
-				<div class="sendcode" id="sendCode">发送验证码</div>	
-        
-      </div>
-      <div class="mask-footer">
-        <di class="cancle button gray" id="maskCancle">取消</di>
-        <di class="ok button" id="maskOk">确定</di>
-      </div>
-    </div>
-  </div>
+<div style="display: none;" id="payh5">
+</div>
 <script>
-	$(function(){
-		$("#codeInput").on("input propertychange", function(){
-			$(this).val($(this).val().replace(/[^\d]/g,'').substr(0,6));
-		})
-	})
 	$("#confirm").on("click", confirm);
 	$("#cancel").on("click", cancel);
+	
+	function confirm() {
+	  var params = {
+	      orderId:${orderInfo.id}
+	    }; 
+	  	$.ajax({
+	  		url:'${host.base}/hepet/order/payAgain',
+	  		type: 'post',
+	  		dataType: 'json',
+	  		data: params,
+	  		success: function(data) {
+	  			if(data.head.code == '0000') {
+	  					$("#payh5").html(data.body.payHtml);
+	  					$("#payh5").show();
+	  			} else {
+	  				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
+	  			}
+	  		}
+	  	})
+ 	}
+	
 	// 确认收货
 	$("#confirmReceipt").on("click", confirmReceipt);
 
@@ -184,95 +184,6 @@
 		
 	}
 
-	var countDown = 120,
-    time = null,
-    hasClickSend = false;
-	// 浮层禁止滑动
-	$(".alert-mask, .mask").on("touchmove", function(e) {
-		e.preventDefault();
-	})
-	$("#maskCancle").on("click", function() {
-		$(".mask").hide();
-	})
-	// 成功跳转
-	$("#maskOk").on("click", function() {
-		if(!hasClickSend){
-			$.mask({type:'alert', alertTips: "请先发送验证码", alertTime: 2000});
-			return;
-		}
-		if($("#codeInput").val().length == 0){
-			$.mask({type:'alert', alertTips: "验证码不能为空", alertTime: 2000});
-			return;
-		}
-		var params = {
-	      orderId:${orderInfo.id},
-	      dynamicPwd:$("#codeInput").val()
-	    }; 
-	  	$.ajax({
-	  		url:'${host.base}/hepet/order/payAgain',
-	  		type: 'post',
-	  		dataType: 'json',
-	  		data: params,
-	  		success: function(data) {
-	  			if(data.head.code == '0000') {
-						$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
-						window.location.reload();
-	  			} else {
-	  				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
-	  			}
-	  		}
-	  	})
-	})
-	// 发送验证码
-	$("#sendCode").on('click', onSendCode);
-	//发送验证码事件
-	function onSendCode() {
-    if ($(this).hasClass('disabled')) {
-      return;
-    }
-    sendMesAjax(function(data) {
-	  $.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
-      sendMessage();
-      hasClickSend = true;
-    });
-  }
-  //发送验证码的ajax事件
-  function sendMesAjax(onSuss) {
-  	$.ajax({
-  		url:'${host.base}/hepet/order/getPaySmsCode',
-  		type: 'post',
-  		dataType: 'json',
-  		data: {'goodsId' : ${orderInfo.goodsId}},
-  		success: function(data) {
-  			if(data.head.code == '0000') {
-				onSuss(data)
-			} else {
-  				$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000})
-  			}
-  		}
-  	})
-  }
-  //发送验证码倒计时事件
-  function sendMessage() {
-    $("#sendCode").addClass('disabled');
-    $("#sendCode").html(countDown + "秒");
-    if (time) window.clearInterval(time);
-    time = window.setInterval(setRemainTime, 1000);
-
-    function setRemainTime() {
-      if (countDown == 0) {
-        window.clearInterval(time); //停止计时器
-        $("#sendCode").removeClass('disabled'); //启用按钮
-        $("#sendCode").html("发送验证码");
-      } else {
-        countDown--;
-        $("#sendCode").html(countDown + "秒");
-      }
-    }
-  }
-  function confirm() {
-	  $(".mask").show();
-  }
 </script>
 </body>
 </html>
