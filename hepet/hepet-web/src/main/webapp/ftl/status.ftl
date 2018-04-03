@@ -64,21 +64,21 @@
         imageSrc: '${host.img}/loading.gif'
     })
     $.ajax({
-        url: '${host.base}/mall/pay/result',
+        url: '${host.base}/hepet/mall/pay/result',
         type: 'get',
         dataType: 'json',
-        data: {"outOrderNo": "${outOrderNo}"},
+        data: {outOrderNo: ${outOrderNo}},
         success: function(data) {
             if(data.head.code == '0000') {
                 if(data.body.result === "payed") {
                     $("#succIcon").show()
                     $("#text").html("订单支付成功")
-                    $("#confirmBtn").attr("href", "${host.base}/hepet/order/result?orderId="+data.body.id)
+                    $("#confirmBtn").attr("href", "${host.base}/hepet/hepet/order/result?orderId="+data.body.id)
                 } else {
                     $("#errIcon").show()
                     $("#text").html("订单支付失败")
                     // 我的订单地址。。。。
-                    $("#confirmBtn").attr("href", "${host.base}/hepet/order/result?orderId="+data.body.id)
+                    $("#confirmBtn").attr("href", "${host.base}/hepet/hepet/order/result?orderId="+data.body.id)
                 }
                 $(".bgmask").hide();
 
@@ -86,7 +86,7 @@
                 $("#errIcon").show()
                 $("#text").html(data.head.msg)
                 // 我的订单地址。。。。
-                $("#confirmBtn").attr("href", "${host.base}/hepet/order/result?orderId="+data.body.id)
+                $("#confirmBtn").attr("href", "${host.base}/hepet/hepet/order/result?orderId="+data.body.id)
                $(".bgmask").hide();
             }
         }
