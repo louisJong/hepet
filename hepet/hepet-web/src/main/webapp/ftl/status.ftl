@@ -67,7 +67,7 @@
         url: '${host.base}/mall/pay/result',
         type: 'get',
         dataType: 'json',
-        data: {outOrderNo: ${outOrderNo}},
+        data: {"outOrderNo": "${outOrderNo}"},
         success: function(data) {
             if(data.head.code == '0000') {
                 if(data.body.result === "payed") {
