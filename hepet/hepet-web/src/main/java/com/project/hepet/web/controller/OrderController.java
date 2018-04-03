@@ -23,6 +23,7 @@ import com.project.hepet.common.utils.GateApiUtils;
 import com.project.hepet.common.utils.JsonUtils;
 import com.project.hepet.common.utils.LoginDesc;
 import com.project.hepet.common.utils.PayConfig;
+import com.project.hepet.common.utils.UniqueNoUtils;
 import com.project.hepet.model.HepetGoods;
 import com.project.hepet.model.HepetOrder;
 import com.project.hepet.model.HepetReceiveAddress;
@@ -95,7 +96,7 @@ public class OrderController {
 		} catch (Exception e) {
 			amtJson = new JSONObject();
 		}
-		Long availAmt = amtJson.getLong("availAmt");
+		Long availAmt = amtJson.getJSONObject("body").getLong("availAmt");
 		modelMap.put("address", address);
 		modelMap.put("goodsId", goodsId);
 		modelMap.put("availAmt", availAmt == null? 0 : (BigDecimal.valueOf(availAmt).divide(new BigDecimal(100))));
@@ -138,7 +139,7 @@ public class OrderController {
 			Long addId , 
 			String desc ) throws Exception{
 		final String tradeId = UUID.randomUUID().toString().replace("-", "");
-		final String orderNum =  WebUtil.getOrderNum(request);
+		final String orderNum =  UniqueNoUtils.genOrderNum();
 		final String tel = WebUtil.getTel(request);
 		try{
 			JSONObject orderResult = orderService.pay(goodsId , tel, WebUtil.getCustomerId(request), desc , addId , orderNum , tradeId);
