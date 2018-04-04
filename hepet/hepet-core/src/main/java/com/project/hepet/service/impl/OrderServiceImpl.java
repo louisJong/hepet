@@ -230,6 +230,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("instalPeriod", order.getPeriod()+"");
 		param.put("notifyUrl", notifyUrl);
 		param.put("retUrl", retUrl);
+		param.put("transDesc", "购买"+order.getGoodsName());
 		param.put("_input_charset", "utf-8");
 		String payHtml= GateApiUtils.getPayHtml(param, "POST", "支付确认", PayConfig.clientPrivateKey);
 		JSONObject result = JsonUtils.commonJsonReturn();
