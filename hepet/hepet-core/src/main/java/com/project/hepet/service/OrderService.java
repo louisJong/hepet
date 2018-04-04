@@ -52,7 +52,7 @@ public interface OrderService {
 	
 	JSONObject pay(long goodsId , String tel , Long customerId , String desc,Long addId, String orderNum , String tradeId) throws Exception;
 
-	JSONObject pay(long orderId, String tel, Long customerId, String tradeId) throws Exception;
+	JSONObject pay(long orderId, String tel, Long customerId) throws Exception;
 
 //	void confirmAgain(final Long orderId,final String orderNum , final String tradeId, final String tel , final int times);
 
