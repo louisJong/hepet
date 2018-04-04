@@ -213,7 +213,7 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public JSONObject pay(long orderId, String tel, Long customerId, String tradeId) throws HttpException {
+	public JSONObject pay(long orderId, String tel, Long customerId) throws HttpException {
 		HepetOrder order = orderDao.findDetail(orderId, customerId);
 		Assert.isTrue(order!=null, "订单不存在");
 		HepetGoods goods = goodsDao.findById(order.getGoodsId());
@@ -224,7 +224,7 @@ public class OrderServiceImpl implements OrderService {
 		param.put("mobile", tel);
 		param.put("comUseType", "A");
 		param.put("channelId", channelId);
-		param.put("outOrderNo", tradeId);
+		param.put("outOrderNo", order.getPayNum());
 		param.put("subject", "iphone");
 		param.put("payAmt", (order.getPrice().multiply(new BigDecimal(100))).longValue()+"");
 		param.put("instalPeriod", order.getPeriod()+"");

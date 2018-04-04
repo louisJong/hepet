@@ -181,10 +181,12 @@ public class OrderController {
 		JSONObject result = JsonUtils.commonJsonReturn();
 		long s , e;
 		s = e = System.currentTimeMillis();
+		int times=0;
 		HepetOrder order = null;
-		while((e-s)<20*1000){//最多等待20秒
+		while((e-s)<10*1000){//最多等待10秒
+			times++;
 			Thread.currentThread();
-			Thread.sleep(100);
+			Thread.sleep(times*100);
 			order = orderService.queryByPayNum(outOrderNo);
 			e = System.currentTimeMillis();
 			if(!"NOPAY".equals(order.getStatus()))//订单已处理完成
@@ -202,18 +204,12 @@ public class OrderController {
 	@RequestMapping("/hepet/order/payAgain")
 	@ResponseBody
 	String payAgain(HttpServletRequest request , @RequestParam(required = true) final long orderId) throws Exception{
-		final String tradeId = UUID.randomUUID().toString().replace("-", "");
 		final String tel = WebUtil.getTel(request);
 		try{
-			JSONObject orderResult = orderService.pay(orderId ,  tel, WebUtil.getCustomerId(request),  tradeId);
+			JSONObject orderResult = orderService.pay(orderId ,  tel, WebUtil.getCustomerId(request));
 			return orderResult.toJSONString();
 		}catch(Exception e){
-			String msg = "支付异常，请重试";
-//			if(e instanceof HttpException){
-//				orderService.confirmAgain(orderId , null , tradeId , tel , 1);
-//				msg = "支付异常,请稍后查看订单状态";
-//			}
-			return JsonUtils.commonJsonReturn("9999", msg).toJSONString();
+			return JsonUtils.commonJsonReturn("9999", "支付异常，请重试").toJSONString();
 		}
 	}
 	
