@@ -5,11 +5,11 @@
 	<title>选择收货地址</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
 	<!-- 引入css -->
-	<link rel="stylesheet" type="text/css" href="${host.css}/base.css">
-	<link rel="stylesheet" type="text/css" href="${host.css}/address.css">
+	<link rel="stylesheet" type="text/css" href="${host.css}/base.css?v=${host.version}">
+	<link rel="stylesheet" type="text/css" href="${host.css}/address.css?v=${host.version}">
 	<!-- 引入js -->
 	<script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
-	<script type="text/javascript" src='${host.js}/common.js'></script>
+	<script type="text/javascript" src='${host.js}/common.js?v=${host.version}'></script>
 </head>
 <body style="padding-bottom: 20px">
 

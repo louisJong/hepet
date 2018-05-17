@@ -98,11 +98,11 @@ html {
     .prod .center .pd-price {
       padding-top: 10px;
       font-size: 14px;
-      color: #1caaf0;
+      color: #F06059;
       font-weight: 600; }
 
 .font-base {
-  color: #1caaf0; }
+  color: #F06059; }
 
 .payinfo {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -208,7 +208,7 @@ html {
   .mask .mask-body {
     width: calc(100% - 30px);
     margin: 30px auto;
-    border-bottom: #1caaf0 1px solid;
+    border-bottom: #F06059 1px solid;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     display: -webkit-box;

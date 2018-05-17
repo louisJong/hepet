@@ -7,12 +7,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
 	<!-- 引入css -->
 	<link rel="stylesheet" type="text/css" href="${host.css}/mescroll.min.css">
-	<link rel="stylesheet" type="text/css" href="${host.css}/base.css">
-	<link rel="stylesheet" type="text/css" href="${host.css}/orderlist.css">
-	<link rel="stylesheet" type="text/css" href="${host.css}/mall.css">
+	<link rel="stylesheet" type="text/css" href="${host.css}/base.css?v=${host.version}">
+	<link rel="stylesheet" type="text/css" href="${host.css}/orderlist.css?v=${host.version}">
+	<link rel="stylesheet" type="text/css" href="${host.css}/mall.css?v=${host.version}">
 	<!-- 引入js -->
   <script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
-  <script type="text/javascript" src="${host.js}/common.js"></script>
+  <script type="text/javascript" src="${host.js}/common.js?v=${host.version}"></script>
   <script src="${host.js}/mescroll.min.js"></script>
 </head>
 <body style="padding-top: 44px; background: #f5f5f5">

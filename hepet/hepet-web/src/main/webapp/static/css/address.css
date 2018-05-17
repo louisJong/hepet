@@ -31,7 +31,7 @@
 
 .no-address p {
   font-size: 17px;
-  color: #4a90e2;
+  color: F06059;
   margin-top: 8px;
 }
 
@@ -134,11 +134,11 @@
 .button {
   margin: 20px auto;
   width: calc(100% - 30px);
-  border: 1px solid #4a90e2;
+  border: 1px solid #F06059;
   height: 50px;
   text-align: center;
   line-height: 50px;
-  color: #4a90e2;
+  color: #F06059;
   font-size: 17px;
 }
 

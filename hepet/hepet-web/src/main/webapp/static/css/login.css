@@ -19,7 +19,7 @@ html {
 header {
   width: 100%;
   height: 8rem;
-  background: #1caaf0; }
+  background: #F06059; }
 
 .login-form {
   margin-top: 20px;
@@ -43,7 +43,7 @@ header {
     font-size: 15px;
     -ms-flex-item-align: center;
         align-self: center;
-    color: #1caaf0; }
+    color: #F06059; }
     .login-form .code-tips.disable {
       color: #888; }
   .login-form .register-tips {
@@ -57,7 +57,7 @@ header {
             justify-content: space-between;
     font-size: 15px; }
     .login-form .register-tips a {
-      color: #1caaf0; }
+      color: #F06059; }
 
 footer {
   position: fixed;
@@ -71,6 +71,6 @@ footer {
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
-    color: #1caaf0;
+    color: #F06059;
     font-size: 0.55rem;
     text-align: center; }

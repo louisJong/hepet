@@ -6,12 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
 	<!-- 引入css -->
 	<link rel="stylesheet" type="text/css" href="${host.css}/mescroll.min.css">
-	<link rel="stylesheet" type="text/css" href="${host.css}/base.css">
-	<link rel="stylesheet" type="text/css" href="${host.css}/mall.css">
+	<link rel="stylesheet" type="text/css" href="${host.css}/base.css?v=${host.version}">
+	<link rel="stylesheet" type="text/css" href="${host.css}/mall.css?v=${host.version}">
 	<!-- 引入js -->
   <script src="${host.js}/jquery-1.11.3.min.js"></script>
   <script src="${host.js}/mescroll.min.js"></script>
-  <script src="${host.js}/common.js"></script>
+  <script src="${host.js}/common.js?v=${host.version}"></script>
   <script type="text/javascript">
   </script>
 </head>
@@ -113,7 +113,7 @@
 				str+= '<div>'
 				str+='<p class="pd-name">'+pd.goodsName+'</p>';
 				str+='<p class="pd-sub">'+pd.subDesc+'</p>';
-				str+='<p class="pd-price"><span class="small-font">￥</span>'+pd.price+' 元 <span class="pd-market">￥'+pd.marketPrice+'元</span></p>';
+				str+='<p class="pd-price"><span class="small-font">￥</span>'+pd.price+'  <span class="pd-market">￥'+pd.marketPrice+'</span></p>';
 				str+='</div>';
 				str+='</li>';
 				listDom.append($(str));

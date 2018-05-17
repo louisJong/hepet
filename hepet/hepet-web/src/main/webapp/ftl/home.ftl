@@ -6,12 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
 	<!-- 引入css -->
 	<link rel="stylesheet" type="text/css" href="${host.css}/swiper.min.css">
-	<link rel="stylesheet" type="text/css" href="${host.css}/base.css">
-	<link rel="stylesheet" type="text/css" href="${host.css}/home.css">
+	<link rel="stylesheet" type="text/css" href="${host.css}/base.css?v=${host.version}">
+	<link rel="stylesheet" type="text/css" href="${host.css}/home.css?v=${host.version}">
 	<!-- 引入js -->
   <script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
   <script src="${host.js}/swiper.jquery.min.js"></script>
-	<script src="${host.js}/common.js"></script>
+	<script src="${host.js}/common.js?v=${host.version}"></script>
 </head>
 <body style="padding-bottom: 60px;">
 	<!-- 广告页 -->

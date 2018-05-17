@@ -65,7 +65,7 @@ input::-ms-clear, input::-ms-reveal {
     color: #fff;
     font-size: 18px;
     text-align: center;
-    background: #1caaf0; }
+    background: #F06059; }
   .btn-box .green-btn {
     background: #00bf20; }
   .btn-box .disable {
@@ -112,7 +112,7 @@ input::-ms-clear, input::-ms-reveal {
     font-size: 12px;
     line-height: 1; }
     .footer-nav .nav-item.actived {
-      color: #1caaf0; }
+      color: #F06059; }
       .footer-nav .nav-item.actived .jxtj {
         background-position: 0 60%; }
       .footer-nav .nav-item.actived .spfl {
@@ -123,7 +123,7 @@ input::-ms-clear, input::-ms-reveal {
       width: 22px;
       height: 22px;
       margin-bottom: 4px;
-      background: url("../images/footer_icon.png") no-repeat;
+      background: url("../images/footer_icon1.png") no-repeat;
       background-size: 100% auto; }
     .footer-nav .nav-item .jxtj {
       background-position: 0 0; }

@@ -36,7 +36,7 @@ html {
       -ms-flex-align: center;
           align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  color: #1caaf0;
+  color: #F06059;
   font-size: 18px; }
   .pd-price .market {
     font-size: 12px;
@@ -120,13 +120,13 @@ html {
     -webkit-box-flex: 3;
         -ms-flex: 3;
             flex: 3;
-    color: #1caaf0; }
+    color: #F06059; }
   .buy-button .buy {
     -webkit-box-flex: 2;
         -ms-flex: 2;
             flex: 2;
     line-height: 50px;
-    background: #1caaf0;
+    background: #F06059;
     text-align: center;
     color: #fff;
     font-size: 18px; }

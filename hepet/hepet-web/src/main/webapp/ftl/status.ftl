@@ -7,10 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>支付结果</title>
     	<!-- 引入css -->
-    <link rel="stylesheet" type="text/css" href="${host.css}/base.css">
+    <link rel="stylesheet" type="text/css" href="${host.css}/base.css?v=${host.version}">
     	<!-- 引入js -->
 	<script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
-    <script type="text/javascript" src='${host.js}/common.js'></script>
+    <script type="text/javascript" src='${host.js}/common.js?v=${host.version}'></script>
     <style>
     .icon {
     display: none;

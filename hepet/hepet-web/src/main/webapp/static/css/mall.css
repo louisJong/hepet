@@ -40,7 +40,7 @@ header {
     position: relative;
     line-height: 44px; }
     header .nav-item.actived {
-      color: #1caaf0; }
+      color: #F06059; }
       header .nav-item.actived:after {
         content: '';
         position: absolute;
@@ -50,7 +50,7 @@ header {
         margin: auto;
         width: 30px;
         height: 4px;
-        background: #1caaf0; }
+        background: #F06059; }
 
 /*隐藏*/
 .hide {
@@ -97,7 +97,7 @@ header {
 
 .data-list .pd-price {
   padding-top: 10px;
-  color: #1caaf0;
+  color: #F06059;
   font-size: 18px; }
 
 .data-list .pd-market {
