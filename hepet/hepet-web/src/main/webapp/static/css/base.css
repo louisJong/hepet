@@ -123,7 +123,7 @@ input::-ms-clear, input::-ms-reveal {
       width: 22px;
       height: 22px;
       margin-bottom: 4px;
-      background: url("../images/footer_icon1.png") no-repeat;
+      background: url("../images/footer_icon1.png?1") no-repeat;
       background-size: 100% auto; }
     .footer-nav .nav-item .jxtj {
       background-position: 0 0; }

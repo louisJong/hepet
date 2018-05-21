@@ -7,110 +7,389 @@
 	<!-- 引入css -->
 	<link rel="stylesheet" type="text/css" href="${host.css}/swiper.min.css">
 	<link rel="stylesheet" type="text/css" href="${host.css}/base.css?v=${host.version}">
-	<link rel="stylesheet" type="text/css" href="${host.css}/home.css?v=${host.version}">
+	<link rel="stylesheet" type="text/css" href="${host.css}/index.min.css?v=${host.version}">
 	<!-- 引入js -->
   <script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
+	<script src="https://unpkg.com/better-scroll/dist/bscroll.min.js"></script>
   <script src="${host.js}/swiper.jquery.min.js"></script>
 	<script src="${host.js}/common.js?v=${host.version}"></script>
+	<script src="${host.js}/index.min.js?v=${host.version}"></script>
+	<style>
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+        }
+
+        .classify-box-fixed {
+            margin-top: 40px;
+        }
+    </style>
 </head>
 <body style="padding-bottom: 60px;">
-	<!-- 广告页 -->
-	<div class="page-ad"></div>
-	<!-- 国际大牌折扣季 -->
-	<div class="page-discount"></div>
-	<!-- 分类 -->
-	<div class="page-class"></div>
-	<!-- 简介 -->
-	<div class="page-info"></div>
-	<!-- 告知 -->
-	<div class="page-law">
+	<div>
+
+		<div id="slide" class="slide" class="index-slide" alt="star">
+				<!-- 轮播图片数量可自行增减 -->
+				<div class="img">
+						<img src="${host.img}/1.png" />
+						<img class="imgblur" src="${host.img}/1.png" />
+				</div>
+				<div class="img">
+						<img src="${host.img}/2.png" />
+						<img class="imgblur" src="${host.img}/1.png" />
+				</div>
+				<div class="img">
+						<img src="${host.img}/3.png" />
+						<img class="imgblur" src="${host.img}/1.png" />
+				</div>
+				<div class="img">
+						<img src="${host.img}/4.png" />
+						<img class="imgblur" src="${host.img}/1.png" />
+				</div>
+				<div class="img">
+						<img src="${host.img}/5.png" />
+						<img class="imgblur" src="${host.img}/1.png" />
+				</div>
+		</div>
+
+		<div class="tags">
+				<div class="tags-item">
+						<span class="tag-icon"></span>
+						<span>全场分期</span>
+				</div>
+				<div class="tags-item">
+						<span class="tag-icon"></span>
+						<span>最长12期</span>
+				</div>
+				<div class="tags-item">
+						<span class="tag-icon"></span>
+						<span>正品保证</span>
+				</div>
+		</div>
+
+		<div class="classify-tag nav">
+				<div style="width: 450px; display: flex;">
+						<span class="actived">推荐</span>
+						<span>美妆</span>
+						<span>家电</span>
+						<span>母婴</span>
+						<span>户外</span>
+						<span>服饰</span>
+						<span>奢侈品</span>
+				</div>
+		</div>
+
+		<div class="classify-box">
+				<div class="classify-item">
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+				</div>
+				<div class="classify-item">
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+				</div>
+				<div class="classify-item">
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+				</div>
+				<div class="classify-item">
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+				</div>
+				<div class="classify-item">
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+				</div>
+				<div class="classify-item">
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+				</div>
+
+				<div class="classify-item">
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+								<div class="prod-item_img">
+										<img src="${host.img}/6.png">
+								</div>
+								<div class="prod-item_name">四倍蚕丝面膜12片</div>
+								<div class="prod-item_price">¥1399
+										<span>¥1899</span>
+								</div>
+								<div class="prod-item_period">¥99</div>
+						</div>
+						<div class="prod-item">
+										<div class="prod-item_img">
+												<img src="${host.img}/6.png">
+										</div>
+										<div class="prod-item_name">四倍蚕丝面膜12片</div>
+										<div class="prod-item_price">¥1399
+												<span>¥1899</span>
+										</div>
+										<div class="prod-item_period">¥99</div>
+								</div>
+								<div class="prod-item">
+												<div class="prod-item_img">
+														<img src="${host.img}/6.png">
+												</div>
+												<div class="prod-item_name">四倍蚕丝面膜12片</div>
+												<div class="prod-item_price">¥1399
+														<span>¥1899</span>
+												</div>
+												<div class="prod-item_period">¥99</div>
+										</div>
+				</div>
+
+				<div style="width: 100%; height: 70px;"></div>
+				<footer></footer>
+		</div>
 	</div>
-	<footer></footer>
-	<script type="text/javascript">
-		var banners = ${banners};
-	    var categorys = ${categorys};
-		$(function() {
-				$("footer").append(new Footer([{text:'精选推荐', code:'jxtj', link:'${host.base}/hepet/index'},{text: '商品分类', code:'spfl', link:'${host.base}/hepet/mall'}, {text: '我的', code:'wode', link:'${host.base}/hepet/my'}], 0).init());
-			initBanner();
-	    //国际大牌折扣季
-		  var mySwiper = new Swiper ('.swiper-container', {
-			    direction: 'horizontal',
-			    loop: true,
-			    
-			    // 如果需要分页器
-			    pagination: '.swiper-pagination'
-			}) 
-      //初始化分类区域
-			initCategorys();
-			//initAdPage();
-			initInfoPage();
-		})
-    //banner区域
-		function initBanner() {
-			banners = banners || [];
-			if(banners.length <= 0) {
-				return;
-			}		
-		  var str = '<div class="title">国际大牌折扣季</div>';
-			str += '<div class="banner swiper-container">';
-      str += '<div class="swiper-wrapper">';
-      banners.map(function(item, index){
-      	str += '<a class="swiper-slide" href="'+ item['bannerLink'] +'"><img src="'+ item['imgUrl'] +'"></a>'
-      })
-  
-      str += '</div><div class="swiper-pagination"></div></div>';
-      $(".page-discount").append($(str));		
 
-		}
-		//分类区域绘制
-		function initCategorys() {
-			var _categorys = categorys || [];
-			if(_categorys.length <= 0) {
-				return;
-			} 
-			var str = '';
-			_categorys.map(function(item, index) {
-				str += '<a class="class-item" href="${host.base}/hepet/mall?categoryCode='+item['code'] +'">';
-				str += '<i class="class-icon '+ item['code'] +'"></i>';
-				str += '<span>'+ item['name'] +'</span>';
-				str += '</a>';
-			});
-			$(".page-class").append($(str));
-		}
-    //广告页
-		function initAdPage() {
-			var str = '<div class="ad-item">';
-			    str += '<div class="ad-title">Beats Solo3 Wireless <br/> 头戴式耳机 - 金色</div>';
-			    str += '<div class="ad-subtit">潮流利器，无线聆听，感受音乐无拘束</div>';
-			    str += '<div class="ad-img"><img src="${host.img}/ad/ad_01.png"/></div>';
-			    str += '<div class="ad-price">RMB 1,699</div>';
-			    str += '<div class="ad-subprice">分期低至 每月170.59</div>';
-			    str += '</div>';
-      var $dom = str + str + str;
-      $(".page-ad").append($($dom));		 
-		}
-    //下面信息区域
-		function initInfoPage() {
-			var itemArr = [
-				{title: '100%免费配送', subtit: '在所支持范围内（基本全国）完全免除配送费', icon: 'peisong'},
-			  {title: '100%正品保证', subtit: '正品保障 假一赔十', icon: 'zhengping'}
-			]
+    <script>      
+        var arr = [];
+        for (var i = 0; i < $(".classify-item").length; i++) {
+            arr.push($(".classify-item:nth-child(" + (i + 1) + ")").offset().top);
+        }
+        $(function () {
+					 $("footer").append(new Footer([{text:'精选推荐', code:'jxtj', link:'${host.base}/hepet/index'},{text: '商品分类', code:'spfl', link:'${host.base}/hepet/mall'}, {text: '我的', code:'wode', link:'${host.base}/hepet/my'}], 0).init());
+			
+            window.scrollTo(0, 0);
+            var navOffTop = $(".nav").offset().top;
+            $(window).scroll(function () { //页面加载时，获取滚动条初始高度
+                var distance = document.documentElement.scrollTop || document.body.scrollTop; //获取滚动条初始高度的值 ：0
+                if (distance >= navOffTop) {
+                    $(".nav").addClass("nav-fixed");
+                    $(".classify-box").addClass("classify-box-fixed");
+                } else if (distance < navOffTop) {
+                    $(".nav").removeClass("nav-fixed");
+                    $(".classify-box").removeClass("classify-box-fixed");
+                }
 
-			var title = '<div class="info-title"><img src="${host.img}/logo.png"></div>';
-			var list = '<div class="info-list">';
-			itemArr.map(function(item, index) {
-				var itemStr = '<div class="list-item">';
-				  itemStr += '<i class="icon '+ item['icon'] +'"></i>';
-          itemStr += '<div class="right">';
-          itemStr += '	<p class="item-title">'+ item['title'] +'</p>';
-          itemStr += '<p class="item-subtit">'+ item['subtit'] +'</p>';
-          itemStr += '</div>';
-          itemStr += '</div>';
-        list += itemStr;
-			})
-			list += '</div>';
-      $(".page-info").append($(list));
-		}
-	</script>
+
+                for (var j = 0; j < arr.length; j++) {
+                    if (distance > arr[j] - 40 && distance <= arr[j + 1] - 30) {
+                        scrollmethod.scrollToElement(
+                            document.querySelector('.nav span:nth-child(' + (j + 1) + ')'), null,
+                            true, true)
+                        $(".nav span").removeClass("actived");
+                        $(".nav span:nth-child(" + (j + 1) + ")").addClass("actived");
+                    }
+                    if(!arr[j + 1] && distance > arr[j] - 10) {
+                        $(".nav span").removeClass("actived");
+                        $(".nav span:nth-child(" + (j + 1) + ")").addClass("actived");
+                    }
+                }
+            })
+        })
+
+
+        var BScroll = window.BScroll;
+        scrollmethod = new BScroll('.nav', {
+            eventPassthrough: true,
+            scrollX: true,
+            scrollY: false,
+            preventDefault: false
+        })
+
+        $(".nav span").on("click", function () {
+
+            $(".nav span").removeClass("actived");
+            $(this).addClass("actived");
+
+            var offsetHeight = $(".classify-item:nth-child(" + ($(this).index() + 1) + ')').offset().top;
+            $('html, body').animate({
+                scrollTop: offsetHeight - $(".nav").height() - 10
+            }, 'slow');
+
+            scrollmethod.scrollToElement(
+                document.querySelector('.nav span:nth-child(' + $(this).index() + ')'), null, true, true)
+        })
+    </script>
 </body>
 </html>
