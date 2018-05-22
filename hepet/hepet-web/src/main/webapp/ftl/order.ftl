@@ -31,14 +31,14 @@
 		<div class="pd-info">
 			<p>发货：${goods.sendType}</p>
 		</div>
-		<p class="pd-price">RMB ${funUtils.formatAmt(goods.price)} </p>
+		<p class="pd-price">¥ ${funUtils.formatAmt(goods.price)} </p>
 	</div>
 </div>
 <!-- 支付信息 -->
 <div class="payinfo">
 	<div class="item">
 		<div class="left">分期付款</div>
-		<div class="right font-base">RMB ${funUtils.formatAmt(goods.pricePerPeriod)}  X ${goods.period}期</div>
+		<div class="right font-base">¥ ${funUtils.formatAmt(goods.pricePerPeriod)}  X ${goods.period}期</div>
 	</div>
 	<div class="item">
 		<div class="left">支付方式</div>

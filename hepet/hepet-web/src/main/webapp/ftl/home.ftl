@@ -7,13 +7,13 @@
 	<!-- 引入css -->
 	<link rel="stylesheet" type="text/css" href="${host.css}/swiper.min.css">
 	<link rel="stylesheet" type="text/css" href="${host.css}/base.css?v=${host.version}">
-	<link rel="stylesheet" type="text/css" href="${host.css}/index.min.css?v=${host.version}">
+	<link rel="stylesheet" type="text/css" href="${host.css}/index.css?v=${host.version}">
 	<!-- 引入js -->
   <script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
 	<script src="https://unpkg.com/better-scroll/dist/bscroll.min.js"></script>
   <script src="${host.js}/swiper.jquery.min.js"></script>
 	<script src="${host.js}/common.js?v=${host.version}"></script>
-	<script src="${host.js}/index.min.js?v=${host.version}"></script>
+	<script src="${host.js}/index.js?v=${host.version}"></script>
 	<style>
         .nav-fixed {
             position: fixed;
@@ -89,7 +89,7 @@
 								<div class="prod-item_price">¥1399
 										<span>¥1899</span>
 								</div>
-								<div class="prod-item_period">¥99</div>
+								<div class="prod-item_period">¥99 <span style="font-size: 12px;">x 12期</span></div>
 						</div>
 						<div class="prod-item">
 								<div class="prod-item_img">
@@ -337,7 +337,7 @@
             arr.push($(".classify-item:nth-child(" + (i + 1) + ")").offset().top);
         }
         $(function () {
-					 $("footer").append(new Footer([{text:'精选推荐', code:'jxtj', link:'${host.base}/hepet/index'},{text: '商品分类', code:'spfl', link:'${host.base}/hepet/mall'}, {text: '我的', code:'wode', link:'${host.base}/hepet/my'}], 0).init());
+			 $("footer").append(new Footer([{text:'精选推荐', code:'jxtj', link:'${host.base}/hepet/index'},{text: '商品分类', code:'spfl', link:'${host.base}/hepet/mall'}, {text: '我的', code:'wode', link:'${host.base}/hepet/my'}], 0).init());
 			
             window.scrollTo(0, 0);
             var navOffTop = $(".nav").offset().top;
@@ -360,7 +360,7 @@
                         $(".nav span").removeClass("actived");
                         $(".nav span:nth-child(" + (j + 1) + ")").addClass("actived");
                     }
-                    if(!arr[j + 1] && distance > arr[j] - 10) {
+                    if(!arr[j + 1] && distance > arr[j] - 40) {
                         $(".nav span").removeClass("actived");
                         $(".nav span:nth-child(" + (j + 1) + ")").addClass("actived");
                     }
@@ -383,8 +383,9 @@
             $(this).addClass("actived");
 
             var offsetHeight = $(".classify-item:nth-child(" + ($(this).index() + 1) + ')').offset().top;
+			
             $('html, body').animate({
-                scrollTop: offsetHeight - $(".nav").height() - 10
+                scrollTop: offsetHeight - $(".nav").height() + 20
             }, 'slow');
 
             scrollmethod.scrollToElement(
