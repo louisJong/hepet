@@ -18,6 +18,7 @@
         .nav-fixed {
             position: fixed;
             top: 0;
+			z-index: 99;
         }
 
         .classify-box-fixed {
@@ -83,7 +84,9 @@
 				<div class="classify-item">
 						<div class="prod-item">
 								<div class="prod-item_img">
-										<img src="${host.img}/6.png">
+									<div class="prod-item_tag">直降100</div>	
+									<img src="${host.img}/6.png">
+									<div class="prod-item_prif">人手必入系列</div>
 								</div>
 								<div class="prod-item_name">四倍蚕丝面膜12片</div>
 								<div class="prod-item_price">¥1399
