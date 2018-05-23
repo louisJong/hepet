@@ -7,7 +7,7 @@
 	<!-- 引入css -->
 	<link rel="stylesheet" type="text/css" href="${host.css}/swiper.min.css">
 	<link rel="stylesheet" type="text/css" href="${host.css}/base.css?v=${host.version}">
-	<link rel="stylesheet" type="text/css" href="${host.css}/index.css?v=${host.version}">
+	<link rel="stylesheet" type="text/css" href="${host.css}/index.css">
 	<!-- 引入js -->
   <script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
 	<script src="https://unpkg.com/better-scroll/dist/bscroll.min.js"></script>
@@ -56,15 +56,19 @@
 		<div class="tags">
 				<div class="tags-item">
 						<span class="tag-icon"></span>
-						<span>全场分期</span>
+						<span>12期免息</span>
 				</div>
 				<div class="tags-item">
 						<span class="tag-icon"></span>
-						<span>最长12期</span>
+						<span>48h发货</span>
 				</div>
 				<div class="tags-item">
 						<span class="tag-icon"></span>
-						<span>正品保证</span>
+						<span>全场包邮</span>
+				</div>
+				<div class="tags-item">
+						<span class="tag-icon"></span>
+						<span>正品保障</span>
 				</div>
 		</div>
 
@@ -92,7 +96,7 @@
 								<div class="prod-item_price">¥1399
 										<span>¥1899</span>
 								</div>
-								<div class="prod-item_period">¥99 <span style="font-size: 12px;">x 12期</span></div>
+								<div class="prod-item_period">¥99 <span style="font-size: 12px;">/每期</span></div>
 						</div>
 						<div class="prod-item">
 								<div class="prod-item_img">
