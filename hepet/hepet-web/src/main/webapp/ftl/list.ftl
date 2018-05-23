@@ -110,10 +110,11 @@
 				var pd= dataList[i];	
 				var str = '<li onClick="window.location.href=\'${host.base}/hepet/goodsInfo?goodsId='+ pd.id +'\'">'	;	
 				str+='<img class="pd-img" src="'+pd.listImgUrl+'"/>';
-				str+= '<div>'
+				str+= '<div class="pd-right">';
 				str+='<p class="pd-name">'+pd.goodsName+'</p>';
 				str+='<p class="pd-sub">'+pd.subDesc+'</p>';
-				str+='<p class="pd-price"><span class="small-font">￥</span>'+pd.price+'  <span class="pd-market">￥'+pd.marketPrice+'</span></p>';
+				str+='<p class="prod-item_price">¥'+pd.price+'<span class="pd-market">¥'+pd.marketPrice+'</span></p>';
+				str+='<p class="pd-price">¥'+pd.price+'<span class="small-font">/每期</span></p>';
 				str+='</div>';
 				str+='</li>';
 				listDom.append($(str));

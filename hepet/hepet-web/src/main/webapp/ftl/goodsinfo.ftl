@@ -8,7 +8,7 @@
 	<!-- 引入css -->
 	<link rel="stylesheet" type="text/css" href="${host.css}/swiper.min.css">
 	<link rel="stylesheet" type="text/css" href="${host.css}/base.css?v=${host.version}">
-	<link rel="stylesheet" type="text/css" href="${host.css}/prodinfo.css?v=${host.version}">
+	<link rel="stylesheet" type="text/css" href="${host.css}/prodinfo.css">
 	<!-- 引入js -->
   <script src="${host.js}/jquery-1.11.3.min.js"></script>
   <script src="${host.js}/swiper.jquery.min.js"></script>
@@ -28,8 +28,8 @@
 </div>
 <!-- 商品价格 -->
 <div class="pd-price">
-	<span class="small-font">￥</span><span>${funUtils.formatAmt(goodsInfo.price)} </span> <span class="market">￥${funUtils.formatAmt(goodsInfo.marketPrice)}</span>
-	<span class="icon">${goodsInfo.tags}</span>
+	<span class="small-font" >￥</span><span>${funUtils.formatAmt(goodsInfo.price)} </span> <span class="market">￥${funUtils.formatAmt(goodsInfo.marketPrice)}</span>
+	<#--  <span class="icon">${goodsInfo.tags}</span>  -->
 </div>
 <!-- 商品名称及副标题 -->
 <div class="pd-name">
@@ -38,9 +38,9 @@
 </div>
 <!-- 说明 -->
 <div class="pd-info">
-	<p>说明：<span>${goodsInfo.descript?default('无')}</span></p>
+	<#--  <p>说明：<span>${goodsInfo.descript?default('无')}</span></p>  -->
 	<p>产地：<span>${goodsInfo.region?default('无')}</span></p>
-	<p>发货方式：<span>${goodsInfo.sendType?default('无')}</span></p>
+	<p>发货：<span>${goodsInfo.sendType?default('无')}</span></p>
 </div>
 <!-- 图文详情	 -->
 <div class="pd-detail">
@@ -52,7 +52,7 @@
 <!-- 购买按钮 -->
 <div class="buy-button">
 	<div class="amount">￥<font size=5>${goodsInfo.pricePerPeriod}</font>	 x ${goodsInfo.period}期</div>
-	<div class="buy">立即购买</div>
+	<div class="buy">去分期</div>
 </div>
 <script type="text/javascript">
 var imgs = '${goodsInfo.detailImgUrls}';
@@ -72,7 +72,8 @@ $(function() {
     loop: true,
     autoHeight: true,
     // 如果需要分页器
-    pagination: '.swiper-pagination'
+    pagination: '.swiper-pagination',
+	paginationType: 'fraction',
 	}) 
 	$(".buy").click(function(){
 		window.location.href = '${host.base}/hepet/orderConfirm?goodsId=${goodsId}&num=1';
