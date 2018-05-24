@@ -90,7 +90,9 @@ body {
       background: #eee;
       margin-right: 20px; }
       .prod-info .bottom .img img {
-        width: 100%; }
+        width: 100%;
+        height: 100%;
+      }
         .prod-info .bottom .right {
           -ms-flex-negative: 4;
           flex-shrink: 4;

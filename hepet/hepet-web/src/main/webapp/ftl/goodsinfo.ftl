@@ -12,6 +12,7 @@
 	<!-- 引入js -->
   <script src="${host.js}/jquery-1.11.3.min.js"></script>
   <script src="${host.js}/swiper.jquery.min.js"></script>
+  <script src="${host.js}/common.js"></script>
   <style>
   .pd-detail {width: 100%;}
   .media-wrap {width: 100%;}
@@ -76,6 +77,11 @@ $(function() {
 	paginationType: 'fraction',
 	}) 
 	$(".buy").click(function(){
+		/*$.mask({
+			type:'loading',
+			imageSrc: '${host.img}/loading.gif',
+			loadingStatus: 'show',
+		})*/
 		window.location.href = '${host.base}/hepet/orderConfirm?goodsId=${goodsId}&num=1';
 	});
 })
