@@ -78,6 +78,14 @@ public class HepetGoods  extends BaseObject {
   private  String  region;
   /** 市场价格 */
   private  BigDecimal  marketPrice;
+  /** 商户代码 */
+  private  String  merchantCode;
+  /** 商户名称 */
+  private  String  merchantName;
+  /** 商品精选等级：0或空：无推荐，1：分类内精选，2：首页推荐 */
+  private  String  chooseLevel;
+  /** 推荐理由 */
+  private  String  chooseReason;
   /** 类目代码 */
 	public String getCategoryCode(){
 		return this.categoryCode;
@@ -400,6 +408,42 @@ public class HepetGoods  extends BaseObject {
   /** 市场价格 */
 	public HepetGoods setMarketPrice(BigDecimal marketPrice){
 		 this.marketPrice=marketPrice;
+		 return this;
+	}
+  /** 商户代码 */
+	public String getMerchantCode(){
+		return this.merchantCode;
+	}
+  /** 商户代码 */
+	public HepetGoods setMerchantCode(String merchantCode){
+		 this.merchantCode=merchantCode;
+		 return this;
+	}
+  /** 商户名称 */
+	public String getMerchantName(){
+		return this.merchantName;
+	}
+  /** 商户名称 */
+	public HepetGoods setMerchantName(String merchantName){
+		 this.merchantName=merchantName;
+		 return this;
+	}
+  /** 商品精选等级：0或空：无推荐，1：分类内精选，2：首页推荐 */
+	public String getChooseLevel(){
+		return this.chooseLevel;
+	}
+  /** 商品精选等级：0或空：无推荐，1：分类内精选，2：首页推荐 */
+	public HepetGoods setChooseLevel(String chooseLevel){
+		 this.chooseLevel=chooseLevel;
+		 return this;
+	}
+  /** 推荐理由 */
+	public String getChooseReason(){
+		return this.chooseReason;
+	}
+  /** 推荐理由 */
+	public HepetGoods setChooseReason(String chooseReason){
+		 this.chooseReason=chooseReason;
 		 return this;
 	}
 	public String toString(){

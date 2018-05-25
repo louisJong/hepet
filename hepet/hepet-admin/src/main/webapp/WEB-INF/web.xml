@@ -42,6 +42,27 @@
 		<servlet-name>spring-mvc</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+          <servlet-name>default</servlet-name>
+          <url-pattern>*.css</url-pattern>
+          <url-pattern>*.js</url-pattern>
+          <url-pattern>*.ico</url-pattern>
+          <url-pattern>*.swf</url-pattern>
+          <url-pattern>*.gif</url-pattern>
+          <url-pattern>*.jpeg</url-pattern>
+          <url-pattern>*.bmp</url-pattern>
+          <url-pattern>*.psd</url-pattern>
+          <url-pattern>*.jpg</url-pattern>
+          <url-pattern>*.png</url-pattern>
+          <url-pattern>*.htm</url-pattern>
+          <url-pattern>*.html</url-pattern>
+          <url-pattern>*.crx</url-pattern>
+          <url-pattern>*.xpi</url-pattern>
+          <url-pattern>*.exe</url-pattern>
+          <url-pattern>*.ipa</url-pattern>
+          <url-pattern>*.apk</url-pattern>
+          <url-pattern>*.htc</url-pattern>
+      </servlet-mapping>
 
 
 	

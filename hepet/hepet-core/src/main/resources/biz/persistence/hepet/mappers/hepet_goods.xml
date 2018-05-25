@@ -40,10 +40,69 @@
 	<result column="sold_count" property="soldCount"/>
 	<result column="region" property="region"/>
 	<result column="market_price" property="marketPrice"/>
+	<result column="merchant_code" property="merchantCode"/>
+	<result column="merchant_name" property="merchantName"/>
+	<result column="choose_level" property="chooseLevel"/>
+	<result column="choose_reason" property="chooseReason"/>
 </resultMap>
 <select id="findById" parameterType="long"  resultMap="hepet_goods">
 	select * 	from hepet_goods where id=#{id}  
 </select>  
+<insert id="insert"  parameterType="com.project.hepet.model.HepetGoods">
+<selectKey resultType="java.lang.Long" order="AFTER" keyColumn="id" keyProperty="id"> SELECT LAST_INSERT_ID() </selectKey>
+	insert into hepet_goods(id ,category_code ,brand_code ,brand_name ,goods_name ,sub_desc ,list_img_url ,detail_img_urls ,pro_sort ,price ,period ,price_per_period ,is_logistics ,putaway_opertor ,putaway_time ,soldout_opertor ,soldout_time ,soldout_desc ,status ,restrict_type ,restrict_num ,restrict_desc ,descript ,stock ,fetch_info ,size_spec ,source ,tags ,pro_detail ,update_time ,create_user ,update_user ,create_time ,send_type ,profit ,sold_count ,region ,market_price ,merchant_code ,merchant_name ,choose_level ,choose_reason)
+   values(#{id,jdbcType=INTEGER} ,#{categoryCode,jdbcType=VARCHAR} ,#{brandCode,jdbcType=VARCHAR} ,#{brandName,jdbcType=VARCHAR} ,#{goodsName,jdbcType=VARCHAR} ,#{subDesc,jdbcType=VARCHAR} ,#{listImgUrl,jdbcType=LONGVARCHAR} ,#{detailImgUrls,jdbcType=LONGVARCHAR} ,#{proSort,jdbcType=INTEGER} ,#{price,jdbcType=DECIMAL} ,#{period,jdbcType=INTEGER} ,#{pricePerPeriod,jdbcType=DECIMAL} ,#{isLogistics,jdbcType=TINYINT} ,#{putawayOpertor,jdbcType=VARCHAR} ,#{putawayTime,jdbcType=TIMESTAMP} ,#{soldoutOpertor,jdbcType=VARCHAR} ,#{soldoutTime,jdbcType=TIMESTAMP} ,#{soldoutDesc,jdbcType=VARCHAR} ,#{status,jdbcType=TINYINT} ,#{restrictType,jdbcType=TINYINT} ,#{restrictNum,jdbcType=INTEGER} ,#{restrictDesc,jdbcType=VARCHAR} ,#{descript,jdbcType=LONGVARCHAR} ,#{stock,jdbcType=INTEGER} ,#{fetchInfo,jdbcType=VARCHAR} ,#{sizeSpec,jdbcType=VARCHAR} ,#{source,jdbcType=VARCHAR} ,#{tags,jdbcType=VARCHAR} ,#{proDetail,jdbcType=LONGVARCHAR} ,#{updateTime,jdbcType=TIMESTAMP} ,#{createUser,jdbcType=VARCHAR} ,#{updateUser,jdbcType=VARCHAR} ,#{createTime,jdbcType=TIMESTAMP} ,#{sendType,jdbcType=VARCHAR} ,#{profit,jdbcType=INTEGER} ,#{soldCount,jdbcType=INTEGER} ,#{region,jdbcType=VARCHAR} ,#{marketPrice,jdbcType=DECIMAL} ,#{merchantCode,jdbcType=VARCHAR} ,#{merchantName,jdbcType=VARCHAR} ,#{chooseLevel,jdbcType=VARCHAR} ,#{chooseReason,jdbcType=VARCHAR}) 
+</insert>
+<insert id="batchInsert"  parameterType="list">
+	insert into hepet_goods(id ,category_code ,brand_code ,brand_name ,goods_name ,sub_desc ,list_img_url ,detail_img_urls ,pro_sort ,price ,period ,price_per_period ,is_logistics ,putaway_opertor ,putaway_time ,soldout_opertor ,soldout_time ,soldout_desc ,status ,restrict_type ,restrict_num ,restrict_desc ,descript ,stock ,fetch_info ,size_spec ,source ,tags ,pro_detail ,update_time ,create_user ,update_user ,create_time ,send_type ,profit ,sold_count ,region ,market_price ,merchant_code ,merchant_name ,choose_level ,choose_reason)
+   values
+	<foreach collection="list" item="item" index="index"   separator=","> 
+    (#{item.id,jdbcType=INTEGER} ,#{item.categoryCode,jdbcType=VARCHAR} ,#{item.brandCode,jdbcType=VARCHAR} ,#{item.brandName,jdbcType=VARCHAR} ,#{item.goodsName,jdbcType=VARCHAR} ,#{item.subDesc,jdbcType=VARCHAR} ,#{item.listImgUrl,jdbcType=LONGVARCHAR} ,#{item.detailImgUrls,jdbcType=LONGVARCHAR} ,#{item.proSort,jdbcType=INTEGER} ,#{item.price,jdbcType=DECIMAL} ,#{item.period,jdbcType=INTEGER} ,#{item.pricePerPeriod,jdbcType=DECIMAL} ,#{item.isLogistics,jdbcType=TINYINT} ,#{item.putawayOpertor,jdbcType=VARCHAR} ,#{item.putawayTime,jdbcType=TIMESTAMP} ,#{item.soldoutOpertor,jdbcType=VARCHAR} ,#{item.soldoutTime,jdbcType=TIMESTAMP} ,#{item.soldoutDesc,jdbcType=VARCHAR} ,#{item.status,jdbcType=TINYINT} ,#{item.restrictType,jdbcType=TINYINT} ,#{item.restrictNum,jdbcType=INTEGER} ,#{item.restrictDesc,jdbcType=VARCHAR} ,#{item.descript,jdbcType=LONGVARCHAR} ,#{item.stock,jdbcType=INTEGER} ,#{item.fetchInfo,jdbcType=VARCHAR} ,#{item.sizeSpec,jdbcType=VARCHAR} ,#{item.source,jdbcType=VARCHAR} ,#{item.tags,jdbcType=VARCHAR} ,#{item.proDetail,jdbcType=LONGVARCHAR} ,#{item.updateTime,jdbcType=TIMESTAMP} ,#{item.createUser,jdbcType=VARCHAR} ,#{item.updateUser,jdbcType=VARCHAR} ,#{item.createTime,jdbcType=TIMESTAMP} ,#{item.sendType,jdbcType=VARCHAR} ,#{item.profit,jdbcType=INTEGER} ,#{item.soldCount,jdbcType=INTEGER} ,#{item.region,jdbcType=VARCHAR} ,#{item.marketPrice,jdbcType=DECIMAL} ,#{item.merchantCode,jdbcType=VARCHAR} ,#{item.merchantName,jdbcType=VARCHAR} ,#{item.chooseLevel,jdbcType=VARCHAR} ,#{item.chooseReason,jdbcType=VARCHAR})
+	</foreach> 
+</insert>
+<update id="update"	parameterType="com.project.hepet.model.HepetGoods">
+	update hepet_goods
+<set>
+	<if test="categoryCode != null and categoryCode !='' ">category_code=#{categoryCode},</if>
+	<if test="brandCode != null and brandCode !='' ">brand_code=#{brandCode},</if>
+	<if test="subDesc != null and subDesc !='' ">sub_desc=#{subDesc},</if>
+	<if test="listImgUrl != null and listImgUrl !='' ">list_img_url=#{listImgUrl},</if>
+	<if test="detailImgUrls != null and detailImgUrls !='' ">detail_img_urls=#{detailImgUrls},</if>
+	<if test="proSort != null and proSort !='' ">pro_sort=#{proSort},</if>
+	<if test="price != null and price !='' ">price=#{price},</if>
+	<if test="period != null and period !='' ">period=#{period},</if>
+	<if test="pricePerPeriod != null and pricePerPeriod !='' ">price_per_period=#{pricePerPeriod},</if>
+	<if test="isLogistics != null and isLogistics !='' ">is_logistics=#{isLogistics},</if>
+	<if test="putawayOpertor != null and putawayOpertor !='' ">putaway_opertor=#{putawayOpertor},</if>
+	<if test="putawayTime != null and putawayTime !='' ">putaway_time=#{putawayTime},</if>
+	<if test="soldoutOpertor != null and soldoutOpertor !='' ">soldout_opertor=#{soldoutOpertor},</if>
+	<if test="soldoutTime != null and soldoutTime !='' ">soldout_time=#{soldoutTime},</if>
+	<if test="soldoutDesc != null and soldoutDesc !='' ">soldout_desc=#{soldoutDesc},</if>
+	<if test="status != null and status !='' ">status=#{status},</if>
+	<if test="restrictType != null and restrictType !='' ">restrict_type=#{restrictType},</if>
+	<if test="restrictNum != null and restrictNum !='' ">restrict_num=#{restrictNum},</if>
+	<if test="restrictDesc != null and restrictDesc !='' ">restrict_desc=#{restrictDesc},</if>
+	<if test="descript != null and descript !='' ">descript=#{descript},</if>
+	<if test="stock != null and stock !='' ">stock=#{stock},</if>
+	<if test="fetchInfo != null and fetchInfo !='' ">fetch_info=#{fetchInfo},</if>
+	<if test="sizeSpec != null and sizeSpec !='' ">size_spec=#{sizeSpec},</if>
+	<if test="source != null and source !='' ">source=#{source},</if>
+	<if test="tags != null and tags !='' ">tags=#{tags},</if>
+	<if test="proDetail != null and proDetail !='' ">pro_detail=#{proDetail},</if>
+	<if test="updateTime != null and updateTime !='' ">update_time=#{updateTime},</if>
+	<if test="updateUser != null and updateUser !='' ">update_user=#{updateUser},</if>
+	<if test="sendType != null and sendType !='' ">send_type=#{sendType},</if>
+	<if test="profit != null and profit !='' ">profit=#{profit},</if>
+	<if test="soldCount != null and soldCount !='' ">sold_count=#{soldCount},</if>
+	<if test="region != null and region !='' ">region=#{region},</if>
+	<if test="marketPrice != null and marketPrice !='' ">market_price=#{marketPrice},</if>
+	<if test="merchantCode != null and merchantCode !='' ">merchant_code=#{merchantCode},</if>
+	<if test="merchantName != null and merchantName !='' ">merchant_name=#{merchantName},</if>
+	<if test="chooseLevel != null and chooseLevel !='' ">choose_level=#{chooseLevel},</if>
+	<if test="chooseReason != null and chooseReason !='' ">choose_reason=#{chooseReason}</if>
+</set>
+	where id=#{id}
+</update>
 <select id="findByIdSimple" parameterType="long"  resultMap="hepet_goods">
 	select brand_name,market_price,send_type,region,goods_name,sub_desc,detail_img_urls,list_img_url,price,period,price_per_period,is_logistics,status,stock,tags,sold_count from hepet_goods where id=#{goodsId}  
 </select>  
@@ -95,58 +154,6 @@
 	 </choose>
   	limit #{startRow} , #{limit}
 </select>
-<insert id="insert"  parameterType="com.project.hepet.model.HepetGoods"  useGeneratedKeys="true" keyProperty="id">
-	insert into hepet_goods(id ,category_code ,brand_code ,brand_name ,goods_name ,sub_desc ,list_img_url ,detail_img_urls ,pro_sort ,price ,period ,price_per_period ,is_logistics ,putaway_opertor ,putaway_time ,soldout_opertor ,soldout_time ,soldout_desc ,status ,restrict_type ,restrict_num ,restrict_desc ,descript ,stock ,fetch_info ,size_spec ,source ,tags ,pro_detail ,update_time ,create_user ,update_user ,create_time ,send_type ,profit ,sold_count ,region ,market_price)
-   values(#{id,jdbcType=INTEGER} ,#{categoryCode,jdbcType=VARCHAR} ,#{brandCode,jdbcType=VARCHAR} ,#{brandName,jdbcType=VARCHAR} ,#{goodsName,jdbcType=VARCHAR} ,#{subDesc,jdbcType=VARCHAR} ,#{listImgUrl,jdbcType=LONGVARCHAR} ,#{detailImgUrls,jdbcType=LONGVARCHAR} ,#{proSort,jdbcType=INTEGER} ,#{price,jdbcType=DECIMAL} ,#{period,jdbcType=INTEGER} ,#{pricePerPeriod,jdbcType=DECIMAL} ,#{isLogistics,jdbcType=TINYINT} ,#{putawayOpertor,jdbcType=VARCHAR} ,#{putawayTime,jdbcType=TIMESTAMP} ,#{soldoutOpertor,jdbcType=VARCHAR} ,#{soldoutTime,jdbcType=TIMESTAMP} ,#{soldoutDesc,jdbcType=VARCHAR} ,#{status,jdbcType=TINYINT} ,#{restrictType,jdbcType=TINYINT} ,#{restrictNum,jdbcType=INTEGER} ,#{restrictDesc,jdbcType=VARCHAR} ,#{descript,jdbcType=LONGVARCHAR} ,#{stock,jdbcType=INTEGER} ,#{fetchInfo,jdbcType=VARCHAR} ,#{sizeSpec,jdbcType=VARCHAR} ,#{source,jdbcType=VARCHAR} ,#{tags,jdbcType=VARCHAR} ,#{proDetail,jdbcType=LONGVARCHAR} ,#{updateTime,jdbcType=TIMESTAMP} ,#{createUser,jdbcType=VARCHAR} ,#{updateUser,jdbcType=VARCHAR} ,#{createTime,jdbcType=TIMESTAMP} ,#{sendType,jdbcType=VARCHAR} ,#{profit,jdbcType=INTEGER} ,#{soldCount,jdbcType=INTEGER} ,#{region,jdbcType=VARCHAR} ,#{marketPrice,jdbcType=DECIMAL}) 
-</insert>
-<insert id="batchInsert"  parameterType="list">
-	insert into hepet_goods(id ,category_code ,brand_code ,brand_name ,goods_name ,sub_desc ,list_img_url ,detail_img_urls ,pro_sort ,price ,period ,price_per_period ,is_logistics ,putaway_opertor ,putaway_time ,soldout_opertor ,soldout_time ,soldout_desc ,status ,restrict_type ,restrict_num ,restrict_desc ,descript ,stock ,fetch_info ,size_spec ,source ,tags ,pro_detail ,update_time ,create_user ,update_user ,create_time ,send_type ,profit ,sold_count ,region ,market_price)
-   values
-	<foreach collection="list" item="item" index="index"   separator=","> 
-    (#{item.id,jdbcType=INTEGER} ,#{item.categoryCode,jdbcType=VARCHAR} ,#{item.brandCode,jdbcType=VARCHAR} ,#{item.brandName,jdbcType=VARCHAR} ,#{item.goodsName,jdbcType=VARCHAR} ,#{item.subDesc,jdbcType=VARCHAR} ,#{item.listImgUrl,jdbcType=LONGVARCHAR} ,#{item.detailImgUrls,jdbcType=LONGVARCHAR} ,#{item.proSort,jdbcType=INTEGER} ,#{item.price,jdbcType=DECIMAL} ,#{item.period,jdbcType=INTEGER} ,#{item.pricePerPeriod,jdbcType=DECIMAL} ,#{item.isLogistics,jdbcType=TINYINT} ,#{item.putawayOpertor,jdbcType=VARCHAR} ,#{item.putawayTime,jdbcType=TIMESTAMP} ,#{item.soldoutOpertor,jdbcType=VARCHAR} ,#{item.soldoutTime,jdbcType=TIMESTAMP} ,#{item.soldoutDesc,jdbcType=VARCHAR} ,#{item.status,jdbcType=TINYINT} ,#{item.restrictType,jdbcType=TINYINT} ,#{item.restrictNum,jdbcType=INTEGER} ,#{item.restrictDesc,jdbcType=VARCHAR} ,#{item.descript,jdbcType=LONGVARCHAR} ,#{item.stock,jdbcType=INTEGER} ,#{item.fetchInfo,jdbcType=VARCHAR} ,#{item.sizeSpec,jdbcType=VARCHAR} ,#{item.source,jdbcType=VARCHAR} ,#{item.tags,jdbcType=VARCHAR} ,#{item.proDetail,jdbcType=LONGVARCHAR} ,#{item.updateTime,jdbcType=TIMESTAMP} ,#{item.createUser,jdbcType=VARCHAR} ,#{item.updateUser,jdbcType=VARCHAR} ,#{item.createTime,jdbcType=TIMESTAMP} ,#{item.sendType,jdbcType=VARCHAR} ,#{item.profit,jdbcType=INTEGER} ,#{item.soldCount,jdbcType=INTEGER} ,#{item.region,jdbcType=VARCHAR} ,#{item.marketPrice,jdbcType=DECIMAL})
-	</foreach> 
-</insert>
-<update id="update"	parameterType="com.project.hepet.model.HepetGoods">
-	update hepet_goods
-<set>
-	<if test="categoryCode != null">category_code=#{categoryCode},</if>
-	<if test="brandCode != null">brand_code=#{brandCode},</if>
-	<if test="brandName != null">brand_name=#{brandName},</if>
-	<if test="goodsName != null">goods_name=#{goodsName},</if>
-	<if test="subDesc != null">sub_desc=#{subDesc},</if>
-	<if test="listImgUrl != null">list_img_url=#{listImgUrl},</if>
-	<if test="detailImgUrls != null">detail_img_urls=#{detailImgUrls},</if>
-	<if test="proSort != null">pro_sort=#{proSort},</if>
-	<if test="price != null">price=#{price},</if>
-	<if test="period != null">period=#{period},</if>
-	<if test="pricePerPeriod != null">price_per_period=#{pricePerPeriod},</if>
-	<if test="isLogistics != null">is_logistics=#{isLogistics},</if>
-	<if test="putawayOpertor != null">putaway_opertor=#{putawayOpertor},</if>
-	<if test="putawayTime != null">putaway_time=#{putawayTime},</if>
-	<if test="soldoutOpertor != null">soldout_opertor=#{soldoutOpertor},</if>
-	<if test="soldoutTime != null">soldout_time=#{soldoutTime},</if>
-	<if test="soldoutDesc != null">soldout_desc=#{soldoutDesc},</if>
-	<if test="status != null">status=#{status},</if>
-	<if test="restrictType != null">restrict_type=#{restrictType},</if>
-	<if test="restrictNum != null">restrict_num=#{restrictNum},</if>
-	<if test="restrictDesc != null">restrict_desc=#{restrictDesc},</if>
-	<if test="descript != null">descript=#{descript},</if>
-	<if test="stock != null">stock=#{stock},</if>
-	<if test="fetchInfo != null">fetch_info=#{fetchInfo},</if>
-	<if test="sizeSpec != null">size_spec=#{sizeSpec},</if>
-	<if test="source != null">source=#{source},</if>
-	<if test="tags != null">tags=#{tags},</if>
-	<if test="proDetail != null">pro_detail=#{proDetail},</if>
-	<if test="updateTime != null">update_time=#{updateTime},</if>
-	<if test="updateUser != null">update_user=#{updateUser},</if>
-	<if test="sendType != null">send_type=#{sendType},</if>
-	<if test="profit != null">profit=#{profit},</if>
-	<if test="soldCount != null">sold_count=#{soldCount},</if>
-	<if test="region != null">region=#{region},</if>
-	<if test="marketPrice != null">market_price=#{marketPrice}</if>
-</set>
-	where id=#{id}
-</update>
 <update id="addSoldCount" parameterType="hashmap">
 	update hepet_goods set sold_count = sold_count + #{soldNum}, update_time=now() where id = #{id}
 </update>
