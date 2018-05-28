@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <title>售后服务</title>
+    <script src="./jquery.min.js"></script>
+    <link rel="stylesheet" href="./help.css">
+</head>
+
+<body>
+    <div class="question-box">
+        <ul id="question">
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">签收验货</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                        当您收到包裹后，请务必认真检查所收包裹与您订购的商品型号、数量、外观和质量等是否一致。如果确认无误，请签收；如果发现有出入，请当场拒收。签收后发现有任何质量问题，可随时与商城客服或商户客服取得联系，商城将严格按照国家三包政策来维护您的利益。发票类型根据商家提供的发票为准。
+                </div>
+            </li>
+            <li onclick="window.location.href='./return.html'">
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">退换货政策</span>
+                    <span class="arrow"></span>
+                </p>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        $("#question li").on("click", function () {
+            if ($(this).hasClass("actived")) {
+                $(this).removeClass("actived");
+            } else {
+                $(this).addClass("actived");
+            }
+            $(this).siblings().removeClass("actived");
+        })
+    </script>
+</body>
+
+</html>

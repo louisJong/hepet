@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <title>快递配送</title>
+    <script src="./jquery.min.js"></script>
+    <link rel="stylesheet" href="./help.css">
+</head>
+
+<body>
+    <div class="question-box">
+        <ul id="question">
+            <li class="actived">
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">配送方式</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    商城所有商品享受免运费政策，快递为商家签约的第三方物流，暂时不支持西藏和新疆地区的配送。
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">配送查询</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    您可在商城中点击订单详细信息，会显示当前的配送进度。
+
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        $("#question li").on("click", function () {
+            if ($(this).hasClass("actived")) {
+                $(this).removeClass("actived");
+            } else {
+                $(this).addClass("actived");
+            }
+            $(this).siblings().removeClass("actived");
+        })
+    </script>
+</body>
+
+</html>

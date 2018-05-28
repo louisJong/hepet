@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <title>分期付款</title>
+    <script src="./jquery.min.js"></script>
+    <link rel="stylesheet" href="./help.css">
+</head>
+
+<body>
+    <div class="question-box">
+        <ul id="question">
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">分期付款规则？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    中银消费钱包当日可用额度一定大于购买商品的总金额，订单成交后，您的可用额度需扣除分期总金额，随着每月分期还款，您的可用额度也将逐步恢复。 如果账户因故冻结或注销，将不能进行分期购物。
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">为何购买时会提示额度不足？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    请您确保中银消费钱包当前可用额度大于商品总金额，在您订购分期商品时，需要先扣除商品总金额的额度，之后您只需要按照账单显示分期还款即可。如您当前可用额度不足，建议您可先还款确保钱包的可用额度大于您本次需要购买的商品总额。
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">还款</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    在钱包分期商城购买的金额会分期体现在钱包综合账单内，您只需按照账单金额按时还款即可； 由于该金额已经是分期后的金额，该部分金额不能再申请账单分期；
+
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        $("#question li").on("click", function () {
+            if ($(this).hasClass("actived")) {
+                $(this).removeClass("actived");
+            } else {
+                $(this).addClass("actived");
+            }
+            $(this).siblings().removeClass("actived");
+        })
+    </script>
+</body>
+
+</html>

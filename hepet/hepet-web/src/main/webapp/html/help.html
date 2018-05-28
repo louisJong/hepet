@@ -9,149 +9,31 @@
     <meta name="format-detection" content="email=no">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
     <title>帮助中心</title>
-    <script src="./jquery.min.js"></script>
-    <style>
-        body,
-        header,
-        ul,
-        li,
-        p {
-            padding: 0;
-            margin: 0;
-        }
-
-        li {
-            list-style: none;
-            -webkit-tap-highlight-color:rgba(0,0,0,0); 
-        }
-
-        header {
-            height: 166px;
-        }
-
-        .header-box {
-            float: left;
-            height: 83px;
-            width: calc(100%/3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: #454545;
-        }
-
-        .header-box img {
-            width: 34px;
-            height: 34px;
-        }
-
-        .header-box span {
-            font-size: 15px;
-            color: #454545;
-            padding-top: 9px;
-        }
-
-        .line {
-            width: 100%;
-            height: 10px;
-            background: #f1f4f6
-        }
-
-        .question-box {
-            padding-left: 20px;
-        }
-
-        .question-box .title {
-            line-height: 40px;
-            font-size: 15px;
-            font-weight: bold;
-            color: #454545;
-            border-bottom: 1px solid #F7F4F4;
-        }
-
-        .question {
-            width: 100%;
-            height: 60px;
-            display: flex;
-            border-bottom: 1px solid #F7F4F4;
-            justify-content: space-between;
-            align-items: center;
-            padding-right: 20px;
-            box-sizing: border-box;
-        }
-
-        .dot {
-            width: 5px;
-            height: 5px;
-            margin-right: 10px;
-            background: url("./images/dot.png") no-repeat;
-            background-size: 100% 100%;
-        }
-
-        .txt {
-            flex-grow: 4;
-            font-size: 16px;
-            color: #454545;
-        }
-
-        .actived .arrow {
-            background: url("./images/top.png") no-repeat;
-            background-size: 100% 100%;
-        }
-
-        .arrow {
-            width: 10px;
-            height: 6px;
-            background: url("./images/down.png") no-repeat;
-            background-size: 100% 100%;
-        }
-
-        .answer {
-            display: none;
-            padding: 10px 20px;
-            font-size: 14px;
-            color: #4A4A4A;
-            line-height: 20px;
-            border-bottom: 1px solid #F7F4F4;
-            text-indent: 2em;
-        }
-
-        .actived .answer {
-            display: block;
-        }
-    </style>
+    <link rel="stylesheet" href="./help.css">
+    <script src="./jquery.min.js"></script>    
 </head>
 
 <body>
     <header>
-        <a href="./info.html" class="header-box">
-            <img src="./images/info.png" />
-            <span>钱包介绍</span>
+        <a href="./noob.html" class="header-box">
+            <img src="./images/noob.png" />
+            <span>新手上路</span>
         </a>
-        <a href='./limit.html' class="header-box">
-            <img src="./images/limit.png" />
-            <span>申请额度</span>
+        <a href='./stage.html' class="header-box">
+            <img src="./images/stage.png" />
+            <span>分期付款</span>
         </a>
-        <a href='./use.html' class="header-box">
-            <img src="./images/use.png" />
-            <span>使用钱包</span>
+        <a href='./express.html' class="header-box">
+            <img src="./images/express.png" />
+            <span>快递配送</span>
         </a>
-        <a href='./refund.html' class="header-box">
-            <img src="./images/refund.png" />
-            <span>扣款还款</span>
-        </a>
-        <a href='./service.html' class="header-box">
-            <img src="./images/service.png" />
-            <span>客服中心</span>
-        </a>
-        <a href='./other.html' class="header-box">
-            <img src="./images/other.png" />
-            <span>其它</span>
-        </a>
+        <a href='./aftersale.html' class="header-box">
+            <img src="./images/aftersale.png" />
+            <span>售后服务</span>
+        </a>       
     </header>
     <div class="line"></div>
-    <div class="question-box">
+    <div class="question-box" style="padding-bottom: 60px">
         <p class="title">常见问题</p>
         <ul id="question">
             <li>
@@ -322,6 +204,17 @@
                 </div>
             </li>
         </ul>
+    </div>
+
+    <div class="footer">
+        <div class="footer-left">
+            <img src="./images/chat.png"/>
+            <span>联系客服</span>
+        </div>
+        <div class="footer-right">
+            <span>微信公众号</span>
+            <span>xxxxxxx</span>
+        </div>
     </div>
 
     <script>

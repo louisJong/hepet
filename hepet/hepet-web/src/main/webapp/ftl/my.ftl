@@ -27,7 +27,7 @@
 	</a>
 </div> 
 <div class="list">
-	<a class="list-item" href='${host.base}/hepet/myOrders'>
+	<a class="list-item" href='${host.base}/html/help.html'>
 		<div class="left">帮助中心</div>
 		<div class="right icon-right"></div>
 	</a>
