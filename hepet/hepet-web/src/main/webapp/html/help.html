@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
     <title>帮助中心</title>
     <link rel="stylesheet" href="./help.css">
-    <script src="./jquery.min.js"></script>    
+    <script src="./jquery.min.js"></script>
 </head>
 
 <body>
@@ -30,185 +30,97 @@
         <a href='./aftersale.html' class="header-box">
             <img src="./images/aftersale.png" />
             <span>售后服务</span>
-        </a>       
+        </a>
     </header>
     <div class="line"></div>
-    <div class="question-box" style="padding-bottom: 60px">
+    <div class="question-box">
         <p class="title">常见问题</p>
         <ul id="question">
             <li>
                 <p class="question">
                     <span class="dot"></span>
-                    <span class="txt">什么是中银消费钱包？</span>
+                    <span class="txt">分期有利息吗？</span>
                     <span class="arrow"></span>
                 </p>
                 <div class="answer">
-                    “中银消费钱包”是一款基于手机APP端的消费金融产品，采用“类信用卡”模式进行运作。用户下载中银消费钱包APP，申请获得授信额度，额度一方面可直接提款至个人借记卡进行间接消费，具体表现为现金分期；另一方面可通过银联二维码在支持银联云闪付的商户进行直接消费。
+                    您通过中银消费钱包分期商城购买的分期商品，是不会有利息产生的。例如您购买的商品价格为99元*3期共计297元，假设您的账单无其他消费，您每月在最晚还款日前还款99元，分3个月还清，不会有利息产生。
                 </div>
             </li>
             <li>
                 <p class="question">
                     <span class="dot"></span>
-                    <span class="txt">贷款审核时间大约多久？</span>
+                    <span class="txt">如何取消订单？</span>
                     <span class="arrow"></span>
                 </p>
                 <div class="answer">
-                    正常审核时长在20分钟至1小时不等，审核结果会有短信通知。
-                </div>
-            </li>
-            <li>
-                <p class="question">
-                    <span class="dot"></span>
-                    <span class="txt">申请为什么会被拒？</span>
-                    <span class="arrow"></span>
-                </p>
-                <div class="answer">
-                    审批不通过很可能是因为综合评分不足，我们会根据您的实际拒绝原因在APP端告诉您是否需要重新申请。
-                </div>
-            </li>
-            <li>
-                <p class="question">
-                    <span class="dot"></span>
-                    <span class="txt">审核会打公司或者联系人电话吗？</span>
-                    <span class="arrow"></span>
-                </p>
-                <div class="answer">
-                    不会，但为确保您能够成功申请到额度，请务必填写真实信息。
-                </div>
-            </li>
-            <li>
-                <p class="question">
-                    <span class="dot"></span>
-                    <span class="txt">为什么提示我消费借款申请资格验证失败？</span>
-                    <span class="arrow"></span>
-                </p>
-                <div class="answer">
-                    可能有两种原因导致这种情况：
-                    <br/> 1：您有正在审批中的贷款，请耐心等待，勿重复申请；
-                    <br/> 2：您已有我司其他产品，可以先结清其他产品再进行申请。
-                    <br/>
-                </div>
-            </li>
-            <li>
-                <p class="question">
-                    <span class="dot"></span>
-                    <span class="txt">为什么我人脸识别反映很慢，一直不过？</span>
-                    <span class="arrow"></span>
-                </p>
-                <div class="answer">
-                    若您的脸不在镜头内、不清晰、当前灯光昏暗或佩戴眼镜造成反光，都可能导致刷脸失败。建议在光线明亮的室内进行录制，并摘掉眼镜。如果以上问题都不存在，可能是网络延时，建议稍后再试。
-                </div>
-            </li>
-            <li>
-                <p class="question">
-                    <span class="dot"></span>
-                    <span class="txt">为什么扫描身份证反映很慢，一直不过？</span>
-                    <span class="arrow"></span>
-                </p>
-                <div class="answer">
-                    网络问题、灯光昏暗、身份证反光都可能导致扫描较慢，若10秒内扫描不成功需手动点击拍摄按键，请注意关注扫描过程中页面的变化。
-                </div>
-            </li>
-            <li>
-                <p class="question">
-                    <span class="dot"></span>
-                    <span class="txt">钱包可以在哪些地方使用？</span>
-                    <span class="arrow"></span>
-                </p>
-                <div class="answer">
-                    钱包是“类信用卡”产品，您获得额度后，既可以申请提款，我们会直接将资金转账至您提供的银行卡，也可以在APP首页点击“付款码”进行线下支付，所有支持银联云闪付的商户都可以使用，通过二维码消费可享受最长45天的免息期。
-                </div>
-            </li>
-            <li>
-                <p class="question">
-                    <span class="dot"></span>
-                    <span class="txt">钱包可以循环借款吗？</span>
-                    <span class="arrow"></span>
-                </p>
-                <div class="answer">
-                    可以的，钱包是额度可循环产品，只要在您额度范围内，可以循环提款，还款后相对应的钱包额度会立马释放。
-                </div>
-            </li>
-            <li>
-                <p class="question">
-                    <span class="dot"></span>
-                    <span class="txt">中银消费钱包的还款方式是怎样的？</span>
-                    <span class="arrow"></span>
-                </p>
-                <div class="answer">
-                    每月1至31号为一个记账周期，次月2号出账，账单将包含您上月的消费金额以及分期应还金额，届时APP会显示您最新的账单信息，并可查询您的所有用款记录，建议每月2号登录APP查查账单。 同时我们每月2号和13号也会短信告知您当期应还的费用，并会详细告知其中有多少金额可以申请账单分期，请关注我们的短信。
+                    <p>如您订单未付款，则无需取消，系统会在订单提交订单30分钟后自动取消；</p>
+                    <p>如您的订单已付款，因商品随时可能发货，请您联系商城客服，按退货流程办理。</p>
 
                 </div>
             </li>
             <li>
                 <p class="question">
                     <span class="dot"></span>
-                    <span class="txt">忘记还款怎么办？</span>
+                    <span class="txt">如何申请退货？</span>
                     <span class="arrow"></span>
                 </p>
                 <div class="answer">
-                    若您在还款日忘记还款则应在还款日后3个自然日之内完成还款，此时不进入催收，亦不上报人民银行征信。此3天计收滞纳金（贷款金额的0.05%/天）。若超过3个自然日仍未还款则纳入恶意逾期，纳入人行征信系统，同时余下分期自动结清为当月账单。
+                    <p>在微信“中银消费钱包分期商城客服”中发送“退货换货”指令；</p>
+                    <p>按照提示输入订单号；</p>
+                    <p>按照提示输入金额和购买人手机号末4位进行确认；</p>
+                    <p>至此，您一旦提交申请，该申请单就进入了商城的售后服务处理流程。客服会根据您填写的申请单情况给予回应。当您的申请单审核通过时，您需要邮寄商品至审核回复后的地址。在邮寄时，请您将所有退货、返修的物品都放入一个邮包中一起寄送。</p>
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">退款时效需要多久？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    一般情况下，商户会在收到您退回的商品并确认符合退换条件的情况下，在一周内完成退款。温馨提醒：请您在寄回商品时，务必保证商品及配件完整，同时在包装内放置小纸条，注明您的订单号及联系方式，以便商户在收到商品后能够与您及时确认。
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">如何修改配送地址？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    如您需要修改配送信息（地址错误，收货手机错误），请您联系客服修改； 如您需要更换配送地址，需要订购人（持卡人）致电中银消费客服热线，申请更改配送地址，但若商品已发出，则无法修改配送地址。
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">还款？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    <p>在钱包分期商城购买的金额会分期体现在钱包综合账单内，您只需按照账单金额按时还款即可；</p>
+                    <p>由于该金额已经是分期后的金额，该部分金额不能再申请账单分期；</p>
+                </div>
+            </li>
 
-                </div>
-            </li>
-            <li>
+        </ul>
+    </div>
+    <div class="line"></div>
+    <div class="question-box">
+        <ul>
+            <li onclick="window.location.href='./return.html'">
                 <p class="question">
                     <span class="dot"></span>
-                    <span class="txt">扣款失败了，显示我的账户有问题，怎么回事？</span>
+                    <span class="txt">退换货政策</span>
                     <span class="arrow"></span>
                 </p>
-                <div class="answer">
-                    快去确认一下您绑定的借记卡中余额是否充足，账户状态是否正常，是否有挂失、冻结等情况。如果余额充足、状态正常，系统第二天会再次扣款的，扣款结果会有短信通知。
-
-                </div>
-            </li>
-            <li>
-                <p class="question">
-                    <span class="dot"></span>
-                    <span class="txt">如何计算分期手续费？</span>
-                    <span class="arrow"></span>
-                </p>
-                <div class="answer">
-                    中银消费钱包3/6/9/12期的分期费率分别是当笔用款金额的1.98%、1.74%、1.65%、1.6%；现金分期、账单分期及订单分期费率相同。
-
-                </div>
-            </li>
-            <li>
-                <p class="question">
-                    <span class="dot"></span>
-                    <span class="txt">为什么拨打客服热线95137是空号？</span>
-                    <span class="arrow"></span>
-                </p>
-                <div class="answer">
-                    试试这样拨打：您号码所属地的区号+95137，如果还是空号，请在微信后台给我留言，包括您的地区、手机号及手机服务商，我们会帮您仔细查明原因并尽快给出回复的。
-                </div>
-            </li>
-            <li>
-                <p class="question">
-                    <span class="dot"></span>
-                    <span class="txt">我要怎样修改手机号？</span>
-                    <span class="arrow"></span>
-                </p>
-                <div class="answer">
-                    目前还不可以直接在APP上进行手机号码的修改，可以拨打客服热线95137申请人工帮助更改。
-                </div>
-            </li>
-            <li>
-                <p class="question">
-                    <span class="dot"></span>
-                    <span class="txt">目前支持的银行卡有哪些？</span>
-                    <span class="arrow"></span>
-                </p>
-                <div class="answer">
-                    中国银行、农业银行、工商银行、建设银行、中信银行、光大银行、兴业银行、平安银行、招商银行、宁波银行，我们会不定期添加新的银行卡，请以APP页面显示的为准。
-                </div>
             </li>
         </ul>
     </div>
-
+    <div class="line" style="padding-bottom: 60px;"></div>
     <div class="footer">
         <div class="footer-left">
-            <img src="./images/chat.png"/>
+            <img src="./images/chat.png" />
             <span>联系客服</span>
         </div>
         <div class="footer-right">

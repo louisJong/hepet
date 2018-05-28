@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <title>新手上路</title>
+    <script src="./jquery.min.js"></script>
+    <link rel="stylesheet" href="./help.css" />
+
+</head>
+
+<body>
+    <div class="question-box">
+        <ul id="question">
+            <li class="actived">
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">分期有利息吗?</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    您通过中银消费钱包分期商城购买的分期商品，是不会有利息产生的。例如您购买的商品价格为99元*3期共计297元，假设您的账单无其他消费，您每月在最晚还款日前还款99元，分3个月还清，不会有利息产生。
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">如何取消订单？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    如您订单未付款，则无需取消，系统会在订单提交订单30分钟后自动取消； 如您的订单已付款，因商品随时可能发货，请您联系商城客服，按退货流程办理。
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">如何修改配送地址？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    如您需要修改配送信息（地址错误，收货手机错误），请您联系客服修改； 如您需要更换配送地址，需要订购人（持卡人）致电中银消费客服热线，申请更改配送地址，但若商品已发出，则无法修改配送地址。
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">是否支持7天无理由退货？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    自您实际收到商品之日起7日内，在商品保持完好，且您愿意自行承担退货运费的情况下，可申请无理由退货。我们承诺销售商品均为全新商品，为保护消费者利益，以下商品不适用于7天无理由退换货：
+                    <p>1.个人定制类商品； </p>
+                    <p>2.鲜活易腐类商品；</p>
+                    <p> 3.在线下载或者已拆封的音像制品，计算机软件等数字化商品；</p>
+                    <p>4.交付的报纸期刊类商品； 5.其他根据商品性质并在购买时经您确认不宜退货的商品。</p>
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">如何申请退货？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    <p>在微信“中银消费钱包分期商城客服”中发送“退货换货”指令；</p>
+                    <p>按照提示输入订单号；</p>
+                    <p>按照提示输入金额和购买人手机号末4位进行确认；</p>
+                    <p>至此，您一旦提交申请，该申请单就进入了商城的售后服务处理流程。客服会根据您填写的申请单情况给予回应。当您的申请单审核通过时，您需要邮寄商品至审核回复后的地址。在邮寄时，请您将所有退货、返修的物品都放入一个邮包中一起寄送。</p>
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">退款时效需要多久？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    一般情况下，商户会在收到您退回的商品并确认符合退换条件的情况下，在一周内完成退款。温馨提醒：请您在寄回商品时，务必保证商品及配件完整，同时在包装内放置小纸条，注明您的订单号及联系方式，以便商户在收到商品后能够与您及时确认。
+                </div>
+            </li>
+            
+        </ul>
+    </div>
+
+    <script>
+        $("#question li").on("click", function () {
+            if ($(this).hasClass("actived")) {
+                $(this).removeClass("actived");
+            } else {
+                $(this).addClass("actived");
+            }
+            $(this).siblings().removeClass("actived");
+        })
+    </script>
+</body>
+
+</html>
