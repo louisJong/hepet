@@ -183,6 +183,8 @@ p {
 
 .prod-item .prod-item_img {
   position: relative;
+  width: 170px;
+  height: 170px;
 }
 
 .prod-item .prod-item_tag {
@@ -195,6 +197,15 @@ p {
   top: 0;
   left: 0;
   background: linear-gradient(144deg, #FF8960, #FF62A5);
+}
+.prod-item .prod-item_soldout {
+  width: 84px; 
+  height: 85px;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: url("../images/soldout.png") no-repeat;
+  background-size: 100% 100%;
 }
 .prod-item .prod-item_prif {
   line-height: 21px;
@@ -209,6 +220,7 @@ p {
 }
 .prod-item .prod-item_img img {
   width: 100%;
+  height: 100%;
 }
 
 .prod-item .prod-item_name {
