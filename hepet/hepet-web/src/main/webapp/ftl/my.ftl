@@ -26,6 +26,12 @@
 		<div class="right icon-right"></div>
 	</a>
 </div> 
+<div class="list">
+	<a class="list-item" href='${host.base}/hepet/myOrders'>
+		<div class="left">帮助中心</div>
+		<div class="right icon-right"></div>
+	</a>
+</div> 
  <footer></footer>
 </body>
 <script type="text/javascript">

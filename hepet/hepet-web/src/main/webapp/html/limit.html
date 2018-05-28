@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <title>钱包申请</title>
+    <script src="./jquery.min.js"></script>
+    <style>
+        body,
+        header,
+        ul,
+        li,
+        p {
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            list-style: none;
+            -webkit-tap-highlight-color:rgba(0,0,0,0); 
+        }
+
+
+        .question-box {
+            padding-left: 20px;
+        }
+
+        .question-box .title {
+            line-height: 40px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #454545;
+            border-bottom: 1px solid #F7F4F4;
+        }
+
+        .question {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            border-bottom: 1px solid #F7F4F4;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 20px;
+            box-sizing: border-box;
+        }
+
+        .dot {
+            width: 5px;
+            height: 5px;
+            margin-right: 10px;
+            background: url("./images/dot.png") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .txt {
+            flex-grow: 4;
+            font-size: 16px;
+            color: #454545;
+        }
+
+        .actived .arrow {
+            background: url("./images/top.png") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .arrow {
+            width: 10px;
+            height: 6px;
+            background: url("./images/down.png") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .answer {
+            display: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #4A4A4A;
+            line-height: 20px;
+            border-bottom: 1px solid #F7F4F4;
+            text-indent: 2em;
+        }
+
+        .actived .answer {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="question-box">
+        <ul id="question">
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">贷款审核时间大约多久？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    正常审核时长在20分钟至1小时不等，审核结果会有短信通知。
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">申请为什么会被拒？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    审批不通过很可能是因为综合评分不足，我们会根据您的实际拒绝原因在APP端告诉您是否需要重新申请。
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">审核会打公司或者联系人电话吗？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    不会，但为确保您能够成功申请到额度，请务必填写真实信息。
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">为什么提示我消费借款申请资格验证失败？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    可能有两种原因导致这种情况：
+                    <br/> 1：您有正在审批中的贷款，请耐心等待，勿重复申请；
+                    <br/> 2：您已有我司其他产品，可以先结清其他产品再进行申请。
+                    <br/>
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">为什么我人脸识别反映很慢，一直不过？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    若您的脸不在镜头内、不清晰、当前灯光昏暗或佩戴眼镜造成反光，都可能导致刷脸失败。建议在光线明亮的室内进行录制，并摘掉眼镜。如果以上问题都不存在，可能是网络延时，建议稍后再试。
+                </div>
+            </li>
+            <li>
+                <p class="question">
+                    <span class="dot"></span>
+                    <span class="txt">为什么扫描身份证反映很慢，一直不过？</span>
+                    <span class="arrow"></span>
+                </p>
+                <div class="answer">
+                    网络问题、灯光昏暗、身份证反光都可能导致扫描较慢，若10秒内扫描不成功需手动点击拍摄按键，请注意关注扫描过程中页面的变化。
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        $("#question li").on("click", function () {
+            if ($(this).hasClass("actived")) {
+                $(this).removeClass("actived");
+            } else {
+                $(this).addClass("actived");
+            }
+            $(this).siblings().removeClass("actived");
+        })
+    </script>
+</body>
+
+</html>
