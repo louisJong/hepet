@@ -44,4 +44,13 @@ public class HepetGoodsDao extends GenericDAOImpl<HepetGoods> {
 	public int deductStock(Map<String, Object> param) {
 		return this.getSqlSession().update(this.getNameSpace()+".deductStock", param);
 	}
+	
+	/**
+	 * 首页商品列表查询
+	 * @param param
+	 * @return
+	 */
+	public List<HepetGoods> indexProList(Map<String, Object> param){
+		return this.getSqlSession().selectList(this.getNameSpace()+".indexProList" , param);
+	}
 }

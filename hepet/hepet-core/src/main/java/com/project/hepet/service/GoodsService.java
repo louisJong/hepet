@@ -49,4 +49,10 @@ public interface GoodsService {
     List<HepetBanner> getSortedBanners();
 
     HepetGoods goodsAllDetail(long goodsId);
+    
+    /**
+     * 商城首页商品列表
+     * @return
+     */
+    JSONObject indexProList();
 }

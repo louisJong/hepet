@@ -161,4 +161,14 @@
 <update id="deductStock" parameterType="hashmap">
 	update hepet_goods set stock = stock - #{num}, update_time=now() where id = #{id} and stock - #{num} &gt;= 0 
 </update>
+
+<select id="indexProList" parameterType="hashmap"  resultMap="hepet_goods">
+	select id,category_code,brand_name,market_price,goods_name,profit,sub_desc,list_img_url,pro_sort,price,price_per_period,period,is_logistics,status,stock,tags,sold_count,
+		choose_level, choose_reason 
+	 from hepet_goods 
+  	<where>
+  		status = 1 and choose_level>0
+  	</where>
+  	order by id desc
+</select>
 </mapper>

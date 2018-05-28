@@ -1,5 +1,6 @@
 package com.project.hepet.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -125,5 +126,42 @@ public class GoodsServiceImpl implements GoodsService {
 	public HepetGoods goodsAllDetail(long goodsId) {
 		return goodsDao.findByIdAllDetail(goodsId);
 	}
+
+	@Override
+	public JSONObject indexProList() {
+		Map<String, Object> param = new HashMap<String, Object>();
+		List<HepetGoods> goodsList = goodsDao.indexProList(param);
+		JSONObject result = new JSONObject();
+		for(HepetGoods goods:goodsList) {
+			List<JSONObject> list = new ArrayList<JSONObject>();
+			String categoryCode = goods.getCategoryCode();
+			if("2".equals(goods.getChooseLevel())) {
+				categoryCode = "sytj";
+			}
+			if(result.containsKey(categoryCode)) {
+				list = result.getObject(categoryCode, List.class);
+			}
+			JSONObject obj = new JSONObject();
+			obj.put("id", goods.getId());
+			obj.put("categoryCode", goods.getCategoryCode());
+			obj.put("goodsName", goods.getBrandName());
+			obj.put("chooseReason", goods.getChooseReason());
+			obj.put("marketPrice", goods.getMarketPrice());
+			obj.put("price", goods.getPrice());
+			obj.put("period", goods.getPeriod());
+			obj.put("pricePerPeriod", goods.getPricePerPeriod());
+			obj.put("listImgUrl", goods.getListImgUrl());
+			if(goods.getSoldCount()==null ||goods.getStock()==null||goods.getSoldCount()<goods.getStock()) {
+				obj.put("isSellOut", false);
+			}else {
+				obj.put("isSellOut", true);
+			}
+			list.add(obj);
+			result.put(categoryCode, list);
+		}
+		return result;
+	}
+	
+	
 
 }
