@@ -151,6 +151,9 @@ public class GoodsServiceImpl implements GoodsService {
 			obj.put("period", goods.getPeriod());
 			obj.put("pricePerPeriod", goods.getPricePerPeriod());
 			obj.put("listImgUrl", goods.getListImgUrl());
+			if(goods.getMarketPrice()!=null&&goods.getPrice()!=null&&goods.getPrice().compareTo(goods.getMarketPrice())<0) {
+				obj.put("diffPrice", goods.getMarketPrice().subtract(goods.getPrice()));
+			}
 			if(goods.getSoldCount()==null ||goods.getStock()==null||goods.getSoldCount()<goods.getStock()) {
 				obj.put("isSellOut", false);
 			}else {
