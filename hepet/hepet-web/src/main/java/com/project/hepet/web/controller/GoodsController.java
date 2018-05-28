@@ -81,7 +81,7 @@ public class GoodsController {
 			modelMap.put("info", "商品未上架");
 			return "common_result";
 		}
-		modelMap.put("goodsInfo", goodsService.goodsAllDetail(goodsId));
+		modelMap.put("goodsInfo", goods);
 		modelMap.put("goodsId", goodsId);
 		return "goodsinfo";
 	}
