@@ -9,9 +9,10 @@
 	<link rel="stylesheet" type="text/css" href="${host.css}/base.css?v=${host.version}">
 	<link rel="stylesheet" type="text/css" href="${host.css}/index.css?2">
 	<!-- 引入js -->
-  <script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
+	<script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
 	<script src="https://unpkg.com/better-scroll/dist/bscroll.min.js"></script>
-  <script src="${host.js}/swiper.jquery.min.js"></script>
+	<script src="${host.js}/swiper.jquery.min.js"></script>
+  	<script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
 	<script src="${host.js}/common.js?v=${host.version}"></script>
 	<style>
         .nav-fixed {
@@ -148,6 +149,10 @@
 							$("#classify").append($(_str));
 							gClassifyOffTops.push($("."+ele.code+'-item').offset().top)
 						})
+
+						$("img.lazy").lazyload({
+    						effect : "fadeIn"
+						});
 					}
 				}
 			})
@@ -156,7 +161,7 @@
 			var str = '<a class="prod-item" href="${host.base}/hepet/goodsInfo?goodsId='+ item.id +'">';
 			str += '<div class="prod-item_img">';
 			str += item.diffPrice && item.diffPrice > 0 ? '<div class="prod-item_tag">直降'+item.diffPrice+'</div>'	 : '';
-			str += '<img src="'+ item.listImgUrl+'">';
+			str += '<img class="lazy" src="${host.img}/loading.gif?1" data-src="'+ item.listImgUrl+'">';
 			str += item.chooseReason ? '<div class="prod-item_prif">'+ item.chooseReason +'</div>' : '';
 			str += item.isSellOut ? '<div class="prod-item_soldout"></div>' : '';
 			str += '</div>';

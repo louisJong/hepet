@@ -77,12 +77,12 @@ $(function() {
 	paginationType: 'fraction',
 	}) 
 	$(".buy").click(function(){
-		/*$.mask({
+		$.mask({
 			type:'loading',
 			imageSrc: '${host.img}/loading.gif',
 			loadingStatus: 'show',
-		})*/
-		window.location.href = '${host.base}/hepet/orderConfirm?goodsId=${goodsId}&num=1';
+		})
+		//window.location.href = '${host.base}/hepet/orderConfirm?goodsId=${goodsId}&num=1';
 	});
 })
 </script>
