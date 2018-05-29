@@ -64,6 +64,14 @@
     <script>      
         var gClassifyOffTops = [];
 		var gNavs = ${categorys} || [] ;
+
+		var BScroll = window.BScroll;
+		scrollmethod = new BScroll('.nav', {
+			eventPassthrough: true,
+			scrollX: true,
+			scrollY: false,
+			preventDefault: false
+		})
         $(function () {
 			$("footer").append(new Footer([{text:'精选推荐', code:'jxtj', link:'${host.base}/hepet/index'},{text: '商品分类', code:'spfl', link:'${host.base}/hepet/mall'}, {text: '我的', code:'wode', link:'${host.base}/hepet/my'}], 0).init());
 			initBanner(${banners});
@@ -79,7 +87,7 @@
                 } else if (distance < navOffTop) {
                     $(".nav").removeClass("nav-fixed");
                     $(".classify-box").removeClass("classify-box-fixed");
-                }
+                }				
                 for (var j = 0; j < gClassifyOffTops.length; j++) {
                     if (distance > gClassifyOffTops[j] - 40 && distance <= gClassifyOffTops[j + 1] - 30) {
                         scrollmethod.scrollToElement(
@@ -93,6 +101,9 @@
                         $(".nav span:nth-child(" + (j + 1) + ")").addClass("actived");
                     }
                 }
+
+				scrollmethod.scrollToElement(
+				document.querySelector('.nav span:nth-child(' + $(this).index() + ')'), null, true, true)
             })
         })
 
@@ -171,13 +182,6 @@
 			str += '</a>';
 			return str;
 		}
-		var BScroll = window.BScroll;
-		scrollmethod = new BScroll('.nav', {
-			eventPassthrough: true,
-			scrollX: true,
-			scrollY: false,
-			preventDefault: false
-		})
 
 		$("body").on( "click", ".nav span", function () {
 			$(".nav span").removeClass("actived");

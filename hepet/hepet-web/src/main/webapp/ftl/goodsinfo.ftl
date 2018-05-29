@@ -46,7 +46,7 @@
 <!-- 图文详情	 -->
 <div class="pd-detail">
 	<div class="title">以下为图文详情</div>
-	<div id="pd-detail">
+	<div id="pd-detail" style="margin-top: 10px">
 		<p>${goodsInfo.proDetail}</p>
 	</div>
 </div>
@@ -77,11 +77,11 @@ $(function() {
 	paginationType: 'fraction',
 	}) 
 	$(".buy").click(function(){
-		/*$.mask({
+		$.mask({
 			type:'loading',
 			imageSrc: '${host.img}/loading.gif',
 			loadingStatus: 'show',
-		})*/
+		})
 		window.location.href = '${host.base}/hepet/orderConfirm?goodsId=${goodsId}&num=1';
 	});
 })
