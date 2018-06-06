@@ -10,9 +10,9 @@
 	<link rel="stylesheet" type="text/css" href="${host.css}/index.css?2">
 	<!-- 引入js -->
 	<script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
+	<script type="text/javascript" src="${host.js}/jquery.scrollLoading-min.js"></script>
 	<script src="${host.js}/bscroll.min.js"></script>
 	<script src="${host.js}/swiper.jquery.min.js"></script>
-  	<script src="${host.js}/lazyload.js"></script>
 	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273825318'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1273825318' type='text/javascript'%3E%3C/script%3E"));var _czc = _czc || [];_czc.push(["_setAccount", "3D1273825318"]);</script>
 	<script src="${host.js}/common.js?v=${host.version}"></script>
 	<style>
@@ -170,8 +170,8 @@
 							gClassifyOffTops.push($("."+ele.code+'-item').offset().top)
 						})
 
-						$("img.lazy").lazyload({
-    						effect : "fadeIn"
+						$("img.lazy").scrollLoading({
+    						container: $(".classify-box"),							
 						});
 					}
 				}
@@ -181,7 +181,7 @@
 			var str = '<a class="prod-item" href="${host.base}/hepet/goodsInfo?goodsId='+ item.id +'">';
 			str += '<div class="prod-item_img">';
 			str += item.diffPrice && item.diffPrice > 0 ? '<div class="prod-item_tag">直降'+item.diffPrice+'</div>'	 : '';
-			str += '<img class="lazy" src="${host.img}/loading.gif?1" data-src="'+ item.listImgUrl+'">';
+			str += '<img class="lazy" src="${host.img}/loading.gif?1" data-url="'+ item.listImgUrl+'">';
 			str += item.chooseReason ? '<div class="prod-item_prif">'+ item.chooseReason +'</div>' : '';
 			str += item.isSellOut ? '<div class="prod-item_soldout"></div>' : '';
 			str += '</div>';
