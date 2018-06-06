@@ -51,13 +51,15 @@ input::-ms-clear, input::-ms-reveal {
 
 ::-webkit-input-placeholder {
   color: #ccc; }
-
+#cnzz_stat_icon_1273825318 {
+  display: none;
+}
 .small-font {
   font-size: 12px; }
 
 .btn-box {
   width: 100%;
-  padding: 0 15px;
+  padding: 0 35px;
   margin-top: 30px; }
   .btn-box .normal-btn, .btn-box .green-btn {
     width: 100%;
@@ -70,7 +72,7 @@ input::-ms-clear, input::-ms-reveal {
     background: #00bf20; }
   .btn-box .disable {
     background: #ddd;
-    color: #bbb; }
+    color: #fff; }
 
 /*底部导航样式*/
 .footer-nav {

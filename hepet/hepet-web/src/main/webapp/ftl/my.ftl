@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="${host.css}/my.css?v=${host.version}">
 	<!-- 引入js -->
   	<script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273825318'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1273825318' type='text/javascript'%3E%3C/script%3E"));var _czc = _czc || [];_czc.push(["_setAccount", "3D1273825318"]);</script>
   	<script type="text/javascript" src="${host.js}/common.js?v=${host.version}"></script>
 	<script>
 		var curUrl = encodeURIComponent(window.location.href);
@@ -34,12 +35,17 @@
 </div> 
  <footer></footer>
 </body>
+
+
+
 <script type="text/javascript">
+
 $(function() {
 	$("#goToAddress").on("click", function() {
 		window.location.href="${host.base}/hepet/addresses?from=my&curUrl="+curUrl;
 	})
-    $("footer").append(new Footer([{text:'精选推荐', code:'jxtj', link:'${host.base}/hepet/index'},{text: '商品分类', code:'spfl', link:'${host.base}/hepet/mall'}, {text: '我的', code:'wode', link:'${host.base}/hepet/my'}], 2).init());
+    new Footer([{text:'精选推荐', code:'jxtj', link:'${host.base}/hepet/index'},{text: '商品分类', code:'spfl', link:'${host.base}/hepet/mall'}, {text: '我的', code:'wode', link:'${host.base}/hepet/my'}], 2).init();
 });
 </script>
+
 </html>

@@ -14,10 +14,12 @@
   <script src="${host.js}/swiper.jquery.min.js"></script>
   <script src="${host.js}/common.js"></script>
   <style>
+  .banner {height: 224px; position: relative;}
   .pd-detail {width: 100%;}
   .media-wrap {width: 100%;}
   .media-wrap img{width: 100%;}
   #pd-detail img{width: 100%;}
+  .banner-tips {text-align: center; font-size: 13px; line-height: 25px; color: #fff; position: absolute; top: 0; left:0; right: 0; background: linear-gradient(44deg, #FF965A, #FFECA7); height: 25px; z-index: 9;}
   </style>
 </head>
 <body style="background: #f5f5f5; padding-bottom: 60px;">
@@ -26,6 +28,9 @@
 	<div class="swiper-wrapper">
 	</div>
 	<div class="swiper-pagination"></div>
+	<div class="banner-tips">
+	   使用钱包分期，12期0利息
+	</div>
 </div>
 <!-- 商品价格 -->
 <div class="pd-price">
@@ -55,10 +60,15 @@
 	<div class="amount">￥<font size=5>${goodsInfo.pricePerPeriod}</font>	 x ${goodsInfo.period}期</div>
 	<div class="buy">去分期</div>
 </div>
+
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273825318'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1273825318' type='text/javascript'%3E%3C/script%3E"));</script>
+
 <script type="text/javascript">
 var imgs = '${goodsInfo.detailImgUrls}';
 var banners = imgs.split(",");
-
+var _czc = _czc || [];
+_czc.push(["_setAccount", "3D1273825318"]);
 function initBanners() {
 	var str = ''
 	banners.map(function(item, index) {
@@ -122,10 +132,12 @@ $(function() {
 			imageSrc: '${host.img}/loading.gif',
 			loadingStatus: 'show',
 		})
+		_czc.push(["_trackEvent",'商品详情购买按钮', '购买', '去购买', '${goodsId}', '${goodsId}']);
 		window.location.href = '${host.base}/hepet/orderConfirm?goodsId=${goodsId}&num=1';
 		-->
 	});
 })
 </script>
+
 </body>
 </html>
