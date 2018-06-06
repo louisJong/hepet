@@ -11,7 +11,8 @@
 	<!-- 引入js -->
   <script src="${host.js}/jquery-1.11.3.min.js"></script>
   <script src="${host.js}/mescroll.min.js"></script>
-  <script src="${host.js}/common.js?v=${host.version}"></script>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273825318'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1273825318' type='text/javascript'%3E%3C/script%3E"));var _czc = _czc || [];_czc.push(["_setAccount", "3D1273825318"]);</script>
+  <script src="${host.js}/common.js?v=${host.version}1"></script>
   <script type="text/javascript">
   </script>
 </head>
@@ -30,8 +31,8 @@
 		})
     $(function() {
     	initNav();
-    		$("footer").append(new Footer([{text:'精选推荐', code:'jxtj', link:'${host.base}/hepet/index'},{text: '商品分类', code:'spfl', link:'${host.base}/hepet/mall'}, {text: '我的', code:'wode', link:'${host.base}/hepet/my'}], 1).init());
-    	//初始化
+    	new Footer([{text:'精选推荐', code:'jxtj', link:'${host.base}/hepet/index'},{text: '商品分类', code:'spfl', link:'${host.base}/hepet/mall'}, {text: '我的', code:'wode', link:'${host.base}/hepet/my'}], 1).init();	
+			//初始化
 		  mescrollArr[categorysMap[curNavIndex]] = initMescroll("mescroll"+curNavIndex, "dataList"+curNavIndex);
 		  $("#mescroll"+curNavIndex).show();
 		  /*初始化菜单*/
@@ -79,6 +80,7 @@
 							window.location.href = '${host.base}/hepet/index';
 						} 
 					},
+					htmlNodata: '<p class="upwarp-nodata">-- 没有更多 --</p>',
 					clearEmptyId: clearEmptyId, //相当于同时设置了clearId和empty.warpId; 简化写法;默认null					
 				}
 			});
@@ -159,5 +161,7 @@
       });
 		}
 	</script>
+
+	
 </body>
 </html>

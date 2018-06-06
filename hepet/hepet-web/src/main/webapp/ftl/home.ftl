@@ -10,9 +10,10 @@
 	<link rel="stylesheet" type="text/css" href="${host.css}/index.css?2">
 	<!-- 引入js -->
 	<script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
-	<script src="https://unpkg.com/better-scroll/dist/bscroll.min.js"></script>
+	<script src="${host.js}/bscroll.min.js"></script>
 	<script src="${host.js}/swiper.jquery.min.js"></script>
-  	<script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
+  	<script src="${host.js}/lazyload.js"></script>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273825318'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1273825318' type='text/javascript'%3E%3C/script%3E"));var _czc = _czc || [];_czc.push(["_setAccount", "3D1273825318"]);</script>
 	<script src="${host.js}/common.js?v=${host.version}"></script>
 	<style>
         .nav-fixed {
@@ -24,6 +25,9 @@
         .classify-box-fixed {
             margin-top: 40px;
         }
+		.nav span {
+			cursor: pointer; -webkit-tap-highlight-color: transparent;
+		}
     </style>
 
 </head>
@@ -73,7 +77,7 @@
 			preventDefault: false
 		})
         $(function () {
-			$("footer").append(new Footer([{text:'精选推荐', code:'jxtj', link:'${host.base}/hepet/index'},{text: '商品分类', code:'spfl', link:'${host.base}/hepet/mall'}, {text: '我的', code:'wode', link:'${host.base}/hepet/my'}], 0).init());
+			new Footer([{text:'精选推荐', code:'jxtj', link:'${host.base}/hepet/index'},{text: '商品分类', code:'spfl', link:'${host.base}/hepet/mall'}, {text: '我的', code:'wode', link:'${host.base}/hepet/my'}], 0).init();			
 			initBanner(${banners});
 			initNav(gNavs);
 			loadProlist(gNavs);
@@ -99,11 +103,12 @@
                     if(!gClassifyOffTops[j + 1] && distance > gClassifyOffTops[j] - 40) {
                         $(".nav span").removeClass("actived");
                         $(".nav span:nth-child(" + (j + 1) + ")").addClass("actived");
+						scrollmethod.scrollToElement(
+                            document.querySelector('.nav span:nth-child(' + (j + 1) + ')'), null,
+                            true, true)
                     }
                 }
-
-				scrollmethod.scrollToElement(
-				document.querySelector('.nav span:nth-child(' + $(this).index() + ')'), null, true, true)
+				
             })
         })
 
@@ -113,15 +118,19 @@
 			var str = "";
 			if ( banners && banners.length > 0 ) {
 				for ( var i = 0; i < banners.length; i++ ) {
-					str += '<a href="'+banners[i]["bannerLink"] +'" class="img">' ;
+					str += '<div class="href img" data-href="'+banners[i]["bannerLink"] +'">' ;
 					str += '<img src="'+ banners[i].imgUrl+'" />' ;
 					str += '<img class="imgblur" src="'+ banners[i].imgUrl+'" />'
-					str += '</a>' ;
+					str += '</div>' ;
 				}			
 			}
 
 			$("#slide").append($(str));
-			
+			$("#slide .href").on("click", function(){
+				_czc.push(["_trackEvent",'商城点击banner', '商城banner点击', '', '', '']);
+				window.location.href = $(this).data("href");
+				
+			})
 		}
 
 		// nav初始化
@@ -188,7 +197,7 @@
 			$(this).addClass("actived");
 			var item = $(this).data("id") + "-item";
 			var offsetHeight = $("."+item).offset().top;
-			
+			_czc.push(["_trackEvent",'商城切换产品类别', '商城切换产品类别', $(this).html(), '', '']);
 			$('html, body').animate({
 				scrollTop: offsetHeight - $(".nav").height() + 20
 			}, 'slow');
@@ -201,5 +210,6 @@
     </script>
 
 	<script src="${host.js}/index.js?v=${host.version}"></script>
+
 </body>
 </html>

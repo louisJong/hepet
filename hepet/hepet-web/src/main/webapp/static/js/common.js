@@ -6,16 +6,22 @@ var Footer = function(footerArr, current) {
 		var str = '<div class="footer-nav">';
 		this.footerArr.map(function(item, index) {
 			var actived = (index == _this.current) ? 'actived' : '';
-			str += '<a href="'+ item['link'] +'" class="nav-item ' + actived + '">' 
-      str += '<span class="icon '+ item['code'] +'"></span>'
-      str += '<span>'+ item['text'] +'</span>' 
-      str +=  '</a>';
+			str += '<div data-href="'+ item['link'] +'" class="footeritem nav-item ' + actived + '">' 
+			str += '<span class="icon '+ item['code'] +'"></span>'
+			str += '<span>'+ item['text'] +'</span>' 
+			str +=  '</div>';
 		})
 		str += '</div>';
 		if ($('body').find('footer').length > 0) {
 			$("footer").empty();
 		}
-		return $(str);
+
+		$("footer").append($(str));
+		console.log(_czc)
+		$("footer .footeritem").on("click", function() {
+			_czc.push(["_trackEvent",'底部tab切换', '底部tab切换', '', '', '']);
+			window.location.href = $(this).data('href');
+		})
 	}
 }
 
