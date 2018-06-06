@@ -77,12 +77,53 @@ $(function() {
 	paginationType: 'fraction',
 	}) 
 	$(".buy").click(function(){
+		$.ajax({
+			url: '${host.base}/hepet/user/acctStatus',
+			type:'post',
+			dataType: 'json',
+			data:{
+			'goodsId':${goodsId}
+			},
+			success: function(data) {
+				console.log(data)
+				if(data.head.code == '0000') {
+					if("SUCC" == data.body.applyStatus){
+						$.mask({
+							type:'loading',
+							imageSrc: '${host.img}/loading.gif',
+							loadingStatus: 'show',
+						})
+						window.location.href = '${host.base}/hepet/orderConfirm?goodsId=${goodsId}&num=1';
+					}else if("ING" == data.body.applyStatus){
+						$.mask({type:'alert', alertTips: '用户贷款审批中，请耐心等待！', alertTime: 2000});
+					}else{
+						if(confirm("去申请？")){
+							var script = $(data.body.funcSc);   //创建script标签
+							$('body').append(script);   //将标签插入body尾部
+							//window.location.href = '${host.base}'+data.body.redirectUrl;
+						}
+					}
+					
+				} else if(data.head.code == '0001'){
+					if(confirm("去登录？")){
+						var script = $(data.body.funcSc);   //创建script标签
+						$('body').append(script);   //将标签插入body尾部
+					}
+				} else {
+					$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000});
+				}
+			}
+
+		})
+	
+		<#--
 		$.mask({
 			type:'loading',
 			imageSrc: '${host.img}/loading.gif',
 			loadingStatus: 'show',
 		})
 		window.location.href = '${host.base}/hepet/orderConfirm?goodsId=${goodsId}&num=1';
+		-->
 	});
 })
 </script>
