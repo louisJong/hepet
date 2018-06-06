@@ -8,53 +8,43 @@
     <title>支付结果</title>
     	<!-- 引入css -->
     <link rel="stylesheet" type="text/css" href="${host.css}/base.css?v=${host.version}">
+    <link rel="stylesheet" type="text/css" href="${host.css}/status.css?v=${host.version}">    
     	<!-- 引入js -->
 	<script type="text/javascript" src='${host.js}/jquery-1.11.3.min.js'></script>
     <script type="text/javascript" src='${host.js}/common.js?v=${host.version}'></script>
-    <style>
     
-    .icon {
-    display: none;
-    width: 77px;
-    height: 77px;
-    margin-bottom: 20px; }
-
-    .box {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    margin-top: 100px; }
-
-    .text {
-    font-size: 18px; }
-    #confirmBtn {
-        display: block;
-        text-decoration: none;
-    }
-    </style>
 </head>
 <body>
- <div class="box">
-     <!-- 成功icon  -->
-     <img id="succIcon" class="icon" src="${host.img}/status-succ.png"/>
-     <!-- 失败icon -->
-     <img id="errIcon" class="icon" src="${host.img}/status-fail.png"/>
-     <span class="text" id="text"></span>
-     <!-- 按钮随机设置 -->
-     <div class="btn-box">
-        <a class="normal-btn" id="confirmBtn" >查看订单</a>
+
+<div id="succ" class="succ-box" style="display: none;">
+    <div class="left">
+        <img class="icon" src="${host.img}/status_succ.png" />
+        <div class="line"></div>
+        <div class="dot"></div>
     </div>
- </div>   
+    <div class="right">
+        <div>
+            <p style="font-size: 24px; font-weight: bold;">支付成功</p>
+            <p>¥<span style='font-size: 20px'>99</span>×<span style='font-size: 20px'>12</span><span style="font-size: 12px;">期</span></p>
+        </div>        
+        <div style="font-size: 17px;">
+            正在加急备货中，您可以前往<span style="color: #F06059;">商城-我的</span>查看订单状态
+        </div>
+    </div>
+</div> 
+<div id="fail" class="fail-box"  style="display: none;">
+    <img class="icon" src="${host.img}/status_fail.png"/>
+    <p style="font-size: 24px; font-weight: bold; margin-bottom: 9px;">订单支付失败</p>
+    <p style="font-size: 17px;" id="errotips">失败原因</p>
+</div>
+<div class="btnbox">
+    <a class="leftbtn" id="confirmBtn">
+        查看订单
+    </a>
+    <div class="rightbtn">
+        返回商城
+    </div>
+</div> 
  <script>
 
 
@@ -72,20 +62,19 @@
         success: function(data) {
             if(data.head.code == '0000') {
                 if(data.body.result === "payed") {
-                    $("#succIcon").show()
-                    $("#text").html("订单支付成功")
+                    $("#succ").show()                    
                     $("#confirmBtn").attr("href", "${host.base}/hepet/order/result?orderId="+data.body.id)
                 } else {
-                    $("#errIcon").show()
-                    $("#text").html("订单支付失败")
+                    $("#fail").show()
+                    $("#errotips").html("订单支付失败")
                     // 我的订单地址。。。。
                     $("#confirmBtn").attr("href", "${host.base}/hepet/order/result?orderId="+data.body.id)
                 }
                 $(".bgmask").hide();
 
             } else {
-                $("#errIcon").show()
-                $("#text").html(data.head.msg)
+                $("#fail").show()
+                $("#errotips").html(data.head.msg)
                 // 我的订单地址。。。。
                 $("#confirmBtn").attr("href", "${host.base}/hepet/order/result?orderId="+data.body.id)
                $(".bgmask").hide();

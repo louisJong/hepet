@@ -14,6 +14,7 @@
   <script src="${host.js}/swiper.jquery.min.js"></script>
   <script src="${host.js}/common.js"></script>
   <style>
+  .bgmask .content-title {text-align: center;}
   .banner {height: 224px; position: relative;}
   .pd-detail {width: 100%;}
   .media-wrap {width: 100%;}
@@ -107,18 +108,36 @@ $(function() {
 					}else if("ING" == data.body.applyStatus){
 						$.mask({type:'alert', alertTips: '用户贷款审批中，请耐心等待！', alertTime: 2000});
 					}else{
-						if(confirm("去申请？")){
-							var script = $(data.body.funcSc);   //创建script标签
-							$('body').append(script);   //将标签插入body尾部
-							//window.location.href = '${host.base}'+data.body.redirectUrl;
-						}
+						$.mask({
+							type: 'content',
+							title: '去申请？',
+							buttons: [{
+								buttonTxt: '是',
+								buttonFn: function() {
+									var script = $(data.body.funcSc);   //创建script标签
+									$('body').append(script);   //将标签插入body尾部
+									//window.location.href = '${host.base}'+data.body.redirectUrl;
+								}
+							}, {
+								buttonTxt: '否'
+							}],
+						})
 					}
 					
 				} else if(data.head.code == '0001'){
-					if(confirm("去登录？")){
-						var script = $(data.body.funcSc);   //创建script标签
-						$('body').append(script);   //将标签插入body尾部
-					}
+					$.mask({
+						type: 'content',
+						title: '去登陆？',
+						buttons: [{
+							buttonTxt: '是',
+							buttonFn: function() {
+								var script = $(data.body.funcSc);   //创建script标签
+								$('body').append(script);   //将标签插入body尾部
+							}
+						}, {
+							buttonTxt: '否'
+						}],
+					})
 				} else {
 					$.mask({type:'alert', alertTips: data.head.msg, alertTime: 2000});
 				}

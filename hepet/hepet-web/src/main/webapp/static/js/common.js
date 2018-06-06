@@ -28,7 +28,7 @@ var Footer = function(footerArr, current) {
 function ZlMask(opts) {
 	this.defaults = {
 		title: '',
-		text: '我是text信息',
+		text: '',
 		type: 'content', //[normal|alert|content|image|loading]
 		buttons: [{
 			buttonTxt: '立即开启'
@@ -106,6 +106,9 @@ function ZlMask(opts) {
 		Array.isArray(_this.options.tips) ? _this.options.tips.map(function(item, index) {
 			tips.append('<p>' + item + '</p>');
 		}) : '';
+		if (!_this.text) {
+			text = "";
+		}
 		_this.bgmaskBody.append(_this.close).append(title).append(text).append(tips);
 		_this.bgmaskWrap.append(_this.bgmaskBody).append(_this.bgmaskFooter);
 		_this.bgmask.append(_this.bgmaskWrap);

@@ -1,0 +1,86 @@
+.succ-box {
+  margin: 95px 45px 35px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: #4a4a4a; }
+  .succ-box .left {
+    width: 30px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin-right: 8px; }
+    .succ-box .left .icon {
+      width: 30px;
+      height: 30px; }
+    .succ-box .left .line {
+      margin: 4px 0;
+      height: 86px;
+      width: 1px;
+      background: #F06059; }
+    .succ-box .left .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #F06059; }
+  .succ-box .right {
+    position: relative;
+    top: -10px;
+    height: 165px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column; }
+
+.fail-box {
+  margin: 50px 0 80px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  color: #4a4a4a; }
+  .fail-box .icon {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 15px; }
+
+.btnbox {
+  width: 100%;
+  padding: 0 32px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between; }
+  .btnbox .leftbtn, .btnbox .rightbtn {
+    width: 145px;
+    height: 42px;
+    line-height: 42px;
+    text-align: center; }
+  .btnbox .leftbtn {
+    border: 1px solid #4a4a4a; }
+  .btnbox .rightbtn {
+    background: #F06059;
+    color: #ffffff; }
