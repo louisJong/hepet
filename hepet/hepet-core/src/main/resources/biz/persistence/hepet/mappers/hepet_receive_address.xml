@@ -70,13 +70,13 @@
 </select>
 <insert id="insert"  parameterType="com.project.hepet.model.HepetReceiveAddress"  useGeneratedKeys="true" keyProperty="id">
 	insert into hepet_receive_address(id ,customer_id ,tel ,area ,address ,update_time ,create_time ,contact ,phone ,recent_use ,regin_info)
-   values(#{id,jdbcType=INTEGER} ,#{customerId,jdbcType=INTEGER} ,#{tel,jdbcType=VARCHAR} ,#{area,jdbcType=VARCHAR} ,#{address,jdbcType=VARCHAR} ,#{updateTime,jdbcType=TIMESTAMP} ,#{createTime,jdbcType=TIMESTAMP} ,#{contact,jdbcType=VARCHAR} ,#{phone,jdbcType=VARCHAR} ,#{recentUse,jdbcType=TINYINT} ,#{reginInfo,jdbcType=VARCHAR}) 
+   values(#{id,jdbcType=INTEGER} ,#{customerId,jdbcType=VARCHAR} ,#{tel,jdbcType=VARCHAR} ,#{area,jdbcType=VARCHAR} ,#{address,jdbcType=VARCHAR} ,#{updateTime,jdbcType=TIMESTAMP} ,#{createTime,jdbcType=TIMESTAMP} ,#{contact,jdbcType=VARCHAR} ,#{phone,jdbcType=VARCHAR} ,#{recentUse,jdbcType=TINYINT} ,#{reginInfo,jdbcType=VARCHAR}) 
 </insert>
 <insert id="batchInsert"  parameterType="list">
 	insert into hepet_receive_address(id ,customer_id ,tel ,area ,address ,update_time ,create_time ,contact ,phone ,recent_use ,regin_info)
    values
 	<foreach collection="list" item="item" index="index"   separator=","> 
-    (#{item.id,jdbcType=INTEGER} ,#{item.customerId,jdbcType=INTEGER} ,#{item.tel,jdbcType=VARCHAR} ,#{item.area,jdbcType=VARCHAR} ,#{item.address,jdbcType=VARCHAR} ,#{item.updateTime,jdbcType=TIMESTAMP} ,#{item.createTime,jdbcType=TIMESTAMP} ,#{item.contact,jdbcType=VARCHAR} ,#{item.phone,jdbcType=VARCHAR} ,#{item.recentUse,jdbcType=TINYINT} ,#{item.reginInfo,jdbcType=VARCHAR})
+    (#{item.id,jdbcType=INTEGER} ,#{item.customerId,jdbcType=VARCHAR} ,#{item.tel,jdbcType=VARCHAR} ,#{item.area,jdbcType=VARCHAR} ,#{item.address,jdbcType=VARCHAR} ,#{item.updateTime,jdbcType=TIMESTAMP} ,#{item.createTime,jdbcType=TIMESTAMP} ,#{item.contact,jdbcType=VARCHAR} ,#{item.phone,jdbcType=VARCHAR} ,#{item.recentUse,jdbcType=TINYINT} ,#{item.reginInfo,jdbcType=VARCHAR})
 	</foreach> 
 </insert>
 <update id="update"	parameterType="com.project.hepet.model.HepetReceiveAddress">

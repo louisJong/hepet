@@ -53,4 +53,13 @@ public class HepetGoodsDao extends GenericDAOImpl<HepetGoods> {
 	public List<HepetGoods> indexProList(Map<String, Object> param){
 		return this.getSqlSession().selectList(this.getNameSpace()+".indexProList" , param);
 	}
+	
+	/**
+	 * app首页商品列表查询
+	 * @param param
+	 * @return
+	 */
+	public List<HepetGoods> appIndexProList(Map<String, Object> param){
+		return this.getSqlSession().selectList(this.getNameSpace()+".appIndexProList" , param);
+	}
 }

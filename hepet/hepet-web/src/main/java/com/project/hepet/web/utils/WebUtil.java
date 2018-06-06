@@ -22,8 +22,10 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.util.CollectionUtils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.project.hepet.common.utils.PayConfig;
 public class WebUtil {
 	private static Logger logger = Logger.getLogger(WebUtil.class);
 	
@@ -112,10 +114,10 @@ public class WebUtil {
 		}
 	}
     
-    public static Long getCustomerId(HttpServletRequest request){
+    public static String getCustomerId(HttpServletRequest request){
 		HttpSession session = getSession(request);
 		if(session != null && session.getAttribute("customerId") != null){
-			return Long.valueOf( session.getAttribute("customerId")+"");
+			return  String.valueOf(session.getAttribute("customerId"));
 		}
 		return null;
 	}
@@ -157,6 +159,43 @@ public class WebUtil {
 
 	public static boolean isLogin(HttpServletRequest request) {
 		HttpSession session = getSession(request);
-		return session.getAttribute("customerId")!=null;
+		return session.getAttribute("customerId")!=null && StringUtils.isNotEmpty((String)session.getAttribute("customerId"));
+	}
+	
+	/**
+	 * 商城回调url处理
+	 * @param gotoUrl
+	 * @param params
+	 * @return
+	 */
+	public static String  gotoUrlHandler(String gotoUrl, Map<String, String> params, boolean isIncludeHost) {
+		if(StringUtils.isEmpty(gotoUrl)) {
+			return null;
+		}
+		StringBuffer sb = new StringBuffer();
+		if(isIncludeHost) {
+			sb.append(PayConfig.baseUrl);
+			sb.append(gotoUrl);
+		}else {
+			if(gotoUrl.indexOf(PayConfig.projectName)>0) {
+				gotoUrl = gotoUrl.substring(PayConfig.projectName.length()-1, gotoUrl.length());
+			}
+			sb.append(gotoUrl);
+		}
+		if(CollectionUtils.isEmpty(params)) {
+			return sb.toString();
+		}
+		StringBuffer reqParams = new StringBuffer("?");
+		Set< String> keys = params.keySet();
+		for(String key: keys) {
+			if("gotoUrl".equals(key) || "signature".equals(key) ||"signatureType".equals(key) ) {
+				continue;
+			}
+			reqParams.append(key+"="+params.get(key)+"&");
+		}
+		if(reqParams.length()>1) {
+			sb.append(reqParams.substring(0, reqParams.length()-1));
+		}
+		return sb.toString();
 	}
 }

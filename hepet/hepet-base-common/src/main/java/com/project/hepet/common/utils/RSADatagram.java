@@ -156,6 +156,20 @@ public  class RSADatagram {
 		}
 	}
 	
+	public static RSADatagram buildDatagram(String reqData, String privateKey, String publicKey){
+		String merId = reqData.substring(8,23);
+		String serverCode = reqData.substring(23,31);
+		//String privateKey =shwfPrivateKey;
+		//String publicKey =cusPublicKey;
+		RSADatagram	result = new RSADatagram();
+		RSAHelper cipher = new RSAHelper();
+		cipher.initKey(privateKey, publicKey, 2048);
+		result.setCipher(cipher);
+		result.setMerId(merId);
+		result.setServerCode(serverCode);
+		return result;
+	}
+	
 	public String getMerId() {
 		return merId;
 	}

@@ -1,6 +1,7 @@
 package com.project.hepet.web.controller;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -69,6 +70,30 @@ public class OrderController {
 		JsonUtils.setBody(result, "orderDetail", orderService.orderDetail(orderId , WebUtil.getCustomerId(request)));
 		return result.toJSONString();
 	}
+	@LoginDesc
+	@RequestMapping("/hepet/user/acctStatus")
+	@ResponseBody
+	public String acctStatus(HttpServletRequest request ){
+		//判断用户账户状态，如果未通过审核提醒用户去申请额度 add by wjk 2018-06-04
+		String customerId = WebUtil.getCustomerId(request);
+		JSONObject customerResult = orderService.queryAcctStatus(customerId);
+		if(!JsonUtils.equalDefSuccCode(customerResult)) {
+			logger.info("用户额度状态查询失败，customerId："+customerId);
+			return JsonUtils.commonJsonReturn("1000", "用户状态查询失败，请稍后再试").toJSONString();
+		}
+		String applyStatus = customerResult.getString("applyStatus");
+		if(!("SUCC".equals(applyStatus)||"ING".equals(applyStatus))) {
+			Map<String, String> params = WebUtil.getRequestParamsMap(request);
+			String handlerGotoUrl = WebUtil.gotoUrlHandler("/hepet-web/hepet/goodsInfo", params, true);
+			params.put("gotoUrl", handlerGotoUrl);
+			String script = GateApiUtils.getAppFuncScript("zyApply", params);
+			JsonUtils.setBody(customerResult, "funcSc", script);
+			//跳页方式
+			//JsonUtils.setBody(customerResult, "redirectUrl", "/hepet/user/apply");
+		}
+		return customerResult.toJSONString();
+	}
+	
 	
 	@LoginDesc
 	@RequestMapping("/hepet/orderConfirm")
@@ -78,6 +103,14 @@ public class OrderController {
 			@RequestParam(value="addid" , required=false) Long addid
 			){
 		JSONObject result = JsonUtils.commonJsonReturn();
+		//判断用户账户状态，如果未通过审核提醒用户去申请额度 add by wjk 2018-06-04
+		String customerId = WebUtil.getCustomerId(request);
+		JSONObject customerResult = orderService.queryAcctStatus(customerId);
+		if(!JsonUtils.equalDefSuccCode(customerResult)) {
+			//TODO 用户账户查询失败，跳转错误页，待从新确认
+			return "error";
+		}
+		
 		HepetReceiveAddress address = null;
 		if(addid!=null){
 			address = addressService.getAddress(WebUtil.getTel(request), WebUtil.getCustomerId(request), addid);

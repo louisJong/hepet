@@ -26,7 +26,9 @@ public class MybatisSqlMapGenerateTest extends TestCase {
     @Test
     public void testGenerate() throws Exception {
         
-    	this.generate("hepet_goods");
+    	//this.generate("hepet_goods");
+    	this.generate("hepet_order");
+    	this.generate("hepet_receive_address");
     	
     }
 

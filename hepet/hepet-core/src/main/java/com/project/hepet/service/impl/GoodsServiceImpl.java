@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.project.hepet.common.utils.JsonUtils;
@@ -165,6 +166,45 @@ public class GoodsServiceImpl implements GoodsService {
 		return result;
 	}
 	
+	
+	@Override
+	public JSONObject appIndexProList() {
+		Map<String, Object> param = new HashMap<String, Object>();
+		List<HepetGoods> goodsList = goodsDao.appIndexProList(param);
+		if(CollectionUtils.isEmpty(goodsList)) {
+			logger.warn("App 首页推荐商品查询为空");
+			return null;
+		}
+		JSONObject result = JsonUtils.commonJsonReturn();
+		List<JSONObject> list = new ArrayList<JSONObject>();
+		for(HepetGoods goods:goodsList) {
+			JSONObject obj = new JSONObject();
+			obj.put("id", goods.getId());
+			obj.put("categoryCode", goods.getCategoryCode());
+			obj.put("goodsName", goods.getBrandName());
+			obj.put("chooseReason", goods.getChooseReason());
+			obj.put("marketPrice", goods.getMarketPrice());
+			obj.put("price", goods.getPrice());
+			obj.put("period", goods.getPeriod());
+			obj.put("pricePerPeriod", goods.getPricePerPeriod());
+			obj.put("listImgUrl", goods.getListImgUrl());
+			if(goods.getMarketPrice()!=null&&goods.getPrice()!=null&&goods.getPrice().compareTo(goods.getMarketPrice())<0) {
+				obj.put("diffPrice", "直降"+goods.getMarketPrice().subtract(goods.getPrice()));
+			}
+			if(goods.getSoldCount()==null ||goods.getStock()==null||goods.getSoldCount()<goods.getStock()) {
+				obj.put("isSellOut", false);
+			}else {
+				obj.put("isSellOut", true);
+			}
+			list.add(obj);
+		}
+		if(!CollectionUtils.isEmpty(list)&&list.size()>5) {
+			JsonUtils.setBody(result, "list", list.subList(0, 5));
+		}else {
+			JsonUtils.setBody(result, "list", list);
+		}
+		return result;
+	}
 	
 
 }

@@ -37,7 +37,7 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public List<HepetReceiveAddress> addressList(String tel, Long customerId) {
+	public List<HepetReceiveAddress> addressList(String tel, String customerId) {
 		Map<String , Object> param = new HashMap<String, Object>();
 		param.put("tel", tel);
 		param.put("customerId", customerId);
@@ -45,7 +45,7 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public HepetReceiveAddress getRecentUse(String tel, Long customerId) {
+	public HepetReceiveAddress getRecentUse(String tel, String customerId) {
 		Map<String , Object> param = new HashMap<String, Object>();
 		param.put("tel", tel);
 		param.put("customerId", customerId);
@@ -53,7 +53,7 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public HepetReceiveAddress getAddress(String tel, Long customerId, long id) {
+	public HepetReceiveAddress getAddress(String tel, String customerId, long id) {
 		Map<String , Object> param = new HashMap<String, Object>();
 		param.put("id", id);
 		param.put("customerId", customerId);
@@ -62,7 +62,7 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public int haseMore(String tel, Long customerId) {
+	public int haseMore(String tel, String customerId) {
 		Map<String , Object> param = new HashMap<String, Object>();
 		param.put("customerId", customerId);
 		param.put("tel", tel);
@@ -71,7 +71,7 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public int setRecentUse(Long addid, String tel, Long customerId) {
+	public int setRecentUse(Long addid, String tel, String customerId) {
 		Map<String , Object> param = new HashMap<String, Object>();
 		param.put("customerId", customerId);
 		param.put("tel", tel);
@@ -80,7 +80,7 @@ public class AddressServiceImpl implements AddressService {
 	}
 	
 	@Override
-	public int setUnRecentUse(String tel, Long customerId) {
+	public int setUnRecentUse(String tel, String customerId) {
 		Map<String , Object> param = new HashMap<String, Object>();
 		param.put("customerId", customerId);
 		param.put("tel", tel);
@@ -88,7 +88,7 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public void addressDelete(long id, String tel, Long customerId) {
+	public void addressDelete(long id, String tel, String customerId) {
 		Assert.isTrue(id>0 && StringUtils.isNoneBlank(tel) && customerId!=null);
 		Map<String , Object> param = new HashMap<String, Object>();
 		param.put("customerId", customerId);

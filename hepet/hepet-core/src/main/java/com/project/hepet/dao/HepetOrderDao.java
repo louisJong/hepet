@@ -18,7 +18,7 @@ public class HepetOrderDao extends GenericDAOImpl<HepetOrder> {
 		return this.getSqlSession().selectList(this.getNameSpace()+".findOrders", param);
 	}
 
-	public HepetOrder findDetail(long orderId, Long customerId) {
+	public HepetOrder findDetail(long orderId, String customerId) {
 		Map<String , Object> param = new HashMap<String, Object>();
 		param.put("orderId", orderId);
 		param.put("customerId", customerId);

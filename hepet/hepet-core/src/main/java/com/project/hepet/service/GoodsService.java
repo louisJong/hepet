@@ -55,4 +55,10 @@ public interface GoodsService {
      * @return
      */
     JSONObject indexProList();
+    
+    /**
+     * app 首页推荐商品列表
+     * @return
+     */
+    JSONObject appIndexProList();
 }

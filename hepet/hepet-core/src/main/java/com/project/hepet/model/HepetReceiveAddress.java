@@ -5,7 +5,7 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class HepetReceiveAddress  extends BaseObject {
   /** 用户id */
-  private  Long  customerId;
+  private  String  customerId;
   /** 手机号 */
   private  String  tel;
   /** 省市区域 */
@@ -23,11 +23,11 @@ public class HepetReceiveAddress  extends BaseObject {
   /** 区域信息 */
   private  String  reginInfo;
   /** 用户id */
-	public Long getCustomerId(){
+	public String getCustomerId(){
 		return this.customerId;
 	}
   /** 用户id */
-	public HepetReceiveAddress setCustomerId(Long customerId){
+	public HepetReceiveAddress setCustomerId(String customerId){
 		 this.customerId=customerId;
 		 return this;
 	}

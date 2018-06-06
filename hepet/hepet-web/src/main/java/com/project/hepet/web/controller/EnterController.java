@@ -28,8 +28,8 @@ public class EnterController {
 	private GoodsService goodsService;
 	
 	@RequestMapping("/hepet/login")
-	String login(ModelMap modelMap , HttpSession session ,@RequestParam(value="customerId" , required=true) String customerId ,
-			@RequestParam(value="tel" , required=true) String tel ,@RequestParam(value="timeStamp" , required=true)  String timeStamp ,@RequestParam(value="token" , required=true)  String token, @RequestParam(value="sign" , required=true)  String sign,
+	String login(ModelMap modelMap , HttpSession session ,@RequestParam(value="customerId" , required=false) String customerId ,
+			@RequestParam(value="tel" , required=false) String tel ,@RequestParam(value="timeStamp" , required=false)  String timeStamp ,@RequestParam(value="token" , required=false)  String token, @RequestParam(value="sign" , required=false)  String sign,
 			@RequestParam(value="gotoUrl" , required=false)  String gotoUrl){
 		JSONObject result = new JSONObject();
 		if(!verifySign(customerId , tel , timeStamp , token , sign, gotoUrl)){
@@ -53,6 +53,11 @@ public class EnterController {
 	private boolean verifySign(String customerId, String tel, String timeStamp, String token,
 			String sign, String gotoUrl) {
 		String salt = "HepetMall2018";
+		customerId = StringUtils.isEmpty(customerId)?"":customerId;
+		tel = StringUtils.isEmpty(tel)?"":tel;
+		timeStamp = StringUtils.isEmpty(timeStamp)?"":timeStamp;
+		token = StringUtils.isEmpty(token)?"":token;
+		gotoUrl = StringUtils.isEmpty(gotoUrl)?"":gotoUrl;
 		//TODO gotoUrl  customerId + tel + gotoUrl + timeStamp + token + salt
 		String sign_ = MD5Util.MD5Encode(customerId + tel + timeStamp + token + salt).toLowerCase();
 		return sign_.equals(sign);

@@ -78,12 +78,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public HepetOrder orderDetail(long orderId, Long customerId) {
+	public HepetOrder orderDetail(long orderId, String customerId) {
 		return orderDao.findDetail(orderId , customerId);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public JSONObject order(long goodsId , long num , long addId, String tel , Long customerId, String orderNum, String tradeId) {
+	public JSONObject order(long goodsId , long num , long addId, String tel , String customerId, String orderNum, String tradeId) {
 		Assert.isTrue(num>0);
 		HepetGoods goods = goodsDao.findById(goodsId);
 		if(goods.getStatus()!=1){//未上架
@@ -134,7 +134,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<HepetOrder> userOrderList(long pageIndex, long limit,
-			String status, String tel, Long customerId) {
+			String status, String tel, String customerId) {
 		Map<String , Object> param = new HashMap<String, Object>();
 		param.put("startRow", pageIndex*limit);
 		param.put("limit", limit);
@@ -154,7 +154,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public long orderCount(String status, String tel, Long customerId) {
+	public long orderCount(String status, String tel, String customerId) {
 		Map<String , Object> param = new HashMap<String, Object>();
 		param.put("status", status);
 		param.put("tel", tel);
@@ -182,7 +182,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public JSONObject pay(long goodsId , String tel , Long customerId , String desc,Long addId, String orderNum , String tradeId) throws Exception {
+	public JSONObject pay(long goodsId , String tel , String customerId , String desc,Long addId, String orderNum , String tradeId) throws Exception {
 		JSONObject orderResult = this.order(goodsId, 1, addId, tel, customerId , orderNum , tradeId);
 		if(!JsonUtils.isSuccessCode(orderResult)){
 			return orderResult;
@@ -213,7 +213,7 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public JSONObject pay(long orderId, String tel, Long customerId) throws HttpException {
+	public JSONObject pay(long orderId, String tel, String customerId) throws HttpException {
 		HepetOrder order = orderDao.findDetail(orderId, customerId);
 		Assert.isTrue(order!=null, "订单不存在");
 		HepetGoods goods = goodsDao.findById(order.getGoodsId());
@@ -261,7 +261,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public JSONObject getAvailAmt(String tel, Long customerId) throws Exception {
+	public JSONObject getAvailAmt(String tel, String customerId) throws Exception {
 		SortedMap<String, Object> param = new TreeMap<String, Object>();
 		param.put("appMarket", "apple");
 		param.put("mobile", tel);
@@ -336,7 +336,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
-	public JSONObject queryKdInfo(long orderId , long customerId) throws IOException {
+	public JSONObject queryKdInfo(long orderId , String customerId) throws IOException {
 		JSONObject result = JsonUtils.commonJsonReturn();
 		HepetOrder order = orderDao.findDetail(orderId, customerId);
 		if(order==null || !canQueryKd(order))
@@ -384,7 +384,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
-	public void confirmOrder(long orderId, long customerId) {
+	public void confirmOrder(long orderId, String customerId) {
 		HepetOrder orderUpdate = new HepetOrder();
 		orderUpdate.setId(orderId);
 		orderUpdate.setUpdateTime(new Date());
@@ -400,7 +400,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void cancelOrder(long orderId, long customerId) {
+	public void cancelOrder(long orderId, String customerId) {
 		HepetOrder orderUpdate = new HepetOrder();
 		orderUpdate.setId(orderId);
 		orderUpdate.setUpdateTime(new Date());
@@ -554,5 +554,20 @@ public class OrderServiceImpl implements OrderService {
 			logger.warn("notifyOrder fail params:"+params, e);
 		}
 	}
+
+	@Override
+	public JSONObject queryAcctStatus(String customerId) {
+		SortedMap<String, Object> param = new TreeMap<String, Object>();
+		param.put("appMarket", "apple");
+		param.put("customerId", customerId);
+		param.put("channelId", channelId);
+		try {
+			return doTrans(param , "ACCT0001");
+		} catch (Exception e) {
+			logger.error("用户账户状态查询发生异常，customerId："+customerId, e);
+			return JsonUtils.commonJsonReturn("9000", "交易待确认");
+		}
+	}
+
 
 }

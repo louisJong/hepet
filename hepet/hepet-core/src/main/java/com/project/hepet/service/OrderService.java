@@ -25,7 +25,7 @@ public interface OrderService {
 	 * @param status 状态
 	 * @return
 	 */
-	List<HepetOrder> userOrderList(long pageIndex , long limit , String status , String tel , Long customerId);
+	List<HepetOrder> userOrderList(long pageIndex , long limit , String status , String tel , String customerId);
 
 	/**
 	 * 商品数量
@@ -34,7 +34,7 @@ public interface OrderService {
 	 * @param customerId
 	 * @return
 	 */
-	long orderCount(String status, String tel, Long customerId);
+	long orderCount(String status, String tel, String customerId);
 	
 	/**
 	 * 订单详情
@@ -42,25 +42,25 @@ public interface OrderService {
 	 * @param customerId 
 	 * @return
 	 */
-	HepetOrder orderDetail(long orderId, Long customerId);
+	HepetOrder orderDetail(long orderId, String customerId);
 	
 	void addKdInfo(String kdNo ,String kdName, long orderId);
 	
 //	JSONObject getPaySmsCode(String tel , Long customerId, String token, long goodsId, String orderNum) throws Exception;
 	
-	JSONObject getAvailAmt(String tel , Long customerId) throws Exception;
+	JSONObject getAvailAmt(String tel , String customerId) throws Exception;
 	
-	JSONObject pay(long goodsId , String tel , Long customerId , String desc,Long addId, String orderNum , String tradeId) throws Exception;
+	JSONObject pay(long goodsId , String tel , String customerId , String desc,Long addId, String orderNum , String tradeId) throws Exception;
 
-	JSONObject pay(long orderId, String tel, Long customerId) throws Exception;
+	JSONObject pay(long orderId, String tel, String customerId) throws Exception;
 
 //	void confirmAgain(final Long orderId,final String orderNum , final String tradeId, final String tel , final int times);
 
-	JSONObject queryKdInfo(long orderId , long customerId) throws IOException;
+	JSONObject queryKdInfo(long orderId , String customerId) throws IOException;
 	
-	void confirmOrder(long orderId , long customerId);
+	void confirmOrder(long orderId , String customerId);
 	
-	void cancelOrder(long orderId , long customerId);
+	void cancelOrder(long orderId , String customerId);
 
 	long allOrderCount(Map<String, Object> params);
 	
@@ -73,5 +73,7 @@ public interface OrderService {
 	HepetOrder queryByPayNum(String payNum);
 
 	void notifyOrder(Map<String,String> params);
+	
+	JSONObject queryAcctStatus(String customerId);
 
 }

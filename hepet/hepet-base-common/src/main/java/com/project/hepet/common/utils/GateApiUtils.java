@@ -6,9 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class GateApiUtils {
+	private static final Logger logger = Logger.getLogger(GateApiUtils.class);
 	
 	/**
      * 建立请求，以表单HTML形式构造（默认）
@@ -145,4 +149,123 @@ public class GateApiUtils {
         }
         return isSign;
     }
+	
+	
+	/**
+	 * 获取唤起app功能html
+	 * @return
+	 */
+	public static String getAppFuncHtml(String funcName, Map<String,String> params){
+		//生成参数app支付请求参数map
+		//Map<String,String> params = new HashMap<String, String>();
+		//params.put("gotoUrl", gotoUrl);
+		//生成签名参数
+		params = GateApiUtils.buildRequestPara(params, PayConfig.serverPrivateKey);
+		
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("<html>");
+		sb.append("<script>");
+		sb.append("var userAgent = navigator.userAgent;");
+		//sb.append("alert(userAgent);");
+		sb.append("if(userAgent && userAgent.indexOf(\"zypay_wallet\")>-1){");
+		//sb.append("alert('内部访问');");
+		sb.append("  function setupWebViewJavascriptBridge(callback) {");
+		sb.append("  if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }");
+		sb.append("  else {");
+		sb.append("  document.addEventListener(");
+		sb.append("  'WebViewJavascriptBridgeReady'");
+		sb.append("  , function() {");
+		sb.append("  	callback(WebViewJavascriptBridge)");
+		sb.append("  },");
+		sb.append("  false");
+		sb.append("   );");
+		sb.append("  }");
+		sb.append("  if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }");
+		sb.append("  window.WVJBCallbacks = [callback];");
+		sb.append("  var WVJBIframe = document.createElement('iframe');");
+		sb.append("  WVJBIframe.style.display = 'none';");
+		sb.append("  WVJBIframe.src = 'https://__bridge_loaded__';");
+		sb.append("  document.documentElement.appendChild(WVJBIframe);");
+		sb.append("  setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0);");
+		sb.append("}");
+		sb.append("setupWebViewJavascriptBridge(function(bridge) {");
+		sb.append("  bridge.registerHandler('"+funcName+"', function(data, responseCallback) {");
+		sb.append("    var responseData = "+JSONObject.toJSONString(params)+";");
+		System.out.println("order reqPrams:"+JSONObject.toJSONString(params));
+		sb.append("    responseCallback(responseData);");
+		sb.append("  });");
+		sb.append("});");
+		sb.append("}else{");
+		//sb.append("alert('外部访问');");
+		sb.append("  var curUrl = window.location.href;");
+		sb.append("  var out_app_url = '"+funcName+"://?"+GateApiUtils.createLinkString(params)+"';");
+		sb.append("  window.location.href = out_app_url;");
+		sb.append("}");
+		sb.append("</script>");
+		sb.append("</html>");
+		if(logger.isDebugEnabled()) logger.debug(GateApiUtils.createLinkString(params));
+		if(logger.isDebugEnabled()) logger.debug("linkurlParams length:"+GateApiUtils.createLinkString(params).length());
+		
+		
+		return sb.toString();
+	}
+	
+	/**
+	 * 获取唤起app功能html
+	 * @return
+	 */
+	public static String getAppFuncScript(String funcName, Map<String,String> params){
+		//生成参数app支付请求参数map
+		//Map<String,String> params = new HashMap<String, String>();
+		//params.put("gotoUrl", gotoUrl);
+		//生成签名参数
+		params = GateApiUtils.buildRequestPara(params, PayConfig.serverPrivateKey);
+		
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		sb.append("var userAgent = navigator.userAgent;");
+		//sb.append("alert(userAgent);");
+		sb.append("if(userAgent && userAgent.indexOf(\"zypay_wallet\")>-1){");
+		//sb.append("alert('内部访问');");
+		sb.append("  function setupWebViewJavascriptBridge(callback) {");
+		sb.append("  if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }");
+		sb.append("  else {");
+		sb.append("  document.addEventListener(");
+		sb.append("  'WebViewJavascriptBridgeReady'");
+		sb.append("  , function() {");
+		sb.append("  	callback(WebViewJavascriptBridge)");
+		sb.append("  },");
+		sb.append("  false");
+		sb.append("   );");
+		sb.append("  }");
+		sb.append("  if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }");
+		sb.append("  window.WVJBCallbacks = [callback];");
+		sb.append("  var WVJBIframe = document.createElement('iframe');");
+		sb.append("  WVJBIframe.style.display = 'none';");
+		sb.append("  WVJBIframe.src = 'https://__bridge_loaded__';");
+		sb.append("  document.documentElement.appendChild(WVJBIframe);");
+		sb.append("  setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0);");
+		sb.append("}");
+		sb.append("setupWebViewJavascriptBridge(function(bridge) {");
+		sb.append("  bridge.registerHandler('"+funcName+"', function(data, responseCallback) {");
+		sb.append("    var responseData = "+JSONObject.toJSONString(params)+";");
+		System.out.println("order reqPrams:"+JSONObject.toJSONString(params));
+		sb.append("    responseCallback(responseData);");
+		sb.append("  });");
+		sb.append("});");
+		sb.append("}else{");
+		//sb.append("alert('外部访问');");
+		sb.append("  var curUrl = window.location.href;");
+		sb.append("  var out_app_url = '"+funcName+"://?"+GateApiUtils.createLinkString(params)+"';");
+		sb.append("  window.location.href = out_app_url;");
+		sb.append("}");
+		sb.append("</script>");
+		if(logger.isDebugEnabled()) logger.debug(GateApiUtils.createLinkString(params));
+		if(logger.isDebugEnabled()) logger.debug("linkurlParams length:"+GateApiUtils.createLinkString(params).length());
+		
+		
+		return sb.toString();
+	}
 }

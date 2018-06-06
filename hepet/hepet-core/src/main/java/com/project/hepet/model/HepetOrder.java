@@ -36,14 +36,14 @@ public class HepetOrder  extends BaseObject {
   private  String  kdNo;
   /** 快递公司 */
   private  String  kdName;
-  /** 商品状态NOPAY待付款NOSEND待发货NORECEIVE待收货CANCEL已取消CLOSED已关闭REFUND已退货SUCCESS完成 */
+  /** 商品状态NOPAY待付款NOSEND待发货NORECEIVE待收货CLOSED已关闭REFUND已退货SUCCESS完成CANCEL已取消 */
   private  String  status;
   /**  */
   private  Date  updateTime;
   /** 支付时间 */
   private  Date  payTime;
   /** 用户id */
-  private  Long  customerId;
+  private  String  customerId;
   /** 手机号 */
   private  String  tel;
   /** 订单号 */
@@ -72,25 +72,7 @@ public class HepetOrder  extends BaseObject {
   private  String  merchantCode;
   /** 添加快递日期 */
   private  Date  addKdTime;
-  public String getMerchantName() {
-	return merchantName;
-}
-public void setMerchantName(String merchantName) {
-	this.merchantName = merchantName;
-}
-public String getMerchantCode() {
-	return merchantCode;
-}
-public void setMerchantCode(String merchantCode) {
-	this.merchantCode = merchantCode;
-}
-public Date getAddKdTime() {
-	return addKdTime;
-}
-public void setAddKdTime(Date addKdTime) {
-	this.addKdTime = addKdTime;
-}
-/** 类目代码 */
+  /** 类目代码 */
 	public String getCategoryCode(){
 		return this.categoryCode;
 	}
@@ -225,11 +207,11 @@ public void setAddKdTime(Date addKdTime) {
 		 this.kdName=kdName;
 		 return this;
 	}
-  /** 商品状态NOPAY待付款NOSEND待发货NORECEIVE待收货CLOSED已关闭REFUND已退货SUCCESS完成 */
+  /** 商品状态NOPAY待付款NOSEND待发货NORECEIVE待收货CLOSED已关闭REFUND已退货SUCCESS完成CANCEL已取消 */
 	public String getStatus(){
 		return this.status;
 	}
-  /** 商品状态NOPAY待付款NOSEND待发货NORECEIVE待收货CLOSED已关闭REFUND已退货SUCCESS完成 */
+  /** 商品状态NOPAY待付款NOSEND待发货NORECEIVE待收货CLOSED已关闭REFUND已退货SUCCESS完成CANCEL已取消 */
 	public HepetOrder setStatus(String status){
 		 this.status=status;
 		 return this;
@@ -253,11 +235,11 @@ public void setAddKdTime(Date addKdTime) {
 		 return this;
 	}
   /** 用户id */
-	public Long getCustomerId(){
+	public String getCustomerId(){
 		return this.customerId;
 	}
   /** 用户id */
-	public HepetOrder setCustomerId(Long customerId){
+	public HepetOrder setCustomerId(String customerId){
 		 this.customerId=customerId;
 		 return this;
 	}
@@ -358,6 +340,33 @@ public void setAddKdTime(Date addKdTime) {
   /** 已查询次数 */
 	public HepetOrder setKdQueryTimes(Integer kdQueryTimes){
 		 this.kdQueryTimes=kdQueryTimes;
+		 return this;
+	}
+  /** 商户名称 */
+	public String getMerchantName(){
+		return this.merchantName;
+	}
+  /** 商户名称 */
+	public HepetOrder setMerchantName(String merchantName){
+		 this.merchantName=merchantName;
+		 return this;
+	}
+  /** 商户code */
+	public String getMerchantCode(){
+		return this.merchantCode;
+	}
+  /** 商户code */
+	public HepetOrder setMerchantCode(String merchantCode){
+		 this.merchantCode=merchantCode;
+		 return this;
+	}
+  /** 添加快递日期 */
+	public Date getAddKdTime(){
+		return this.addKdTime;
+	}
+  /** 添加快递日期 */
+	public HepetOrder setAddKdTime(Date addKdTime){
+		 this.addKdTime=addKdTime;
 		 return this;
 	}
 	public String toString(){

@@ -21,4 +21,8 @@ public class PayConfig {
 	public static String pay_gateway_url = ResourceUtils.getValue("hepet-core", "mall.payGatewayUrl");
 	
 	public static String input_charset = "utf-8";
+	
+	/**商城host配置*/
+	public static String baseUrl = "http://wallet.iok.la:11208";
+	public static String projectName = "/hepet-web";
 }

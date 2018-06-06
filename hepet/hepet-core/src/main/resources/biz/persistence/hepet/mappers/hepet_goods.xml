@@ -171,4 +171,14 @@
   	</where>
   	order by id desc
 </select>
+
+<select id="appIndexProList" parameterType="hashmap"  resultMap="hepet_goods">
+	select id,category_code,brand_name,market_price,goods_name,profit,sub_desc,list_img_url,pro_sort,price,price_per_period,period,is_logistics,status,stock,tags,sold_count,
+		choose_level, choose_reason 
+	 from hepet_goods 
+  	<where>
+  		status = 1 and choose_level=2
+  	</where>
+  	order by id desc
+</select>
 </mapper>
