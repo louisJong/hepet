@@ -1,15 +1,15 @@
-var Footer = function(footerArr, current) {
+var Footer = function (footerArr, current) {
 	this.footerArr = footerArr || [];
 	this.current = current || 0;
 	var _this = this;
-	this.init = function() {
+	this.init = function () {
 		var str = '<div class="footer-nav">';
-		this.footerArr.map(function(item, index) {
+		this.footerArr.map(function (item, index) {
 			var actived = (index == _this.current) ? 'actived' : '';
-			str += '<div data-href="'+ item['link'] +'" class="footeritem nav-item ' + actived + '">' 
-			str += '<span class="icon '+ item['code'] +'"></span>'
-			str += '<span>'+ item['text'] +'</span>' 
-			str +=  '</div>';
+			str += '<div data-href="' + item['link'] + '" class="footeritem nav-item ' + actived + '">'
+			str += '<span class="icon ' + item['code'] + '"></span>'
+			str += '<span>' + item['text'] + '</span>'
+			str += '</div>';
 		})
 		str += '</div>';
 		if ($('body').find('footer').length > 0) {
@@ -18,8 +18,8 @@ var Footer = function(footerArr, current) {
 
 		$("footer").append($(str));
 		console.log(_czc)
-		$("footer .footeritem").on("click", function() {
-			_czc.push(["_trackEvent",'底部tab切换', '底部tab切换', '', '', '']);
+		$("footer .footeritem").on("click", function () {
+			_czc.push(["_trackEvent", '底部tab切换', '底部tab切换', '', '', '']);
 			window.location.href = $(this).data('href');
 		})
 	}
@@ -38,7 +38,7 @@ function ZlMask(opts) {
 
 	var _this = this;
 
-	this.init = function() {
+	this.init = function () {
 		if (_this.options.type == 'alert') {
 			_this.initAlert();
 		} else if (_this.options.type == 'normal') {
@@ -64,27 +64,27 @@ function ZlMask(opts) {
 	if (_this.options.buttons.length == 1) {
 		_this.footerBtn.push($('<div class="bgmask-button">' + _this.options.buttons[0].buttonTxt + '</div>'));
 	} else {
-		_this.options.buttons.map(function(item, index) {
+		_this.options.buttons.map(function (item, index) {
 			_this.footerBtn.push($('<div class="bgmask-button">' + item.buttonTxt + '</div>'));
 		})
 	}
-	this.footerBtn.map(function(item, index) {
+	this.footerBtn.map(function (item, index) {
 		_this.bgmaskFooter.append(item);
 	})
 
 
 
-	this.initAlert = function() {
+	this.initAlert = function () {
 		this.bgmask.addClass('alert');
 		var alert = $('<div class="bgmask-alert">' + this.options.alertTips + '</div>');
 		this.bgmask.append(alert);
 		$('body').append(_this.bgmask);
-		setTimeout(function() {
+		setTimeout(function () {
 			_this.bgmask.remove();
 		}, _this.options.alertTime ? _this.options.alertTime : 1500);
 	}
 
-	this.initNormal = function() {
+	this.initNormal = function () {
 		var title = _this.options.title ? $('<div class="title">' + _this.options.title + '</div>') : '';
 		var text = $('<div class="text">' + _this.options.text + '</div>');
 		_this.bgmaskBody.append(title).append(text);
@@ -94,19 +94,20 @@ function ZlMask(opts) {
 		_this.bindEvent();
 	}
 
-	this.initContent = function() {
+	this.initContent = function () {
 		_this.bgmaskBody.addClass('content');
 		_this.close = _this.options.close ? $('<div class="close"></div>') : '';
 		var title = $('<p class="content-title">' + _this.options.title + '</p>');
 		var text = $('<p class="content-text"></p>');
-		Array.isArray(_this.options.text) ? _this.options.text.map(function(item, index) {
+		console.log(_this.options.text)
+		Array.isArray(_this.options.text) ? _this.options.text.map(function (item, index) {
 			text.append('<p>' + item + '</p>');
 		}) : '';
 		var tips = $('<p class="content-tips"></p>');
-		Array.isArray(_this.options.tips) ? _this.options.tips.map(function(item, index) {
+		Array.isArray(_this.options.tips) ? _this.options.tips.map(function (item, index) {
 			tips.append('<p>' + item + '</p>');
 		}) : '';
-		if (!_this.text) {
+		if (!_this.options.text) {
 			text = "";
 		}
 		_this.bgmaskBody.append(_this.close).append(title).append(text).append(tips);
@@ -116,7 +117,7 @@ function ZlMask(opts) {
 		_this.bindEvent();
 	}
 
-	this.initImage = function() {
+	this.initImage = function () {
 		_this.bgmaskWrap.addClass('image');
 		var image = $('<img src="' + _this.options.imageSrc + '">');
 		_this.bgmaskBody.append(image);
@@ -126,33 +127,33 @@ function ZlMask(opts) {
 		_this.bindEvent();
 	}
 
-	this.initLoading = function() {
+	this.initLoading = function () {
 		this.bgmask.addClass('alert');
 		var loading = $('<div class="bgmask-loading"><img src="' + this.options.imageSrc + '"/></div>');
 		this.bgmask.append(loading);
 		$('body').append(_this.bgmask);
 	}
 
-	this.bindEvent = function() {
+	this.bindEvent = function () {
 		var _this = this;
-		this.bgmask.on("click", function() {
+		this.bgmask.on("click", function () {
 			if (!_this.options.onlyTouchCardClose) {
 				_this.bgmask.remove();
 			}
 		});
 		//禁止滚动
-		this.bgmask.on("touchmove", function(e) {
+		this.bgmask.on("touchmove", function (e) {
 			e.preventDefault();
 		});
-		this.bgmaskWrap.on("click", function(e) {
+		this.bgmaskWrap.on("click", function (e) {
 			e.stopPropagation();
 		});
-		this.footerBtn.map(function(item, index) {
-			item.on('click', function(e) {
+		this.footerBtn.map(function (item, index) {
+			item.on('click', function (e) {
 				if (!!_this.options.buttons[index].buttonFn && typeof _this.options.buttons[index].buttonFn == 'function') {
 					_this.options.buttons[index].buttonFn();
 					if (!_this.options.buttons[index].buttonShow) {
-						setTimeout(function() {
+						setTimeout(function () {
 							_this.bgmask.remove();
 						}, 300)
 					}
@@ -161,46 +162,88 @@ function ZlMask(opts) {
 				}
 			})
 		});
-		this.close ? this.close.on("click", function() {
+		this.close ? this.close.on("click", function () {
 			_this.bgmask.remove();
 		}) : ''
 	}
 }
 
-var CommonUtils = function() {
+var CommonUtils = function () {
 	this.baseUrl = 'http://101.132.166.7/hepet-web/';
 	this.getUrlParam = function (name) {
-    var url = window.location.href;
-    var params = url.substr(url.indexOf("?") + 1);
-    var paramsarr = params.split("&");
-    var paramsobj = {};
-    for (var i = 0; i < paramsarr.length; i++) {
-      var list = paramsarr[i].split("=");
-      paramsobj[list[0]] = list[1];
-    }
-    return paramsobj[name];
-  }
-  this.changeURLArg = function(url,arg,arg_val){ 
-		var pattern=arg+'=([^&]*)'; 
-		var replaceText=arg+'='+arg_val; 
-		if(url.match(pattern)){ 
-			var tmp='/('+ arg+'=)([^&]*)/gi'; 
-			tmp=url.replace(eval(tmp),replaceText); 
-			return tmp; 
-		}else{ 
-			if(url.match('[\?]')){ 
-				return url+'&'+replaceText; 
-			}else{ 
-				return url+'?'+replaceText; 
-			} 
-		} 
-		return url+'\n'+arg+'\n'+arg_val; 
-	} 
+		var url = window.location.href;
+		var params = url.substr(url.indexOf("?") + 1);
+		var paramsarr = params.split("&");
+		var paramsobj = {};
+		for (var i = 0; i < paramsarr.length; i++) {
+			var list = paramsarr[i].split("=");
+			paramsobj[list[0]] = list[1];
+		}
+		return paramsobj[name];
+	}
+	this.changeURLArg = function (url, arg, arg_val) {
+		var pattern = arg + '=([^&]*)';
+		var replaceText = arg + '=' + arg_val;
+		if (url.match(pattern)) {
+			var tmp = '/(' + arg + '=)([^&]*)/gi';
+			tmp = url.replace(eval(tmp), replaceText);
+			return tmp;
+		} else {
+			if (url.match('[\?]')) {
+				return url + '&' + replaceText;
+			} else {
+				return url + '?' + replaceText;
+			}
+		}
+		return url + '\n' + arg + '\n' + arg_val;
+	}
+	this.numberCurrency = function (n) {
+		var s = n.toString();
+		var ss = s.split(".");
+		var s1, s2, rs;
+		s1 = ss[0];
+		s2 = ss[1] ? ss[1] : "";
+		var sign = "";
+		if (s1[0] == "+" || s1[0] == "-") {
+			sign = s1[0];
+			s1 = s1.substr(1);
+		};
+
+		var len = s1.length;
+		if (len <= 3) {
+			rs = s1;
+		} else {
+			var r = len % 3;
+			rs = r > 0 ? s1.slice(0, r) + "," + s1.slice(r, len).match(/\d{3}/g).join(",") : s1.slice(r, len).match(/\d{3}/g).join(",");
+		}
+		if (s2.length > 0) {
+			rs += "." + s2
+		};
+		if (sign != "") {
+			rs = sign + rs;
+		};
+		return rs;
+	}
+
+	this.numberCurrencyFix = function (n) {
+		var s = this.numberCurrency(n);
+		var ss = s.split(".");
+		if (ss.length == 1) {
+			return s + ".00";
+		} else if (ss[1].length == 1) {
+			return s + "0";
+		} else if (ss[1].length == 0) {
+			return s + "00";
+		} else if (ss[1].length > 2) {
+			return ss[0] + "." + ss[1].substr(0, 2);
+		}
+		return s;
+	}
 }
 var commonUtils = new CommonUtils();
-(function($) {
+(function ($) {
 	$.extend({
-		mask: function(opts) {
+		mask: function (opts) {
 			if (!this.instance) {
 				this.instance = new ZlMask(opts).init();
 			}

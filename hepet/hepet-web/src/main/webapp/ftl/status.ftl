@@ -25,7 +25,7 @@
     <div class="right">
         <div>
             <p style="font-size: 24px; font-weight: bold;">支付成功</p>
-            <p>¥<span style='font-size: 20px'>99</span>×<span style='font-size: 20px'>12</span><span style="font-size: 12px;">期</span></p>
+            <p id="periodbox">¥<span style='font-size: 20px' id="pricePerPeriod">99</span>×<span style='font-size: 20px' id="period">12</span><span style="font-size: 12px;">期</span></p>
         </div>        
         <div style="font-size: 17px;">
             正在加急备货中，您可以前往<span style="color: #F06059;">商城-我的</span>查看订单状态
@@ -41,7 +41,7 @@
     <a class="leftbtn" id="confirmBtn">
         查看订单
     </a>
-    <div class="rightbtn">
+    <a href="${host.base}/hepet/index" class="rightbtn">
         返回商城
     </div>
 </div> 
@@ -62,6 +62,12 @@
         success: function(data) {
             if(data.head.code == '0000') {
                 if(data.body.result === "payed") {
+                    if(!data.body.period || !data.body.pricePerPeriod) {
+                        $("#periodbox").hide();
+                    } else {
+                        $("#period").html(data.body.period);
+                        $("#pricePerPeriod").html(data.body.pricePerPeriod);
+                    }                    
                     $("#succ").show()                    
                     $("#confirmBtn").attr("href", "${host.base}/hepet/order/result?orderId="+data.body.id)
                 } else {

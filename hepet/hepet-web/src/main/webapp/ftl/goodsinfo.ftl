@@ -7,21 +7,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
 	<!-- 引入css -->
 	<link rel="stylesheet" type="text/css" href="${host.css}/swiper.min.css">
-	<link rel="stylesheet" type="text/css" href="${host.css}/base.css?v=${host.version}">
+	<link rel="stylesheet" type="text/css" href="${host.css}/base.css?v=${host.version}9">
 	<link rel="stylesheet" type="text/css" href="${host.css}/prodinfo.css">
 	<!-- 引入js -->
-  <script src="${host.js}/jquery-1.11.3.min.js"></script>
-  <script src="${host.js}/swiper.jquery.min.js"></script>
-  <script src="${host.js}/common.js"></script>
-  <style>
-  .bgmask .content-title {text-align: center;}
-  .banner {height: 224px; position: relative;}
-  .pd-detail {width: 100%;}
-  .media-wrap {width: 100%;}
-  .media-wrap img{width: 100%;}
-  #pd-detail img{width: 100%;}
-  .banner-tips {text-align: center; font-size: 13px; line-height: 25px; color: #fff; position: absolute; top: 0; left:0; right: 0; background: linear-gradient(44deg, #FF965A, #FFECA7); height: 25px; z-index: 9;}
-  </style>
+	<script src="${host.js}/jquery-1.11.3.min.js"></script>
+	<script src="${host.js}/swiper.jquery.min.js"></script>
+	<script src="${host.js}/common.js?1"></script>
+	<style>
+	.bgmask .content-title {text-align: center;}
+	.banner {height: 224px; position: relative;}
+	.pd-detail {width: 100%;}
+	.media-wrap {width: 100%;}
+	.media-wrap img{width: 100%;}
+	#pd-detail img{width: 100%;}
+	.banner-tips {text-align: center; font-size: 13px; line-height: 25px; color: #fff; position: absolute; top: 0; left:0; right: 0; background: linear-gradient(44deg, #FF965A, #FFECA7); height: 25px; z-index: 9;}
+	</style>
 </head>
 <body style="background: #f5f5f5; padding-bottom: 60px;">
 <!-- banner滚动 -->
@@ -95,8 +95,16 @@ $(function() {
 			data:{
 			'goodsId':${goodsId}
 			},
-			success: function(data) {
-				console.log(data)
+			success: function(data) { 
+
+			<#--  var data = {
+				head: {
+					code : '0000'
+				},
+				body: {
+					applyStatus: 'FAIL'
+				}
+			}  -->
 				if(data.head.code == '0000') {
 					if("SUCC" == data.body.applyStatus){
 						$.mask({
@@ -104,22 +112,52 @@ $(function() {
 							imageSrc: '${host.img}/loading.gif',
 							loadingStatus: 'show',
 						})
+						_czc.push(["_trackEvent",'商品详情购买按钮', '购买', '去购买', '${goodsId}', '${goodsId}']);
 						window.location.href = '${host.base}/hepet/orderConfirm?goodsId=${goodsId}&num=1';
 					}else if("ING" == data.body.applyStatus){
-						$.mask({type:'alert', alertTips: '用户贷款审批中，请耐心等待！', alertTime: 2000});
-					}else{
 						$.mask({
 							type: 'content',
-							title: '去申请？',
+							title: '申请额度',
+							text: ['您的额度正在审批中，审批成功后可以分期，请耐心等待哦！'],
 							buttons: [{
-								buttonTxt: '是',
+								buttonTxt: '确定',
 								buttonFn: function() {
 									var script = $(data.body.funcSc);   //创建script标签
 									$('body').append(script);   //将标签插入body尾部
 									//window.location.href = '${host.base}'+data.body.redirectUrl;
 								}
+							}],
+						})
+					}else if("FAIL" == data.body.applyStatus) {
+						$.mask({
+							type: 'content',
+							title: '申请额度',
+							text: ['您暂未或得钱包额度，无法分期购物哦~'],
+							buttons: [{
+								buttonTxt: '取消'
 							}, {
-								buttonTxt: '否'
+								buttonTxt: '去申请',
+								buttonFn: function() {
+									var script = $(data.body.funcSc);   //创建script标签
+									$('body').append(script);   //将标签插入body尾部
+									//window.location.href = '${host.base}'+data.body.redirectUrl;
+								}
+							}],
+						})
+					}else{						
+						$.mask({
+							type: 'content',
+							title: '申请额度',
+							text: ['您当前还没有钱包额度，最多可申请5万额度，额度审批后可享受免息分期购物~'],
+							buttons: [{
+								buttonTxt: '取消'
+							}, {
+								buttonTxt: '去申请',
+								buttonFn: function() {
+									var script = $(data.body.funcSc);   //创建script标签
+									$('body').append(script);   //将标签插入body尾部
+									//window.location.href = '${host.base}'+data.body.redirectUrl;
+								}
 							}],
 						})
 					}
@@ -128,14 +166,15 @@ $(function() {
 					$.mask({
 						type: 'content',
 						title: '去登陆？',
-						buttons: [{
+						text: '',
+						buttons: [ {
+							buttonTxt: '否'
+						},{
 							buttonTxt: '是',
 							buttonFn: function() {
 								var script = $(data.body.funcSc);   //创建script标签
 								$('body').append(script);   //将标签插入body尾部
 							}
-						}, {
-							buttonTxt: '否'
 						}],
 					})
 				} else {

@@ -12,7 +12,7 @@
   <script src="${host.js}/jquery-1.11.3.min.js"></script>
   <script src="${host.js}/mescroll.min.js"></script>
 	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273825318'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1273825318' type='text/javascript'%3E%3C/script%3E"));var _czc = _czc || [];_czc.push(["_setAccount", "3D1273825318"]);</script>
-  <script src="${host.js}/common.js?v=${host.version}1"></script>
+  <script src="${host.js}/common.js?v=${host.version}2"></script>
   <script type="text/javascript">
   </script>
 </head>
@@ -116,7 +116,7 @@
 				str+='<p class="pd-name">'+pd.goodsName+'</p>';
 				str+='<p class="pd-sub">'+pd.subDesc+'</p>';
 				str+='<p class="prod-item_price">¥'+pd.price+'<span class="pd-market">¥'+pd.marketPrice+'</span></p>';
-				str+='<p class="pd-price">¥'+pd.price+'<span class="small-font">/每期</span></p>';
+				str+='<p class="pd-price">¥'+ commonUtils.numberCurrencyFix(pd.price/pd.period) +'<span class="small-font">/每期</span></p>';
 				str+='</div>';
 				str+='</li>';
 				listDom.append($(str));
