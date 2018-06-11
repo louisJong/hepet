@@ -89,6 +89,8 @@ function submit() {
       cityId: CityId,
       areaId: AreaId
     }; 
+
+		console.log(params)
     var arr = $("#addressForm").serializeArray();
     arr.map(function(item, index) {
       params[item['name']] = item['value'];

@@ -87,6 +87,10 @@
 	  if($(this).hasClass("disable")){
 	  	return;
 	  }
+	  if (address['area'] && (address['area'].indexOf("新疆") || address['area'].indexOf("西藏"))) {
+		  $.mask({type:'alert', alertTips: '该地区不支持配送', alertTime: 2000})
+		  return;
+	  }
 	  // 成功跳转
 		var params = {
 	      goodsId:#{goodsId}
