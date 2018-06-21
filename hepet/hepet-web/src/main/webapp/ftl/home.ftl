@@ -28,6 +28,9 @@
 		.nav span {
 			cursor: pointer; -webkit-tap-highlight-color: transparent;
 		}
+		#nav {
+			width: 470px;
+		}
     </style>
 
 </head>
