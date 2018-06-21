@@ -28,9 +28,6 @@
 		.nav span {
 			cursor: pointer; -webkit-tap-highlight-color: transparent;
 		}
-		#nav {
-			width: 470px;
-		}
     </style>
 
 </head>
@@ -58,7 +55,7 @@
 		</div>
 
 		<div  class="classify-tag nav">
-			<div id="nav" style="width: 450px; display: flex;">
+			<div id="nav" style="width: 470px; display: flex;">
 			</div>
 		</div>
 
